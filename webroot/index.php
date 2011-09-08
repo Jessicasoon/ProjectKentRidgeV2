@@ -9,7 +9,6 @@
 <link href="css/dashboard.css" rel="stylesheet" type="text/css" />
 <link href="css/recent.css" rel="stylesheet" type="text/css" />
 </head> <!--adding comments -->
-</head>
 
 <body>
 <div id="fb-root"></div>
