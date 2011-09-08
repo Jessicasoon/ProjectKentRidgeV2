@@ -33,7 +33,7 @@ $(document).ready(function(){
 	// init the validators
 	QuizValidate.init();
 	<?php if(isset($_GET['step'])){ 
-			if($_GET['step'] == 0){
+//			if($_GET['step'] == 0){
 	?>
 	QuizInfo.init(<?php echo $quiz->quiz_id; ?>, '<?php echo $unikey; ?>');
 	<?php switch($_GET['step']){ case 1: ?>
@@ -97,6 +97,6 @@ $(document).ready(function(){
 	<?php } ?>
 });
 </script>
-<?php }} ?>
+<?php } ?>
 </body>
 </html>
