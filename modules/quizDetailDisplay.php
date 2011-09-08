@@ -218,7 +218,7 @@ $(document).ready(function(){
     <p class="factDesc">Options</p></div>
     <div class="factbox rounded">
       <p class="unit">has</p>
-      <div class="factValue"><?php echo if($mode == "simple" || $mode == "accurate"){$quiz->getResultsMulti('count');}else{$quiz->getResultsTest('count');} ?></div><!--HAVE TO CHANGE FOR TEST YL-->
+      <div class="factValue"><?php if($mode == "simple" || $mode == "accurate"){$quiz->getResultsMulti('count');}else{$quiz->getResultsTest('count');} ?></div><!--HAVE TO CHANGE FOR TEST YL-->
       <p class="factDesc">Results</p>
     </div>
     </div>
