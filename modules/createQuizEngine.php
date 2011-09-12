@@ -16,16 +16,22 @@ if(isset($_GET['step'])){
 
 		$type = $_POST['type']; //get from form
 		$mode = $_POST['mode']; // get from form in createQuizMain
-		header("Location: ../webroot/createQuiz.php?step=1&type=".$type."&mode=".$mode); 
+		if($type == "1" && $mode == "test_simple")
+			header("Location: ../webroot/createQuiz.php?step=1&type=1a");
+		else if ($type == "1" && $mode == "test_custom")
+			header("Location: ../webroot/createQuiz.php?step=1&type=1b");
+		else if ($type == "2" && $mode == "multi_simple")
+			header("Location: ../webroot/createQuiz.php?step=1&type=2a");
+		else if ($type == "2" && $mode == "multi_accurate")
+			header("Location: ../webroot/createQuiz.php?step=1&type=2b");
 		break;
 		
 		case 1: // save the quiz information
 		
 		// get the unikey from the form
 		$key = $_POST['unikey'];
+		$type = $_GET['type']; 
 		
-		$type = $_GET['type'];
-		$mode = $_GET['mode'];
 		// save the data from step 1
 		$quiz_picture = ($_POST['result_picture_0'] != "") ? $_POST['result_picture_0'] : "none.gif";
 		if(isset($_POST['id'])){
@@ -33,16 +39,30 @@ if(isset($_GET['step'])){
 			$quiz_id = $quiz->update($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id);
 		}else{
 			$quiz = new Quiz();
-			//function createQuiz($title, $description, $cat, $picture, $member_id, $key, $display_mode) from quiz.php			
-			$quiz_id = $quiz->create($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id, $key, $mode);
+			$q_mode = " ";
+			$q_type = 0;
+			if($type == "1a"){ 
+				$q_mode = "test_simple"; 
+				$q_type = 1; 
+			}
+			else if($type == "1b"){ 
+				$q_mode = "test_custom"; 
+				$q_type = 1; 
+			}
+			else if($type == "2a"){
+				$q_mode = "multi_simple"; 
+				$q_type = 2; 
+			}
+			else if($type == "2b"){ 
+				$q_mode = "multi_accurate"; 
+				$q_type = 2; 
+			}
+			//function createQuiz($title, $description, $cat, $picture, $member_id, $key, $display_mode, $fk_quiz_type) from quiz.php			
+			$quiz_id = $quiz->createQuiz($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id, $key, $q_mode, $q_type);
 		}
 		
 		// direct them to step 2
-		//if($_POST['save'] == "Previous Step"){
-			//header("Location: ../webroot/createQuiz.php?step=0");
-		//}else{
-			header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
-		//}
+		header("Location: ../webroot/createQuiz.php?step=2&id=".$type);
 		
 		break;		
 		case 2: // save the quiz results

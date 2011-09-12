@@ -1482,18 +1482,19 @@ class Quiz{
 	/**************************************************************************
 	 * Modify on 24 Aug: function for creating a quiz with isPublished = 1 and display mode
 	 **************************************************************************/
-	function createQuiz($title, $description, $cat, $picture, $member_id, $key, $display_mode){
+	function createQuiz($title, $description, $cat, $picture, $member_id, $key, $display_mode, $fk_quiz_type){
 		require('quizrooDB.php');
 		
 		// insert into the quiz table (protect each insert from HTML Injection)
-		$insertSQL = sprintf("INSERT INTO q_quizzes(`quiz_name`, `quiz_description`, `fk_quiz_cat`, `quiz_picture`, `fk_member_id`, `quiz_key`, `isPublished`, `display_mode` ) VALUES (%s, %s, %d, %s, %d, %s, 1, %s)",
+		$insertSQL = sprintf("INSERT INTO q_quizzes(`quiz_name`, `quiz_description`, `fk_quiz_cat`, `quiz_picture`, `fk_member_id`, `quiz_key`, `isPublished`, `display_mode`, `fk_quiz_type` ) VALUES (%s, %s, %d, %s, %d, %s, 1, %s, %d)",
 						   htmlentities(GetSQLValueString($title, "text")),
 						   htmlentities(GetSQLValueString($description, "text")),
 						   GetSQLValueString($cat, "int"),
 						   GetSQLValueString($picture, "text"),
 						   GetSQLValueString($member_id, "int"),
 						   GetSQLValueString($key, "text"),
-						   GetSQLValueString($display_mode, "text"));
+						   GetSQLValueString($display_mode, "text"),
+						   GetSQLValueString($fk_quiz_type, "int"));
 		mysql_query($insertSQL, $quizroo) or die(mysql_error());
 		
 		// find the quiz id to return the quiz_id for the method
@@ -1510,6 +1511,7 @@ class Quiz{
 		$this->fk_member_id = $member_id;
 		$this->quiz_key = $key;
 		$this->display_mode = $display_mode;
+		$this->fk_quiz_type= $fk_quiz_type;
 		
 		mysql_free_result($resultID);
 		
@@ -1544,10 +1546,10 @@ class Quiz{
 	 * Modify on 28 Aug: function for adding options according to new database (Multi type)
 	 * (Foreign key question_id is provided)
 	 **************************************************************************/
-	 function addMultiTypeOption($option, $result_title, $result_description, $point, $fk_question_id){
+	 function addMultiTypeOption($option, $result_title, $result_description, $option_weightage, $fk_question_id){
 		require('quizrooDB.php');
 			// get id of the result the option pointing to
-			$queryResult = sprintf("SELECT result_id AS input_id FROM q_result_multi WHERE  result_title = %s AND result_description = %s",   	                           
+			$queryResult = sprintf("SELECT result_id AS input_id FROM q_results_multi WHERE  result_title = %s AND result_description = %s",   	                           
 						   GetSQLValueString($result_title, "text"),
 						   GetSQLValueString($result_description, "text"));
 			$result = mysql_query($queryResult, $quizroo) or die(mysql_error());
@@ -1555,10 +1557,10 @@ class Quiz{
 			$currentresultID = $row_result_id['input_id'];
 			mysql_free_result($result);
 			
-			$insertSQL = sprintf("INSERT INTO q_options_multi(`option`, `fk_result_id`, `point`, `fk_question_id`) VALUES (%s, %d, %d, %d)",
+			$insertSQL = sprintf("INSERT INTO q_options_multi(`option`, `fk_result_id`, `option_weightage`, `fk_question_id`) VALUES (%s, %d, %d, %d)",
 						   htmlentities(GetSQLValueString($option, "text")),
 						   GetSQLValueString($currentresultID, "int"),
-						   GetSQLValueString($point, "int"),
+						   GetSQLValueString($option_weightage, "int"),
 						   GetSQLValueString($fk_question_id, "int"));
 			mysql_query($insertSQL, $quizroo) or die(mysql_error());
 		

@@ -119,7 +119,7 @@ if ( $_FILES['file']['tmp_name'] )
 	 //create quiz
 	 $quiz = new Quiz();
 	 //get the quiz_id here to use for inserting questions
-	 $quiz_id = $quiz->createQuiz($title, $des, $cat, $quiz_picture, $memberid, 'Admin', $display_mode);
+	 $quiz_id = $quiz->createQuiz($title, $des, $cat, $quiz_picture, $memberid, 'Admin', $display_mode, 1);
 	 }
 	 
 	 //check if the question is null. If not, insert into database.
@@ -257,7 +257,7 @@ if ( $_FILES['file']['tmp_name'] )
 	 //create quiz
 	 $quiz = new Quiz();
 	 //get the quiz_id here to use for inserting questions
-	 $quiz_id = $quiz->createQuiz($title, $des, $cat, $quiz_picture, $memberid, 'Admin', $display_mode);
+	 $quiz_id = $quiz->createQuiz($title, $des, $cat, $quiz_picture, $memberid, 'Admin', $display_mode, 2);
 	 }
 	 
 	 //check if the question is null. If not, insert into database.
@@ -278,7 +278,7 @@ if ( $_FILES['file']['tmp_name'] )
     <td><?php echo($option); ?></td>
     <td><span class="style5">Result contributed to? </span></td>
     <td><?php echo($result_t); ?></td><td><?php echo($result_d); ?></td>
-    <td><span class="style5">Point: </span></td>
+    <td><span class="style5">Option Weightage: </span></td>
     <td><?php echo($point); ?></td>
   </tr>
   <?php

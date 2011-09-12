@@ -1,3 +1,19 @@
+<script src="jquery.js"></script>
+<script type="text/javascript">
+	 $(document).ready(function(){
+     $("#personality").change(function(event){
+		 event.preventDefault();
+		 $("#blk-1").hide("fast");
+		 $("#blk-2").show("fast");
+   	 });
+	 $("#test").change(function(event){
+		 event.preventDefault();
+		 $("#blk-2").hide("fast");
+		 $("#blk-1").show("fast");
+   	 });
+	 
+ });
+</script>
 <?php
 require('../modules/quizrooDB.php');
 require('../modules/uploadFunctions.php');
@@ -28,6 +44,14 @@ if($quiz_state){
 switch($_GET['step']){
 
 default: case 0:  ?>
+<style type="text/css">
+<!--
+.style1 {
+	font-size: 10
+}
+-->
+</style>
+
 
 <div id="progress-container" class="framePanel rounded">
 <h2>Create Quiz: Choose Quiz Type</h2>
@@ -46,137 +70,159 @@ how you want it to be displayed.</p>
 </div>
 </div>
 
-<div id="form_step0" class="framePanel rounded">
-<!---------------ASK ABOUT SUBMITCHECK--------------------->
-<form action="../modules/createQuizEngine.php?step=0" method="post"
-	enctype="multipart/form-data" name="createQuiz" id="createQuiz"
-	onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
-<table width="688" border="1" bordercolor="#000000"
-	style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
-	<!-- Test type-->
-	<tr>
-		<td width="20"><input name="type" type="radio" value="test" /></td>
-		<td width="86">
-		<h2>Test</h2>
-		</td>
-		<td width="820">
-		<div class="content-container">
-
-		<p><strong>Quiz of Test type</strong>: designed to determine knowledge
-		of a particular subject based on factual information of it. Hence,
-		there are right and wrong answers for each question. Below is an
-		example of Test type quiz.</p>
-		<table width="560">
-			<tr>
-				<td width="326">
-				<table width="326" height="113">
-					<tr bgcolor="#FF9900">
-						<td width="62">Quiz title:</td>
-						<td width="252">How well do you know Michael Jackson?</td>
-					</tr>
-					<tr>
-						<td>Question 1:</td>
-						<td>Where is he from?</td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>
-						<p><input type="radio" disabled="disabled" />Singapore</p>
-						<p><input type="radio" disabled="disabled" />Thailand</p>
-						<p><input type="radio" disabled="disabled" />The US (Correct
-						answer)</p>
-						<p><input type="radio" disabled="disabled" />England</p>
-						</td>
-					</tr>
-				</table>
-				</td>
-				<td width="389" valign="top">
-				<table width="224">
-					<tr>
-						<td>Do you want to customize your quiz result?<a
+<div id="form_step2" class="framePanel rounded">
+  <form action="../modules/createQuizEngine.php?step=0" method="post"
+	enctype="multipart/form-data" name="createQuiz" id="createQuiz3" >
+    <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
+      <!-- Test type-->
+      <tr>
+        <td colspan="3"><h2>
+          <input id="test" name="type" type="radio" value="1" />
+          Test</h2></td>
+      </tr>
+      <tr>
+        <td valign="top" width="40%"><div id = "blk-1" style="display:none">
+          <table>
+            <tr>
+              <td>Do you want to customize your quiz result?<a
 							href="customnizeTestExpl.php"> What's this?</a></td>
-						<!-- To replace the hyperlink-->
-					</tr>
-					<tr>
-						<td><input type="radio" value="yes" name="mode" />Yes</td>
-					</tr>
-					<tr>
-						<td><input type="radio" value="no" name="mode" />No, keep it
-						simple</td>
-					</tr>
-				</table>
-				</td>
-			</tr>
-		</table>
-		</div>
-		</td>
-	</tr>
-	<!-- Personality type-->
-	<tr>
-		<td><input name="type" type="radio" value="personality" /></td>
-		<td>
-		<h2>Personality</h2>
-		</td>
-		<td>
-		<div class="content-container">
-		<p><strong>Quiz of Personality type:</strong> consisting of questions
-		whose purpose is to test on different aspects of a person's characters
-		such as behaviors, thoughts and feelings. There is no right or wong
-		answer and the result derives from how quiz takers choose their
-		reactions in certain situation. Below is an example of Personality
-		type quiz.</p>
-		<table width="555">
-			<tr>
-				<td width="323">
-				<table width="323" height="113">
-					<tr bgcolor="#FF9900">
-						<td width="58">Quiz title:</td>
-						<td width="253">How serious are you?</td>
-					</tr>
-					<tr>
-						<td>Question 1:</td>
-						<td>When you're with your friends you&hellip;</td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>
-						<p><input type="radio" disabled="disabled" />Make comments from
-						time to time. You aren't quiet or boisterous.</p>
-						<p><input type="radio" disabled="disabled" />You just listen to
-						what everyone else is talking about.</p>
-						<p><input type="radio" disabled="disabled" />Always making jokes.</p>
-						<p><input type="radio" disabled="disabled" />Don't care about
-						anything.</p>
-						</td>
-					</tr>
-				</table>
-				</td>
-				<td width="399" valign="top">
-				<table width="222">
-					<tr>
-						<td width="224">Do you want to make your quiz more accurate? <a
+              <!-- To replace the hyperlink-->
+            </tr>
+            <tr>
+              <td><input type="radio" value="test_custom" name="mode" />
+                Yes</td>
+            </tr>
+            <tr>
+              <td><input type="radio" value="test_simple" name="mode" />
+                No, keep it
+                simple</td>
+            </tr>
+          </table>
+        </div></td>
+        <td width="60%"><div class="content-container">
+          <p><strong>Quiz of Test type</strong>: designed to determine knowledge
+            of a particular subject based on factual information of it. Hence,
+            there are right and wrong answers for each question. Below is an
+            example of Test type quiz.</p>
+          <table>
+            <tr>
+              <td><table>
+                <tr bgcolor="#FC0">
+                  <td>Quiz title:</td>
+                  <td>How well do you know Michael Jackson?</td>
+                </tr>
+                <tr>
+                  <td>Question 1:</td>
+                  <td>Where is he from?</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><input type="radio" disabled="disabled" />
+                    Thailand</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><input type="radio" disabled="disabled" />
+                    The US (Correct
+                    answer)</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><input type="radio" disabled="disabled" />
+                    England</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><input type="radio" disabled="disabled" />
+                    Singapore </td>
+                </tr>
+              </table></td>
+            </tr>
+          </table>
+        </div></td>
+      </tr>
+      <!-- Personality type-->
+      <tr>
+        <td colspan="3"><h2>
+          <input id="personality" name="type" type="radio" value="2"/>
+          Personality</h2></td>
+      </tr>
+      <tr>
+        <td valign="top" width="40%"><div id = "blk-2" style="display:none">
+          <table>
+            <tr>
+              <td>Do you want to make your quiz more accurate? <a
 							href="customnizeMultiExpl.php">What's this?</a></td>
-						<!-- To replace the hyperlink-->
-					</tr>
-					<tr>
-						<td><input type="radio" value="yes" name="mode" />Yes</td>
-					</tr>
-					<tr>
-						<td><input type="radio" value="no" name="mode" />No, keep it
-						simple</td>
-					</tr>
-				</table>
-				</td>
-			</tr>
-		</table>
-		</div>
-		</td>
-	</tr>
-</table>
-<div align="right"><input type="submit" value="Next Step!" /></div>
-</form>
+              <!-- To replace the hyperlink-->
+            </tr>
+            <tr>
+              <td><input type="radio" value="multi_accurate" name="mode" />
+                Yes</td>
+            </tr>
+            <tr>
+              <td><input type="radio" value="multi_simple" name="mode" />
+                No, keep it
+                simple</td>
+            </tr>
+          </table>
+        </div></td>
+        <td width="60%"><div class="content-container">
+          <p><strong>Quiz of Personality type:</strong> consisting of questions
+            whose purpose is to test on different aspects of a person's characters
+            such as behaviors, thoughts and feelings. There is no right or wong
+            answer and the result derives from how quiz takers choose their
+            reactions in certain situation. Below is an example of Personality
+            type quiz.</p>
+          <table>
+            <tr>
+              <td><table>
+                <tr bgcolor="#FC0">
+                  <td width="58">Quiz title:</td>
+                  <td>How serious are you?</td>
+                </tr>
+                <tr>
+                  <td>Question 1:</td>
+                  <td>When you're with your friends you&hellip;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><span class="style1">
+                    <input type="radio" disabled="disabled" />
+                    Make comments from
+                    time to time. You aren't quiet or boisterous</span></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><span class="style1">
+                    <input type="radio" disabled="disabled" />
+                    You just listen to
+                    what everyone else is talking about.</span></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><span class="style1">
+                    <input type="radio" disabled="disabled" />
+                    Always making jokes.</span></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><span class="style1">
+                    <input type="radio" disabled="disabled" />
+                    Don't care about
+                    anything.</span></td>
+                </tr>
+              </table></td>
+            </tr>
+          </table>
+        </div></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td align="right"><input type="submit" value="Next Step!" /></td>
+      </tr>
+    </table>
+  </form>
 </div>
-
 <?php break; case 1:
 // populate the categories
 $query_listCat = "SELECT cat_id, cat_name FROM q_quiz_cat";
@@ -323,7 +369,6 @@ results as you like!</p>
 </div>
 </div>
 <div id="create-quiz" class="frame rounded">
-
 <?php
 		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz_id);
 		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
@@ -624,136 +669,162 @@ how you want it to be displayed.</p>
 </div>
 </div>
 
-<div id="form_step0" class="framePanel rounded">
-<form action="../modules/createQuizEngine.php?step=0" method="post"
-	enctype="multipart/form-data" name="createQuiz" id="createQuiz"
-	onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
-<table width="688" border="1" bordercolor="#000000"
-	style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
-	<!-- Test type-->
-	<tr>
-		<td width="20"><input name="type" type="radio" value="test" /></td>
-		<td width="86">
-		<h2>Test</h2>
-		</td>
-		<td width="820">
-		<div class="content-container">
-
-		<p><strong>Quiz of Test type</strong>: designed to determine knowledge
-		of a particular subject based on factual information of it. Hence,
-		there are right and wrong answers for each question. Below is an
-		example of Test type quiz.</p>
-		<table width="560">
-			<tr>
-				<td width="326">
-				<table width="326" height="113">
-					<tr bgcolor="#FF9900">
-						<td width="62">Quiz title:</td>
-						<td width="252">How well do you know Michael Jackson?</td>
-					</tr>
-					<tr>
-						<td>Question 1:</td>
-						<td>Where is he from?</td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>
-						<p><input type="radio" disabled="disabled" />Singapore</p>
-						<p><input type="radio" disabled="disabled" />Thailand</p>
-						<p><input type="radio" disabled="disabled" />The US (Correct
-						answer)</p>
-						<p><input type="radio" disabled="disabled" />England</p>
-						</td>
-					</tr>
-				</table>
-				</td>
-				<td width="389" valign="top">
-				<table width="224">
-					<tr>
-						<td>Do you want to customize your quiz result?<a
+<div id="form_step" class="framePanel rounded">
+  <form action="../modules/createQuizEngine.php?step=0" method="post"
+	enctype="multipart/form-data" name="createQuiz" id="createQuiz2" >
+    <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
+      <!-- Test type-->
+      <tr>
+        <td colspan="3"><h2>
+          <input id="test" name="type" type="radio" value="1" />
+          Test</h2></td>
+      </tr>
+      <tr>
+        <td valign="top" width="40%"><div id = "blk-1" style="display:none">
+          <table>
+            <tr>
+              <td>Do you want to customize your quiz result?<a
 							href="customnizeTestExpl.php"> What's this?</a></td>
-						<!-- To replace the hyperlink-->
-					</tr>
-					<tr>
-						<td><input type="radio" value="yes" name="mode" />Yes</td>
-					</tr>
-					<tr>
-						<td><input type="radio" value="no" name="mode" />No, keep it
-						simple</td>
-					</tr>
-				</table>
-				</td>
-			</tr>
-		</table>
-		</div>
-		</td>
-	</tr>
-	<!-- Personality type-->
-	<tr>
-		<td><input name="type" type="radio" value="personality" /></td>
-		<td>
-		<h2>Personality</h2>
-		</td>
-		<td>
-		<div class="content-container">
-		<p><strong>Quiz of Personality type:</strong> consisting of questions
-		whose purpose is to test on different aspects of a person's characters
-		such as behaviors, thoughts and feelings. There is no right or wong
-		answer and the result derives from how quiz takers choose their
-		reactions in certain situation. Below is an example of Personality
-		type quiz.</p>
-		<table width="555">
-			<tr>
-				<td width="323">
-				<table width="323" height="113">
-					<tr bgcolor="#FF9900">
-						<td width="58">Quiz title:</td>
-						<td width="253">How serious are you?</td>
-					</tr>
-					<tr>
-						<td>Question 1:</td>
-						<td>When you're with your friends you&hellip;</td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>
-						<p><input type="radio" disabled="disabled" />Make comments from
-						time to time. You aren't quiet or boisterous.</p>
-						<p><input type="radio" disabled="disabled" />You just listen to
-						what everyone else is talking about.</p>
-						<p><input type="radio" disabled="disabled" />Always making jokes.</p>
-						<p><input type="radio" disabled="disabled" />Don't care about
-						anything.</p>
-						</td>
-					</tr>
-				</table>
-				</td>
-				<td width="399" valign="top">
-				<table width="222">
-					<tr>
-						<td width="224">Do you want to make your quiz more accurate? <a
+              <!-- To replace the hyperlink-->
+            </tr>
+            <tr>
+              <td><input type="radio" value="test_custom" name="mode" />
+                Yes</td>
+            </tr>
+            <tr>
+              <td><input type="radio" value="test_simple" name="mode" />
+                No, keep it
+                simple</td>
+            </tr>
+          </table>
+        </div></td>
+        <td width="60%"><div class="content-container">
+          <p><strong>Quiz of Test type</strong>: designed to determine knowledge
+            of a particular subject based on factual information of it. Hence,
+            there are right and wrong answers for each question. Below is an
+            example of Test type quiz.</p>
+          <table>
+            <tr>
+              <td><table>
+                <tr bgcolor="#FC0">
+                  <td width="58">Quiz title:</td>
+                  <td>How well do you know Michael Jackson?</td>
+                </tr>
+                <tr>
+                  <td>Question 1:</td>
+                  <td>Where is he from?</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><span class="style1">
+                    <input type="radio" disabled="disabled" />
+                    Thailand</span></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><span class="style1">
+                    <input type="radio" disabled="disabled" />
+                    The US (Correct answer)</span></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><span class="style1">
+                    <input type="radio" disabled="disabled" />
+                    England</span></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><span class="style1">
+                    <input type="radio" disabled="disabled" />
+                    Singapore</span></td>
+                </tr>
+              </table></td>
+            </tr>
+          </table>
+        </div></td>
+      </tr>
+      <!-- Personality type-->
+      <tr>
+        <td colspan="3"><h2>
+          <input id="personality" name="type" type="radio" value="2"/>
+          Personality</h2></td>
+      </tr>
+      <tr>
+        <td valign="top" width="40%"><div id = "blk-2" style="display:none">
+          <table>
+            <tr>
+              <td>Do you want to make your quiz more accurate? <a
 							href="customnizeMultiExpl.php">What's this?</a></td>
-						<!-- To replace the hyperlink-->
-					</tr>
-					<tr>
-						<td><input type="radio" value="yes" name="mode" />Yes</td>
-					</tr>
-					<tr>
-						<td><input type="radio" value="no" name="mode" />No, keep it
-						simple</td>
-					</tr>
-				</table>
-				</td>
-			</tr>
-		</table>
-		</div>
-		</td>
-	</tr>
-</table>
-<div align="right"><input type="submit" value="Next Step!" /></div>
-</form>
+              <!-- To replace the hyperlink-->
+            </tr>
+            <tr>
+              <td><input type="radio" value="multi_accurate" name="mode" />
+                Yes</td>
+            </tr>
+            <tr>
+              <td><input type="radio" value="multi_simple" name="mode" />
+                No, keep it
+                simple</td>
+            </tr>
+          </table>
+        </div></td>
+        <td width="60%"><div class="content-container">
+          <p><strong>Quiz of Personality type:</strong> consisting of questions
+            whose purpose is to test on different aspects of a person's characters
+            such as behaviors, thoughts and feelings. There is no right or wong
+            answer and the result derives from how quiz takers choose their
+            reactions in certain situation. Below is an example of Personality
+            type quiz.</p>
+          <table>
+            <tr>
+              <td><table>
+                <tr bgcolor="#FC0">
+                  <td width="58">Quiz title:</td>
+                  <td>How serious are you?</td>
+                </tr>
+                <tr>
+                  <td>Question 1:</td>
+                  <td>When you're with your friends you&hellip;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><span class="style1">
+                    <input type="radio" disabled="disabled" />
+                    Make comments from
+                    time to time. You aren't quiet or boisterous</span></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><span class="style1">
+                    <input type="radio" disabled="disabled" />
+                    You just listen to
+                    what everyone else is talking about.</span></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><span class="style1">
+                    <input type="radio" disabled="disabled" />
+                    Always making jokes.</span></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><span class="style1">
+                    <input type="radio" disabled="disabled" />
+                    Don't care about
+                    anything.</span></td>
+                </tr>
+              </table></td>
+            </tr>
+          </table>
+        </div></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td align="right"><input type="submit" value="Next Step!" /></td>
+      </tr>
+    </table>
+  </form>
 </div>
-
 <?php }else if ($_GET['step'] == 1){
 // generate a one time hash key for the upload, (this hash key will stay with the quiz throughout the entire creation process)
 $unikey = get_rand_id(8);
@@ -906,75 +977,101 @@ how you want it to be displayed.</p>
 
 <div id="form_step0" class="framePanel rounded">
 <form action="../modules/createQuizEngine.php?step=0" method="post"
-	enctype="multipart/form-data" name="createQuiz" id="createQuiz"
-	onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
-<table width="688" border="1" bordercolor="#CCCCCC"
-	style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
+	enctype="multipart/form-data" name="createQuiz" id="createQuiz" >
+<table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
 	<!-- Test type-->
 	<tr>
-		<td width="20"><input name="type" type="radio" value="test" /></td>
-		<td width="86">
-		<h2>Test</h2>
-		</td>
-		<td width="820">
-		<div class="content-container">
-
-		<p><strong>Quiz of Test type</strong>: designed to determine knowledge
-		of a particular subject based on factual information of it. Hence,
-		there are right and wrong answers for each question. Below is an
-		example of Test type quiz.</p>
-		<table width="560">
-			<tr>
-				<td width="326">
-				<table width="326" height="113">
-					<tr bgcolor="#FF9900">
-						<td width="62">Quiz title:</td>
-						<td width="252">How well do you know Michael Jackson?</td>
-					</tr>
-					<tr>
-						<td>Question 1:</td>
-						<td>Where is he from?</td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>
-						<p><input type="radio" disabled="disabled" />Singapore</p>
-						<p><input type="radio" disabled="disabled" />Thailand</p>
-						<p><input type="radio" disabled="disabled" />The US (Correct
-						answer)</p>
-						<p><input type="radio" disabled="disabled" />England</p>
-						</td>
-					</tr>
-				</table>
-				</td>
-				<td width="389" valign="top">
-				<table width="224">
+	  <td colspan="3"><h2><input id="test" name="type" type="radio" value="1" />Test</h2></td>
+	</tr>
+	<tr>
+		<td valign="top" width="40%">
+                <div id = "blk-1" style="display:none">
+				<table>
 					<tr>
 						<td>Do you want to customize your quiz result?<a
 							href="customnizeTestExpl.php"> What's this?</a></td>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="yes" name="mode" />Yes</td>
+						<td><input type="radio" value="test_custom" name="mode" />Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="no" name="mode" />No, keep it
+						<td><input type="radio" value="test_simple" name="mode" />No, keep it
 						simple</td>
 					</tr>
 				</table>
-				</td>
+                </div>		
+                </td>
+		<td width="60%">
+		<div class="content-container">
+		<p><strong>Quiz of Test type</strong>: designed to determine knowledge
+		of a particular subject based on factual information of it. Hence,
+		there are right and wrong answers for each question. Below is an
+		example of Test type quiz.</p>
+		<table>
+			<tr>
+				<td>
+				<table>
+					<tr bgcolor="#FC0">
+						<td>Quiz title:</td>
+						<td>How well do you know Michael Jackson?</td>
+					</tr>
+					<tr>
+						<td>Question 1:</td>
+						<td>Where is he from?</td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td><input type="radio" disabled="disabled" />
+Thailand</td>
+				    </tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td><input type="radio" disabled="disabled" />
+The US (Correct
+					  answer)</td>
+				    </tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td><input type="radio" disabled="disabled" />
+England</td>
+				    </tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>
+						<input type="radio" disabled="disabled" />
+						Singapore					  </td>
+					</tr>
+				</table>				</td>
 			</tr>
 		</table>
-		</div>
-		</td>
+		</div>		
+        </td>
 	</tr>
 	<!-- Personality type-->
 	<tr>
-		<td><input name="type" type="radio" value="personality" /></td>
-		<td>
-		<h2>Personality</h2>
-		</td>
-		<td>
+	  <td colspan="3"><h2><input id="personality" name="type" type="radio" value="2"/>Personality</h2></td>
+	  </tr>
+	<tr>
+		<td valign="top" width="40%">
+                <div id = "blk-2" style="display:none">
+				<table>
+					<tr>
+						<td>Do you want to make your quiz more accurate? <a
+							href="customnizeMultiExpl.php">What's this?</a></td>
+						<!-- To replace the hyperlink-->
+					</tr>
+					<tr>
+						<td><input type="radio" value="multi_accurate" name="mode" />Yes</td>
+					</tr>
+					<tr>
+						<td><input type="radio" value="multi_simple" name="mode" />No, keep it
+						simple</td>
+					</tr>
+				</table>
+                </div>				
+        </td>
+		<td width="60%">
 		<div class="content-container">
 		<p><strong>Quiz of Personality type:</strong> consisting of questions
 		whose purpose is to test on different aspects of a person's characters
@@ -982,55 +1079,58 @@ how you want it to be displayed.</p>
 		answer and the result derives from how quiz takers choose their
 		reactions in certain situation. Below is an example of Personality
 		type quiz.</p>
-		<table width="555">
+		<table>
 			<tr>
-				<td width="323">
-				<table width="323" height="113">
-					<tr bgcolor="#FF9900">
+				<td>
+				<table>
+					<tr bgcolor="#FC0">
 						<td width="58">Quiz title:</td>
-						<td width="253">How serious are you?</td>
+						<td>How serious are you?</td>
 					</tr>
 					<tr>
 						<td>Question 1:</td>
 						<td>When you're with your friends you&hellip;</td>
 					</tr>
 					<tr>
-						<td>&nbsp;</td>
-						<td>
-						<p><input type="radio" disabled="disabled" />Make comments from
-						time to time. You aren't quiet or boisterous.</p>
-						<p><input type="radio" disabled="disabled" />You just listen to
-						what everyone else is talking about.</p>
-						<p><input type="radio" disabled="disabled" />Always making jokes.</p>
-						<p><input type="radio" disabled="disabled" />Don't care about
-						anything.</p>
-						</td>
-					</tr>
-				</table>
-				</td>
-				<td width="399" valign="top">
-				<table width="222">
+					  <td>&nbsp;</td>
+					  <td><span class="style1">
+					    <input type="radio" disabled="disabled" />
+					    Make comments from
+					  time to time. You aren't quiet or boisterous</span></td>
+				    </tr>
 					<tr>
-						<td width="224">Do you want to make your quiz more accurate? <a
-							href="customnizeMultiExpl.php">What's this?</a></td>
-						<!-- To replace the hyperlink-->
-					</tr>
+					  <td>&nbsp;</td>
+					  <td><span class="style1">
+					    <input type="radio" disabled="disabled" />
+					    You just listen to
+					  what everyone else is talking about.</span></td>
+				    </tr>
 					<tr>
-						<td><input type="radio" value="yes" name="mode" />Yes</td>
-					</tr>
+					  <td>&nbsp;</td>
+					  <td><span class="style1">
+					    <input type="radio" disabled="disabled" />
+				      Always making jokes.</span></td>
+				    </tr>
 					<tr>
-						<td><input type="radio" value="no" name="mode" />No, keep it
-						simple</td>
-					</tr>
-				</table>
-				</td>
+					  <td>&nbsp;</td>
+					  <td><span class="style1">
+					    <input type="radio" disabled="disabled" />
+Don't care about
+					  anything.</span></td>
+				    </tr>
+				</table>				
+                </td>
+				
 			</tr>
 		</table>
-		</div>
-		</td>
+		</div>		
+        </td>
+        </tr>
+    <tr>
+    	<td></td>
+        <td align="right"><input type="submit" value="Next Step!" /></td>
 	</tr>
 </table>
-<div align="right"><input type="submit" value="Next Step!" /></div>
 </form>
 </div>
 
