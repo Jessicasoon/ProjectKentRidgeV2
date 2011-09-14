@@ -859,7 +859,7 @@ creation process.</p>
 </div>
 </div>
 <div id="create-quiz" class="frame rounded">
-<form action="../modules/createQuizEngine.php?step=1" method="post"
+<form action="../modules/createQuizEngine.php?step=1&type1=<?php echo ($_GET['type'])?>" method="post"
 	enctype="multipart/form-data" name="createQuiz" id="createQuiz"
 	onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
     <input type="hidden" name="unikey" value="<?php echo $unikey; ?>" />

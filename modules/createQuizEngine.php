@@ -30,7 +30,7 @@ if(isset($_GET['step'])){
 		
 		// get the unikey from the form
 		$key = $_POST['unikey'];
-		$type = $_GET['type']; 
+		$type1 = $_GET['type1']; 
 		
 		// save the data from step 1
 		$quiz_picture = ($_POST['result_picture_0'] != "") ? $_POST['result_picture_0'] : "none.gif";
@@ -41,19 +41,19 @@ if(isset($_GET['step'])){
 			$quiz = new Quiz();
 			$q_mode = " ";
 			$q_type = 0;
-			if($type == "1a"){ 
+			if($type1 == "1a"){ 
 				$q_mode = "test_simple"; 
 				$q_type = 1; 
 			}
-			else if($type == "1b"){ 
+			else if($type1 == "1b"){ 
 				$q_mode = "test_custom"; 
 				$q_type = 1; 
 			}
-			else if($type == "2a"){
+			else if($type1 == "2a"){
 				$q_mode = "multi_simple"; 
 				$q_type = 2; 
 			}
-			else if($type == "2b"){ 
+			else if($type1 == "2b"){ 
 				$q_mode = "multi_accurate"; 
 				$q_type = 2; 
 			}
@@ -62,7 +62,7 @@ if(isset($_GET['step'])){
 		}
 		
 		// direct them to step 2
-		header("Location: ../webroot/createQuiz.php?step=2&id=".$type);
+		header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
 		
 		break;		
 		case 2: // save the quiz results
