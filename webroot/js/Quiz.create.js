@@ -117,6 +117,10 @@ var QuizResultTest = {
 		}
 		// update the count
 		this.updateCount();
+		// Modify by Hien on 14 Sep for getting value from the input text area
+		var test =  document.getElementById('');
+		alert(test.value);
+		// end modification
 		return this.resultCount;
 	},
 	

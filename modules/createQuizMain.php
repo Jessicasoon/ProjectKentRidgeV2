@@ -11,7 +11,6 @@
 		 $("#blk-2").hide("fast");
 		 $("#blk-1").show("fast");
    	 });
-	 
  });
 </script>
 <?php
@@ -51,7 +50,6 @@ default: case 0:  ?>
 }
 -->
 </style>
-
 
 <div id="progress-container" class="framePanel rounded">
 <h2>Create Quiz: Choose Quiz Type</h2>
@@ -977,7 +975,7 @@ how you want it to be displayed.</p>
 
 <div id="form_step0" class="framePanel rounded">
 <form action="../modules/createQuizEngine.php?step=0" method="post"
-	enctype="multipart/form-data" name="createQuiz" id="createQuiz" >
+	enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));" >
 <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
 	<!-- Test type-->
 	<tr>
