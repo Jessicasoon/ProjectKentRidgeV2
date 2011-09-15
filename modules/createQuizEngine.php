@@ -26,9 +26,8 @@ if(isset($_GET['step'])){
 				header("Location: ../webroot/createQuiz.php?step=1&type=2a");
 			else if ($type == "2" && $mode == "multi_accurate")
 				header("Location: ../webroot/createQuiz.php?step=1&type=2b");
-			break;
 		}
-		
+		break;
 		case 1: // save the quiz information
 		
 		// get the unikey from the form

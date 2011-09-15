@@ -337,8 +337,7 @@ creation process.</p>
 	</tr>
 	<tr>
 		<th valign="top" scope="row">&nbsp;</th>
-		<td align="right" class="desc"><input type="submit" name="save"
-			id="prev" value="Previous Step" />&nbsp; <input type="submit"
+		<td align="right" class="desc"><input type="button" onClick="location.href='../webroot/createQuiz.php?step=0'" value='Previous Step'>&nbsp; <input type="submit"
 			name="next" id="next" value="Next Step!" /></td>
 	</tr>
 </table>
@@ -408,8 +407,7 @@ button to add a result entry!</p>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
 <div class="add_container"><input type="submit" name="save" id="prev"
 	value="Previous Step" />&nbsp; <input type="button" name="addResultBtn"
-	id="addResultBtn" value="Add new result" onclick="QuizResultMulti.add()" />&nbsp;
-<input type="submit" name="save" id="next" value="Next Step!" /></div>
+	id="addResultBtn" value="Add new result" onclick="QuizResultMulti.add()" />&nbsp; <input type="submit" name="save" id="next" value="Next Step!" /></div>
 <?php }else{ ?>
 <div class="add_container"><input type="submit" name="save" id="prev"
 	value="Previous Step" />&nbsp; <input type="button" name="addResultBtn"
@@ -864,75 +862,60 @@ creation process.</p>
 <h4>Quiz Information</h4>
 <p>The Quiz Information allows you to tell a potential quiz taker what
 insights your quiz intends to deliver.</p>
-<table width="95%" border="0" align="center" cellpadding="5"
-	cellspacing="0">
-	<tr>
-		<th width="120" valign="top" scope="row"><label for="quiz_title">Title</label></th>
-		<td><span id="sprytextfield0" class="sprytextfield"> 
-        <input type="text" name="quiz_title" id="quiz_title" /> <span
-			class="textfieldRequiredMsg">A title is required.</span></span> <span
-			class="desc">Give your Quiz a meaningful title! Your title will be
-		the first thing that catches a reader's attention.</span></td>
-	</tr>
-	<tr>
-		<th width="120" valign="top" scope="row"><label for="quiz_description">Description</label></th>
-		<td><span id="sprytextarea0" class="sprytextarea"> <textarea
-			name="quiz_description" id="quiz_description" cols="45" rows="5"></textarea>
-		<span class="textareaRequiredMsg">Description should not be blank!</span></span><span
-			class="desc">Provide a short description on what your quiz is about.</span></td>
-	</tr>
-	<tr>
-		<th valign="middle" scope="row"><label for="quiz_cat">Topic</label></th>
-		<td><select name="quiz_cat" id="quiz_cat">
-		<?php do { ?>
-			<option value="<?php echo $row_listCat['cat_id']?>"><?php echo $row_listCat['cat_name']?></option>
-			<?php } while ($row_listCat = mysql_fetch_assoc($listCat));
-			$rows = mysql_num_rows($listCat);
-			if($rows > 0) {
-			mysql_data_seek($listCat, 0);
-			$row_listCat = mysql_fetch_assoc($listCat);
-			} ?>
-		</select></td>
-	</tr>
-	<tr>
-		<th rowspan="2" valign="top" scope="row"><label>Quiz Picture</label> <input
-			type="hidden" name="result_picture_0" id="result_picture_0" value="" /></th>
-		<td class="desc">
-		<div id="swfupload-control-0" class="swfupload-control">
-		<table border="0" cellspacing="0" cellpadding="0">
-			<tr>
-				<td><input name="uploader-0" type="button" id="uploader-0"/></td>
-				<td valign="middle" class="formDesc">Upload a new picture (jpg, gif
-				or png); You can select more than 1 file!</td>
-			</tr>
-		</table>
-		<table border="0" cellspacing="0" cellpadding="5">
-			<tr>
-				<td>
-				<div id="selected-image-0" class="selected-image"></div>
-				</td>
-				<td>
-				<p id="queuestatus-0"></p>
-				</td>
-			</tr>
-		</table>
-		<ol id="log-0" class="log">
-		</ol>
-		</div>
-		<div id="pictureChoser_0"></div>
-		</td>
-	</tr>
-	<tr>
-		<td class="desc">
-		<div id="pictureChoser_0"></div>
-		</td>
-	</tr>
+<table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
+        <tr>
+          <th width="120" valign="top" scope="row"><label for="quiz_title">Title</label></th>
+          <td><span id="sprytextfield0" class="sprytextfield">
+            <input type="text" name="quiz_title" id="quiz_title" />
+          <span class="textfieldRequiredMsg">A title is required.</span></span> <span class="desc">Give your Quiz a meaningful title! Your title will be the first thing that catches a reader's attention.</span></td>
+        </tr>
+        <tr>
+          <th width="120" valign="top" scope="row"><label for="quiz_description">Description</label></th>
+          <td><span id="sprytextarea0" class="sprytextarea">
+            <textarea name="quiz_description" id="quiz_description" cols="45" rows="5"></textarea>
+            <span class="textareaRequiredMsg">Description should not be blank!</span></span><span class="desc">Provide a short description on what your quiz is about.</span></td>
+        </tr>
+        <tr>
+          <th valign="middle" scope="row"><label for="quiz_cat">Topic</label></th>
+          <td><select name="quiz_cat" id="quiz_cat">
+              <?php do { ?>
+              <option value="<?php echo $row_listCat['cat_id']?>"><?php echo $row_listCat['cat_name']?></option>
+              <?php } while ($row_listCat = mysql_fetch_assoc($listCat));
+			  $rows = mysql_num_rows($listCat);
+			  if($rows > 0) {
+				  mysql_data_seek($listCat, 0);
+				  $row_listCat = mysql_fetch_assoc($listCat);
+			  } ?>
+            </select></td>
+        </tr>
+        <tr>
+          <th rowspan="2" valign="top" scope="row"><label>Quiz Picture</label>
+          <input type="hidden" name="result_picture_0" id="result_picture_0" value="" /></th>
+          <td class="desc"><div id="swfupload-control-0" class="swfupload-control">
+              <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td><input name="uploader-0" type="button" id="uploader-0" /></td>
+                  <td valign="middle" class="formDesc">Upload a new picture (jpg, gif or png); You can select more than 1 file!</td>
+                </tr>
+              </table>
+              <table border="0" cellspacing="0" cellpadding="5">
+                <tr>
+                  <td><div id="selected-image-0" class="selected-image"></div></td>
+                  <td><p id="queuestatus-0"></p></td>
+                </tr>
+              </table>
+              <ol id="log-0" class="log">
+              </ol>
+            </div>
+            <div id="pictureChoser_0"></div></td>
+        </tr>
+        <tr>
+          <td class="desc"><div id="pictureChoser_0"></div></td>
+        </tr>
 	<tr>
 		<th valign="top" scope="row">&nbsp;</th>
-        
-		<td align="right" class="desc"><input type="button" onClick="location.href='../webroot/createQuiz.php?step=0'" value='Previous Step'></td>
-		<td align="right" class="desc"><input type="submit" name="save"
-			id="next" value="Next Step!" /></td>
+            <td align="right" class="desc"><input type="button" onClick="location.href='../webroot/createQuiz.php?step=0'" value='Previous Step'>&nbsp; <input type="submit"
+			name="next" id="next" value="Next Step!" /></td>
 	</tr>
 </table>
 </form>

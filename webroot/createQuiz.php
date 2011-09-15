@@ -32,9 +32,7 @@ var unikey = "<?php echo $unikey ?>";
 $(document).ready(function(){
 	// init the validators
 	QuizValidate.init();
-	<?php if(isset($_GET['step'])){ 
-//			if($_GET['step'] == 0){
-	?>
+	<?php if(isset($_GET['step'])){ ?>
 	QuizInfo.init(<?php echo $quiz->quiz_id; ?>, '<?php echo $unikey; ?>');
 	<?php switch($_GET['step']){ case 1: ?>
 	scanInitUploader();
@@ -90,13 +88,16 @@ $(document).ready(function(){
 	QuizQuestionTest.init();
 <?php } ?>	
 	
-	
 	<?php break; case 4: ?>
-	<?php }}}else{ ?>
+	<?php } // end switch
+	}
+	// if step is not set
+	else{ ?>
 	initUploader(0);
 	<?php } ?>
-});
+}); // end of javascript ready()
 </script>
-<?php } ?>
+<?php } // end if quiz_state == false
+}// end quiz_state isset ?>
 </body>
 </html>
