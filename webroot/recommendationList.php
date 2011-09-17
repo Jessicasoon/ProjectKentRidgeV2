@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Quizroo</title>
 <?php include("inc/header-css.php");?>
-<link href="css/dashboard.css" rel="stylesheet" type="text/css" />
+<link href="css/createQuiz.css" rel="stylesheet" type="text/css" />
 <link href="css/recent.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -72,9 +72,11 @@ $totalRows_recommendations = mysql_num_rows($recommendations);
 ?>
 </div>
 <!-- Display the current recommendations -->
-<div id="recommendations">
+<div class="framePanel rounded">
       <h2>Recommended quizzes</h2>
-      <table cellspacing="2" cellpadding="1" style="font-size:12px">
+      <div class="content-container">
+      <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0" class="rounded" style="font-size: 12px">
+      
       <tr bgcolor="#FFCC00">
       <td>Quiz title</td>
       <td>Number of likes</td>

@@ -957,16 +957,15 @@ how you want it to be displayed.</p>
 </div>
 
 <div id="form_step0" class="framePanel rounded">
-<form action="../modules/createQuizEngine.php?step=0" method="post"
-	enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));" >
+<form action="../modules/createQuizEngine.php?step=0" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return confirmStep0()" >
 <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
 	<!-- Test type-->
 	<tr>
-	  <td colspan="3"><h2><input id="test" name="type" type="radio" value="1" />Test</h2></td>
+	  <td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked"/>Test</h2></td>
 	</tr>
 	<tr>
 		<td valign="top" width="40%">
-                <div id = "blk-1" style="display:none">
+                <div id = "blk-1">
 				<table>
 					<tr>
 						<td>Do you want to customize your quiz result?<a
@@ -974,10 +973,10 @@ how you want it to be displayed.</p>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_custom" name="mode" />Yes</td>
+						<td><input type="radio" value="test_custom" name="mode1" checked="checked"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_simple" name="mode" />No, keep it
+						<td><input type="radio" value="test_simple" name="mode1" />No, keep it
 						simple</td>
 					</tr>
 				</table>
@@ -1043,10 +1042,10 @@ England</td>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_accurate" name="mode" />Yes</td>
+						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_simple" name="mode" />No, keep it
+						<td><input type="radio" value="multi_simple" name="mode2" />No, keep it
 						simple</td>
 					</tr>
 				</table>
@@ -1109,7 +1108,7 @@ Don't care about
         </tr>
     <tr>
     	<td></td>
-        <td align="right"><input type="submit" value="Next Step!" /></td>
+        <td align="right"><input type="submit" value="Next Step!"/></td>
 	</tr>
 </table>
 </form>

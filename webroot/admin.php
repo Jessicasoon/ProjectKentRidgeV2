@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Quizroo</title>
 <?php include("inc/header-css.php");?>
-<link href="css/dashboard.css" rel="stylesheet" type="text/css" />
+<link href="css/createQuiz.css" rel="stylesheet" type="text/css" />
 <link href="css/recent.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -20,7 +20,9 @@ When user click submit button, go to another page. Here the specified page is im
 <?php session_start();
 $_SESSION['file'];
 ?>
-<div id = "uploadingForm">
+<div class="framePanel rounded">
+  <h2>Uploading Quiz</h2>
+  <div class="content-container">
 <form enctype="multipart/form-data" action="uploadQuiz.php" method="post">
   <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
   <table width="632">
@@ -40,6 +42,7 @@ $_SESSION['file'];
   </tr>
   </table>
   </form>
+ </div>
   </div>
   <form action="recommendationList.php?do=rec" method="post" enctype="multipart/form-data" >
   <?php require('../modules/quizrooDB.php'); ?>
@@ -57,10 +60,9 @@ $row_popular = mysql_fetch_assoc($popular);
 $totalRows_popular = mysql_num_rows($popular);
 ?>
 <div id="dashboard-container">
-  <div class="clear">
-    <div id="recommendations">
+  <div class="frame rounded">
       <h2>Latest</h2>
-      <table cellspacing="2" cellpadding="1" style="font-size:12px" >
+      <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0" class="rounded" style="font-size: 12px">
       <tr bgcolor="#FFCC00">
       <td></td>
       <td>Quiz title</td>
@@ -68,7 +70,7 @@ $totalRows_popular = mysql_num_rows($popular);
       <td>Quiz category</td>
       <td>Creation date</td>
       </tr>
-      <div class="repeat-container">
+      <div>
       <?php 
 	  if($totalRows_recommendations != 0){ do { ?>
       <tr>
@@ -100,7 +102,6 @@ $totalRows_popular = mysql_num_rows($popular);
         <?php } ?>
         </div>
         </table>
-    </div>
     
   </div>
   
@@ -112,13 +113,19 @@ mysql_free_result($popular);
 
 <?php include("inc/footer-js.php"); ?>
 <div align="center">
+<table>
+	<tr>
+		<td>
 <input type="submit" value="Submit recommendation" />
 </form>
-</div>
-<div align="center">
+</td>
+<td>
 <form action="recommendationList.php" method="post" enctype="multipart/form-data" >
 <input type="submit" value="View recommendation"/>
 </form>
+</td>
+	</tr>
+</table>
 </div>
 <?php
 // get the member's facebook id

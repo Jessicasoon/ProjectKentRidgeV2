@@ -17,15 +17,20 @@ if(isset($_GET['step'])){
 		$type = $_POST['type']; //get from form
 		// if the type was chosen
 		if($type != ""){
-			$mode = $_POST['mode']; // get from form in createQuizMain
-			if($type == "1" && $mode == "test_simple")
-				header("Location: ../webroot/createQuiz.php?step=1&type=1a");
-			else if ($type == "1" && $mode == "test_custom")
-				header("Location: ../webroot/createQuiz.php?step=1&type=1b");
-			else if ($type == "2" && $mode == "multi_simple")
-				header("Location: ../webroot/createQuiz.php?step=1&type=2a");
-			else if ($type == "2" && $mode == "multi_accurate")
-				header("Location: ../webroot/createQuiz.php?step=1&type=2b");
+			if($type == "1"){
+				$mode = $_POST['mode1']; // get from form in createQuizMain
+				if($mode == "test_simple")
+					header("Location: ../webroot/createQuiz.php?step=1&type=1a");
+				else if ($mode == "test_custom")
+					header("Location: ../webroot/createQuiz.php?step=1&type=1b");
+			}
+			else if ($type == "2"){
+				$mode = $_POST['mode2']; // get from form in createQuizMain
+				if ($mode == "multi_simple")
+					header("Location: ../webroot/createQuiz.php?step=1&type=2a");
+				else if ($mode == "multi_accurate")
+					header("Location: ../webroot/createQuiz.php?step=1&type=2b");
+				}
 		}
 		break;
 		case 1: // save the quiz information

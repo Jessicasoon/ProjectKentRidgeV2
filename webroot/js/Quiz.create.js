@@ -969,6 +969,17 @@ function submitCheckMulti(value){
 	}
 }
 
+/* Modified on 15 Sep by Hien for checking radio button*/
+function confirmStep0(){
+	var answer = confirm("Are you sure you want to create quiz of these settings?");
+	if (answer){
+		return true;
+	}else{
+		return false;
+	}
+}
+//end modification
+
 //KEPT TEMPORARILY YL
 function submitCheck(value){
 	// check if upload complete
