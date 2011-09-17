@@ -59,18 +59,17 @@ quiz! <em>Step 0</em> is for you to choose your favourite quiz type and
 how you want it to be displayed.</p>
 <p>Please complete this step then move on to creating quiz process</p>
 <ul class="rounded">
-	<li class="current start"><strong>Step 0</strong> Quiz Type</li>
-	<li><strong>Step 1</strong> Quiz Information</li>
-	<li><strong>Step 2</strong> Results</li>
-	<li><strong>Step 3</strong> Question</li>
-	<li><strong>Step 4</strong> Publish</li>
+	<li class="current start"><strong>Step 1</strong> Quiz Type</li>
+	<li><strong>Step 2</strong> Quiz Information</li>
+	<li><strong>Step 3</strong> Results</li>
+	<li><strong>Step 4</strong> Question</li>
+	<li><strong>Step 5</strong> Publish</li>
 </ul>
 </div>
 </div>
 
 <div id="form_step2" class="framePanel rounded">
-  <form action="../modules/createQuizEngine.php?step=0" method="post"
-	enctype="multipart/form-data" name="createQuiz" id="createQuiz3" >
+  <form action="../modules/createQuizEngine.php?step=0" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return confirmStep0()" >
     <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
       <!-- Test type-->
       <tr>
@@ -239,11 +238,11 @@ insights your quiz intends to deliver.</p>
 at once! You can choose which images to use at every step of the
 creation process.</p>
 <ul class="rounded">
-	<li class="completed_last start"><strong>Step 0</strong> Quiz Type</li>
-	<li class="current start"><strong>Step 1</strong> Quiz Information</li>
-	<li><strong>Step 2</strong> Results</li>
-	<li><strong>Step 3</strong> Question</li>
-	<li><strong>Step 4</strong> Publish</li>
+	<li class="completed_last start"><strong>Step 1</strong> Quiz Type</li>
+	<li class="current"><strong>Step 2</strong> Quiz Information</li>
+	<li><strong>Step 3</strong> Results</li>
+	<li><strong>Step 4</strong> Question</li>
+	<li><strong>Step 5</strong> Publish</li>
 </ul>
 </div>
 </div>
@@ -356,12 +355,12 @@ the quiz taker has chosen, the result which carries the most weightage
 from the options will be the final quiz result. You can add as many
 results as you like!</p>
 <ul class="rounded">
-	<li class="completed_last start"><strong>Step 0</strong> Quiz Type</li>
-	<li class="completed_last start"><strong>Step 1</strong> Quiz
+	<li class="complete_full start"><strong>Step 1</strong> Quiz Type</li>
+	<li class="completed_last"><strong>Step 2</strong> Quiz
 	Information</li>
-	<li class="current"><strong>Step 2</strong> Results</li>
-	<li><strong>Step 3</strong> Question</li>
-	<li><strong>Step 4</strong> Publish</li>
+	<li class="current"><strong>Step 3</strong> Results</li>
+	<li><strong>Step 4</strong> Question</li>
+	<li><strong>Step 5</strong> Publish</li>
 </ul>
 </div>
 </div>
@@ -429,11 +428,13 @@ You can provide several options for quiz takers to choose for each
 question. You should also specify the weightage of each option - how
 each option contributes to a result.</p>
 <ul class="rounded">
-	<li class="complete_full start"><strong>Step 1</strong> Quiz
-	Information</li>
-	<li class="completed_last"><strong>Step 2</strong> Results</li>
-	<li class="current"><strong>Step 3</strong> Question</li>
-	<li><strong>Step 4</strong> Publish</li>
+	
+	<li class="complete_full start"><strong>Step 1</strong> Quiz Type</li>
+	<li class="complete_full "><strong>Step 2</strong> Quiz
+	  Information</li>
+	<li class="completed_last"><strong>Step 3</strong> Results</li>
+	<li class="current"><strong>Step 4</strong> Question</li>
+	<li><strong>Step 5</strong> Publish</li>
 </ul>
 </div>
 </div>
@@ -579,11 +580,13 @@ button to add a question entry!</p>
 <p>You're just <strong>1</strong> step away from creating your own quiz!
 The table below shows the review of your quiz.</p>
 <ul class="rounded final">
-	<li class="complete_full start"><strong>Step 1</strong> Quiz
-	Information</li>
-	<li class="complete_full"><strong>Step 2</strong> Results</li>
-	<li class="completed_last"><strong>Step 3</strong> Question</li>
-	<li class="final"><strong>Step 4</strong> Publish</li>
+	
+	<li class="complete_full start"><strong>Step 1</strong> Quiz Type</li>
+	<li class="complete_full"><strong>Step 2</strong> Quiz
+	  Information</li>
+	<li class="complete_full"><strong>Step 3</strong> Results</li>
+	<li class="completed_last"><strong>Step 4</strong> Question</li>
+	<li class="final"><strong>Step 5</strong> Publish</li>
 </ul>
 </div>
 </div>
@@ -656,18 +659,17 @@ quiz! <em>Step 0</em> is for you to choose your favourite quiz type and
 how you want it to be displayed.</p>
 <p>Please complete this step then move on to creating quiz process</p>
 <ul class="rounded">
-	<li class="current start"><strong>Step 0</strong> Quiz Type</li>
-	<li><strong>Step 1</strong> Quiz Information</li>
-	<li><strong>Step 2</strong> Results</li>
-	<li><strong>Step 3</strong> Question</li>
-	<li><strong>Step 4</strong> Publish</li>
+	<li class="current start"><strong>Step 1</strong> Quiz Type</li>
+	<li><strong>Step 2</strong> Quiz Information</li>
+	<li><strong>Step 3</strong> Results</li>
+	<li><strong>Step 4</strong> Question</li>
+	<li><strong>Step 5</strong> Publish</li>
 </ul>
 </div>
 </div>
 
 <div id="form_step" class="framePanel rounded">
-  <form action="../modules/createQuizEngine.php?step=0" method="post"
-	enctype="multipart/form-data" name="createQuiz" id="createQuiz2" >
+  <form action="../modules/createQuizEngine.php?step=0" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return confirmStep0()" >
     <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
       <!-- Test type-->
       <tr>
@@ -846,11 +848,11 @@ insights your quiz intends to deliver.</p>
 at once! You can choose which images to use at every step of the
 creation process.</p>
 <ul class="rounded">
-	<li class="completed_last start"><strong>Step 0</strong> Quiz Type</li>
-	<li class="current start"><strong>Step 1</strong> Quiz Information</li>
-	<li><strong>Step 2</strong> Results</li>
-	<li><strong>Step 3</strong> Question</li>
-	<li><strong>Step 4</strong> Publish</li>
+	<li class="completed_last start"><strong>Step 1</strong> Quiz Type</li>
+	<li class="current"><strong>Step 2</strong> Quiz Information</li>
+	<li><strong>Step 3</strong> Results</li>
+	<li><strong>Step 4</strong> Question</li>
+	<li><strong>Step 5</strong> Publish</li>
 </ul>
 </div>
 </div>
@@ -947,11 +949,11 @@ quiz! <em>Step 0</em> is for you to choose your favourite quiz type and
 how you want it to be displayed.</p>
 <p>Please complete this step then move on to creating quiz process</p>
 <ul class="rounded">
-	<li class="current start"><strong>Step 0</strong> Quiz Type</li>
-	<li><strong>Step 1</strong> Quiz Information</li>
-	<li><strong>Step 2</strong> Results</li>
-	<li><strong>Step 3</strong> Question</li>
-	<li><strong>Step 4</strong> Publish</li>
+	<li class="current start"><strong>Step 1</strong> Quiz Type</li>
+	<li><strong>Step 2</strong> Quiz Information</li>
+	<li><strong>Step 3</strong> Results</li>
+	<li><strong>Step 4</strong> Question</li>
+	<li><strong>Step 5</strong> Publish</li>
 </ul>
 </div>
 </div>
