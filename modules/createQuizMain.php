@@ -42,7 +42,7 @@ if($quiz_state){
 // THE FIRST STEP (Returning): Quiz Type
 switch($_GET['step']){
 
-default: case 0:  ?>
+case 0:  ?>
 <style type="text/css">
 <!--
 .style1 {
@@ -55,7 +55,7 @@ default: case 0:  ?>
 <h2>Create Quiz: Choose Quiz Type</h2>
 <div class="content-container">
 <p>You're just <strong>5</strong> steps away from creating your own
-quiz! <em>Step 0</em> is for you to choose your favourite quiz type and
+quiz! <em>Step 1</em> is for you to choose your favourite quiz type and
 how you want it to be displayed.</p>
 <p>Please complete this step then move on to creating quiz process</p>
 <ul class="rounded">
@@ -231,7 +231,7 @@ $totalRows_listCat = mysql_num_rows($listCat);
 <h2>Create Quiz: Quiz Information</h2>
 <div class="content-container">
 <p>You're just <strong>4</strong> steps away from creating your own
-quiz! <em>Step 1</em> contains all the basic information we need to help
+quiz! <em>Step 2</em> contains all the basic information we need to help
 you setup your quiz. It allows you to tell a potential quiz taker what
 insights your quiz intends to deliver.</p>
 <p>If you have prepared several images for quiz, you can upload them all
@@ -349,7 +349,7 @@ creation process.</p>
 <h2>Create Quiz: Results</h2>
 <div class="content-container">
 <p>You're just <strong>3</strong> steps away from creating your own
-quiz! <em>Step 2</em> allows you to define the results of your quiz.
+quiz! <em>Step 3</em> allows you to define the results of your quiz.
 Quiz results appear at the end of each quiz. Depending on what options
 the quiz taker has chosen, the result which carries the most weightage
 from the options will be the final quiz result. You can add as many
@@ -423,7 +423,7 @@ button to add a result entry!</p>
 <h2>Create Quiz: Questions</h2>
 <div class="content-container">
 <p>You're just <strong>2</strong> steps away from creating your own
-quiz! <em>Step 3</em> allows you to populate your quiz with questions.
+quiz! <em>Step 4</em> allows you to populate your quiz with questions.
 You can provide several options for quiz takers to choose for each
 question. You should also specify the weightage of each option - how
 each option contributes to a result.</p>
@@ -655,7 +655,7 @@ if($_GET['step'] == 0){
 <h2>Create Quiz: Choose Quiz Type</h2>
 <div class="content-container">
 <p>You're just <strong>5</strong> steps away from creating your own
-quiz! <em>Step 0</em> is for you to choose your favourite quiz type and
+quiz! <em>Step 1</em> is for you to choose your favourite quiz type and
 how you want it to be displayed.</p>
 <p>Please complete this step then move on to creating quiz process</p>
 <ul class="rounded">
@@ -841,7 +841,7 @@ $totalRows_listCat = mysql_num_rows($listCat);
 <h2>Create Quiz: Quiz Information</h2>
 <div class="content-container">
 <p>You're just <strong>4</strong> steps away from creating your own
-quiz! <em>Step 1</em> contains all the basic information we need to help
+quiz! <em>Step 2</em> contains all the basic information we need to help
 you setup your quiz. It allows you to tell a potential quiz taker what
 insights your quiz intends to deliver.</p>
 <p>If you have prepared several images for quiz, you can upload them all
@@ -857,10 +857,8 @@ creation process.</p>
 </div>
 </div>
 <div id="create-quiz" class="frame rounded">
-<form action="../modules/createQuizEngine.php?step=1&type1=<?php echo ($_GET['type'])?>" method="post"
-	enctype="multipart/form-data" name="createQuiz" id="createQuiz"
-	onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
-    <input type="hidden" name="unikey" value="<?php echo $unikey; ?>" />
+<form action="../modules/createQuizEngine.php?step=1&type1=<?php echo ($_GET['type'])?>" method="post" enctype="multipart/form-data name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
+	<input type="hidden" name="unikey" value="<?php echo $unikey; ?>" />
 <h4>Quiz Information</h4>
 <p>The Quiz Information allows you to tell a potential quiz taker what
 insights your quiz intends to deliver.</p>
@@ -917,7 +915,7 @@ insights your quiz intends to deliver.</p>
 	<tr>
 		<th valign="top" scope="row">&nbsp;</th>
             <td align="right" class="desc"><input type="button" onClick="location.href='../webroot/createQuiz.php?step=0'" value='Previous Step'>&nbsp; <input type="submit"
-			name="next" id="next" value="Next Step!" /></td>
+			name="next" id="next" value="Next Step!"/></td>
 	</tr>
 </table>
 </form>
@@ -945,7 +943,7 @@ check the ID of the quiz again.</p>
 <h2>Create Quiz: Choose Quiz Type</h2>
 <div class="content-container">
 <p>You're just <strong>5</strong> steps away from creating your own
-quiz! <em>Step 0</em> is for you to choose your favourite quiz type and
+quiz! <em>Step 1</em> is for you to choose your favourite quiz type and
 how you want it to be displayed.</p>
 <p>Please complete this step then move on to creating quiz process</p>
 <ul class="rounded">

@@ -93,15 +93,13 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
     </div>
   </div>
   <?php } ?>
-  <div class="tab"> <!--------------TABBING LOGIC------------------->
-  <table cellpadding="10">
-	<tr>
-	  <td><?php if($get_type==0){echo "Most Popular";} else{?><a href ="../webroot/index.php?starting=0&sort=0">Most Popular</a><?php }?></td>
-	  <td><?php if($get_type==1){echo "Most Recent";} else{?><a href ="../webroot/index.php?starting=0&sort=1">Most Recent</a><?php }?></td>
-	  <td><?php if($get_type==2){echo "Newly Created";} else{?><a href ="../webroot/index.php?starting=0&sort=2">Newly Created</a><?php }?></td>
-	  <td><?php if($get_type==4){echo "Recommendations";} else{?><a href ="../webroot/index.php?starting=0&sort=3">Recommendations</a><?php }?></td>
-	</tr>
-  </table>
+  <div id="topics-bar" class="clear">
+  <ul style="font-size:15px" > <!--------------TABBING LOGIC------------------->
+	  <li><?php if($get_type==0){echo "Most Popular";} else{?><a href ="../webroot/index.php?starting=0&sort=0">Most Popular</a><?php }?></li>
+	  <li><?php if($get_type==1){echo "Most Recent";} else{?><a href ="../webroot/index.php?starting=0&sort=1">Most Recent</a><?php }?></li>
+	  <li><?php if($get_type==2){echo "Newly Created";} else{?><a href ="../webroot/index.php?starting=0&sort=2">Newly Created</a><?php }?></li>
+	  <li><?php if($get_type==4){echo "Recommendations";} else{?><a href ="../webroot/index.php?starting=0&sort=3">Recommendations</a><?php }?></li>
+	</ul>
   </div>
   <div class="clear">
     <div id="quizzes1" class="framePanel rounded left-right">
