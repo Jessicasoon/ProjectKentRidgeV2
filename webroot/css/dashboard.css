@@ -132,11 +132,13 @@
 	margin-bottom: 3px;
 	color: #333;
 }
-.quiz_box a:link, .quiz_box a:visited {
+.quiz_box a:link, .quiz_box a:hover {
 	text-decoration: none;
+	color: #0000ff;
 }
-.quiz_box a:hover {
+.quiz_box a:visited {
 	text-decoration: underline;
+	color: #0099ff;
 }
 .quiz_box:last-child {
 	border-bottom-style: none;
