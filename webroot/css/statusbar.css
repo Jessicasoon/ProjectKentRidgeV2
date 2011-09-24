@@ -625,20 +625,20 @@
 
 /* Topic Bar */
 #topics-bar {
-	background-color: #777;
-	height: 26px;
+	background-color: #999; /*777*/
+	height: 30px; /*26*/
 	font-family: "Myriad Pro", Arial, sans-serif;
-	font-size: 13px;
+	font-size: 18px; /*13*/
 	letter-spacing: 1.3px;
 	padding-left: 10px;
 	background-repeat: repeat-x;
 	background-position: bottom;
-	-moz-border-radius-bottomleft: 5px;
-	-moz-border-radius-bottomright: 5px;
-	-webkit-border-bottom-left-radius: 5px;
-	-webkit-border-bottom-left-radius: 5px;
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-left-radius: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 	overflow: hidden;
 }
 #topics-bar ul {
@@ -651,7 +651,7 @@
 #topics-bar ul li {
 	float: left;
 	margin: 0px;
-	padding: 0px;
+	padding-right: 15px;
 	list-style-type: none;
 }
 #topics-bar a:link, #topics-bar a:visited {
