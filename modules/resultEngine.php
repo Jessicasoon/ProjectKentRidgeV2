@@ -50,6 +50,7 @@ if(!$validate){
 		
 if($mode == "simple" || $mode == "accurate"){
 	// caculate and order the final result from the sum of options and their weightage
+	//LIEN: The below SQL statement is checking for all option_id in table which is contained in the entire $answers string. Optimum? Correct in this case? Unsure!
 	$query_getResults = "SELECT fk_result_id, SUM(option_weightage) AS count FROM q_options_multi WHERE option_id IN (".substr($answers, 0, strlen($answers)-1).") GROUP BY fk_result_id ORDER BY count DESC LIMIT 0,1";
 	$getResults = mysql_query($query_getResults, $quizroo) or die(mysql_error());
 	$row_getResults = mysql_fetch_assoc($getResults);
@@ -57,10 +58,20 @@ if($mode == "simple" || $mode == "accurate"){
 }
 else{
 	// caculate and order the final result from the sum of options and their weightage
-	$query_getResults = "SELECT fk_result, SUM(option_weightage) AS count FROM q_options WHERE option_id IN (".substr($answers, 0, strlen($answers)-1).") GROUP BY fk_result ORDER BY count DESC LIMIT 0,1";
+	/*$query_getResults = "SELECT fk_result, SUM(option_weightage) AS count FROM q_options WHERE option_id IN (".substr($answers, 0, strlen($answers)-1).") GROUP BY fk_result ORDER BY count DESC LIMIT 0,1";
+	$getResults = mysql_query($query_getResults, $quizroo) or die(mysql_error());
+	$row_getResults = mysql_fetch_assoc($getResults);
+	$totalRows_getResults = mysql_num_rows($getResults);*/ // REMOVED BY LIEN
+	$query_getResults = "SELECT COUNT(isCorrect) AS test_numOfCorrect FROM q_options_test WHERE option_id IN (".substr($answers,0,strlen($answers)-1).") AND isCorrect = 1 ";
 	$getResults = mysql_query($query_getResults, $quizroo) or die(mysql_error());
 	$row_getResults = mysql_fetch_assoc($getResults);
 	$totalRows_getResults = mysql_num_rows($getResults);
+	
+	$query_getNumQuestions = sprintf("SELECT Count(DISTINCT question_id) AS test_numOfQuestions FROM q_questions WHERE fk_quiz_id = %d", $quiz->quiz_id );
+	$getNumQuestions = mysql_query($query_getNumQuestions, $quizroo) or die(mysql_error());
+	$row_getNumQuestions = mysql_fetch_assoc($getNumQuestions);
+	$totalRows_getNumQuestions = mysql_num_rows($getNumQuestions);
+	
 }
 
 // check if the quiz is published
@@ -108,7 +119,16 @@ $achievement_array = checkAchievements($facebookID, $achievement_array);
 //----------------------------------------
 
 // select the result data
-$query_getResultInfo = "SELECT * FROM q_results WHERE result_id = ".$row_getResults['fk_result'];
+if ($mode == "simple" || $mode == "accurate") {
+$query_getResultInfo = "SELECT * FROM q_results_multi WHERE result_id = ".$row_getResults['fk_result'];
+}
+if ($mode == "test_simple"){
+$query_getResultInfo = sprintf("SELECT %d/%d AS result_title", row_getResults['test_numOfCorrect'], row_getNumQuestions['test_numOfQuestions']);
+}
+else {
+//$mode == "test_custom"
+$query_getResultInfo = "SELECT * FROM q_results_test WHERE result_id = ".$row_getResults['test_numOfCorrect'];
+}
 $getResultInfo = mysql_query($query_getResultInfo, $quizroo) or die(mysql_error());
 $row_getResultInfo = mysql_fetch_assoc($getResultInfo);
 $totalRows_getResultInfo = mysql_num_rows($getResultInfo);
@@ -120,13 +140,16 @@ if($mode == "simple" || $mode == "accurate"){
 	$getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
 	$row_getResultChart = mysql_fetch_assoc($getResultChart);
 	$totalRows_getResultChart = mysql_num_rows($getResultChart);
-}else{
+}if ($mode == "test_simple"{
+	
+} else { 
+	// $mode == "test_custom"
 	// get results to build the pie chart
 	//$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
 	$query_getResultChart = sprintf("SELECT count, result_title FROM (SELECT COUNT(*) AS count, fk_result_id FROM q_store_result WHERE q_store_result.fk_quiz_id = %d GROUP BY fk_result_id) r RIGHT JOIN (SELECT result_id, result_title FROM q_results WHERE fk_quiz_id = %d) t ON r.fk_result_id = t.result_id", $quiz->quiz_id, $quiz->quiz_id);
 	$getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
 	$row_getResultChart = mysql_fetch_assoc($getResultChart);
-	$totalRows_getResultChart = mysql_num_rows($getResultChart);
+	$totalRows_getResultChart = mysql_num_rows($getResultChart); 
 }
 
 ?>
