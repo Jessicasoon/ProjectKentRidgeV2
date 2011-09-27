@@ -59,9 +59,16 @@ $question_count = 1;
     <div id="questionContainer">
       <div id="question_reel">
         <?php do { 
-			if ($mode == "simple" || "accurate") {
-			$query_getOptions = "SELECT * FROM q_options_multi WHERE fk_question_id = ".$row_getQuizQuestions['question_id'];
-			} else { $query_getOptions = "SELECT * FROM q_options_test WHERE fk_question_id = ".$row_getQuizQuestions['question_id']; }
+
+			if ( ($mode == "simple") || ($mode == "accurate") ) 
+			{ $query_getOptions = "SELECT * FROM q_options_multi WHERE fk_question_id = ".$row_getQuizQuestions['question_id']; } 
+			if ( ($mode == "test_simple") || ($mode == "test_custom")) 
+			{ $query_getOptions = "SELECT * FROM q_options_test WHERE fk_question_id = ".$row_getQuizQuestions['question_id']; }
+			if ($mode == "")
+			{ 
+			$query_getOptions = "SELECT * FROM q_options WHERE fk_question_id = ".$row_getQuizQuestions['question_id']; 
+			}
+
 			$getOptions = mysql_query($query_getOptions, $quizroo) or die(mysql_error()); 
 			$row_getOptions = mysql_fetch_assoc($getOptions);
 			$totalRows_getOptions = mysql_num_rows($getOptions);
