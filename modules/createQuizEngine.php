@@ -11,33 +11,11 @@ session_start();
 // find out which step is it
 if(isset($_GET['step'])){
 	switch($_GET['step']){
-	//ADDED BY HIEN
-		case 0:
-		
-		$type = $_POST['type']; //get from form
-		// if the type was chosen
-		if($type != ""){
-			if($type == "1"){
-				$mode = $_POST['mode1']; // get from form in createQuizMain
-				if($mode == "test_simple")
-					header("Location: ../webroot/createQuiz.php?step=1&type=1a");
-				else if ($mode == "test_custom")
-					header("Location: ../webroot/createQuiz.php?step=1&type=1b");
-			}
-			else if ($type == "2"){
-				$mode = $_POST['mode2']; // get from form in createQuizMain
-				if ($mode == "multi_simple")
-					header("Location: ../webroot/createQuiz.php?step=1&type=2a");
-				else if ($mode == "multi_accurate")
-					header("Location: ../webroot/createQuiz.php?step=1&type=2b");
-				}
-		}
-		break;
+	
 		case 1: // save the quiz information
 		
 		// get the unikey from the form
 		$key = $_POST['unikey'];
-		$type1 = $_GET['type1']; 
 		
 		// save the data from step 1
 		$quiz_picture = ($_POST['result_picture_0'] != "") ? $_POST['result_picture_0'] : "none.gif";
@@ -46,26 +24,18 @@ if(isset($_GET['step'])){
 			$quiz_id = $quiz->update($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id);
 		}else{
 			$quiz = new Quiz();
-			$q_mode = " ";
-			$q_type = 0;
-			if($type1 == "1a"){ 
-				$q_mode = "test_simple"; 
-				$q_type = 1; 
-			}
-			else if($type1 == "1b"){ 
-				$q_mode = "test_custom"; 
-				$q_type = 1; 
-			}
-			else if($type1 == "2a"){
-				$q_mode = "multi_simple"; 
-				$q_type = 2; 
-			}
-			else if($type1 == "2b"){ 
-				$q_mode = "multi_accurate"; 
-				$q_type = 2; 
+			$type = $_POST['type'];
+			// if the type was chosen
+			if($type != ""){
+				if($type == "1"){
+					$mode = $_POST['mode1']; // get from form in createQuizMain
+				}
+				else if ($type == "2"){
+					$mode = $_POST['mode2']; // get from form in createQuizMain
+				}
 			}
 			//function createQuiz($title, $description, $cat, $picture, $member_id, $key, $display_mode, $fk_quiz_type) from quiz.php			
-			$quiz_id = $quiz->createQuiz($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id, $key, $q_mode, $q_type);
+			$quiz_id = $quiz->createQuiz($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id, $key, $mode, $type);
 		}
 		
 		// direct them to step 2

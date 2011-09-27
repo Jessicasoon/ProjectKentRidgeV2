@@ -36,6 +36,7 @@ $(document).ready(function(){
 	QuizInfo.init(<?php echo $quiz->quiz_id; ?>, '<?php echo $unikey; ?>');
 	<?php switch($_GET['step']){ case 1: ?>
 	scanInitUploader();
+	
 	<?php break; case 2: ?>	
 	
 <?php

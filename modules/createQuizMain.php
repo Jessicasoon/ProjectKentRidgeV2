@@ -11,6 +11,25 @@
 		 $("#blk-2").hide("fast");
 		 $("#blk-1").show("fast");
    	 });
+	 $("#step0").click(function(event){
+		 event.preventDefault();
+		 var answer = confirm("Are you sure you want to create a quiz of these settings? Once you have passed this step, you cannot modify the quiz type");
+		 if (answer){
+			 $("#step_0").hide("");
+			 $("#step_1").show("");
+		 }
+		 else return false;
+   	 });
+	 $("#step0_true").click(function(event){
+		 event.preventDefault();
+			 $("#step_0").hide("");
+			 $("#step_1").show("");
+   	 });
+	 $("#step1").click(function(event){
+		 event.preventDefault();
+		 $("#step_1").hide("");
+		 $("#step_0").show("");
+   	 });
  });
 </script>
 <?php
@@ -42,15 +61,23 @@ if($quiz_state){
 // THE FIRST STEP (Returning): Quiz Type
 switch($_GET['step']){
 
-case 0:  ?>
-<style type="text/css">
-<!--
-.style1 {
-	font-size: 10
-}
--->
-</style>
-
+case 1:
+// populate the categories
+$query_listCat = "SELECT cat_id, cat_name FROM q_quiz_cat";
+$listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
+$row_listCat = mysql_fetch_assoc($listCat);
+$totalRows_listCat = mysql_num_rows($listCat);
+//Modified on 27 Sep by Hien for jquery
+$queryType = sprintf("SELECT fk_quiz_type FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
+$resultType =  mysql_query($queryType, $quizroo) or die(mysql_error());
+$row_resultType = mysql_fetch_assoc($resultType);
+?>
+<form action="../modules/createQuizEngine.php?step=1" method="post"
+	enctype="multipart/form-data" name="createQuiz" id="createQuiz"
+	onsubmit="return submitCheck(Spry.Widget.Form.validate(this));"><input
+	type="hidden" name="id" value="<?php echo $quiz->quiz_id; ?>" /> <input
+	type="hidden" name="unikey" value="<?php echo $unikey; ?>" />
+<div id = "step_0" style="display:none">
 <div id="progress-container" class="framePanel rounded">
 <h2>Create Quiz: Choose Quiz Type</h2>
 <div class="content-container">
@@ -65,168 +92,173 @@ how you want it to be displayed.</p>
 	<li><strong>Step 4</strong> Question</li>
 	<li><strong>Step 5</strong> Publish</li>
 </ul>
+<p style="color:#FF0000">You can modify display mode but you cannot modify quiz type because the quiz of this type has been created. If you still wish to, just delete this quiz and create an entirely new quiz.</p>
 </div>
 </div>
 
-<div id="form_step2" class="framePanel rounded">
-  <form action="../modules/createQuizEngine.php?step=0" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return confirmStep0()" >
-    <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
-      <!-- Test type-->
-      <tr>
-        <td colspan="3"><h2>
-          <input id="test" name="type" type="radio" value="1" />
-          Test</h2></td>
-      </tr>
-      <tr>
-        <td valign="top" width="40%"><div id = "blk-1" style="display:none">
-          <table>
-            <tr>
-              <td>Do you want to customize your quiz result?<a
-							href="customnizeTestExpl.php"> What's this?</a></td>
-              <!-- To replace the hyperlink-->
-            </tr>
-            <tr>
-              <td><input type="radio" value="test_custom" name="mode" />
-                Yes</td>
-            </tr>
-            <tr>
-              <td><input type="radio" value="test_simple" name="mode" />
-                No, keep it
-                simple</td>
-            </tr>
-          </table>
-        </div></td>
-        <td width="60%"><div class="content-container">
-          <p><strong>Quiz of Test type</strong>: designed to determine knowledge
-            of a particular subject based on factual information of it. Hence,
-            there are right and wrong answers for each question. Below is an
-            example of Test type quiz.</p>
-          <table>
-            <tr>
-              <td><table>
-                <tr bgcolor="#FC0">
-                  <td>Quiz title:</td>
-                  <td>How well do you know Michael Jackson?</td>
-                </tr>
-                <tr>
-                  <td>Question 1:</td>
-                  <td>Where is he from?</td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><input type="radio" disabled="disabled" />
-                    Thailand</td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><input type="radio" disabled="disabled" />
-                    The US (Correct
-                    answer)</td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><input type="radio" disabled="disabled" />
-                    England</td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><input type="radio" disabled="disabled" />
-                    Singapore </td>
-                </tr>
-              </table></td>
-            </tr>
-          </table>
-        </div></td>
-      </tr>
-      <!-- Personality type-->
-      <tr>
-        <td colspan="3"><h2>
-          <input id="personality" name="type" type="radio" value="2"/>
-          Personality</h2></td>
-      </tr>
-      <tr>
-        <td valign="top" width="40%"><div id = "blk-2" style="display:none">
-          <table>
-            <tr>
-              <td>Do you want to make your quiz more accurate? <a
+<div id="form_step0" class="framePanel rounded">
+<table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
+	<!-- Test type-->
+	<tr>
+	  <td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked" disabled="disabled"/>Test</h2></td>
+	</tr>
+	<tr>
+		<td valign="top" width="40%">
+        <?php if ($row_resultType['fk_quiz_type'] == "1"){ ?>
+                <div id = "blk-1">
+        <?php } else { ?>
+        		<div id = "blk-1" style="display:none">
+        <?php } ?>       
+				<table>
+					<tr>
+						<td>Do you want to customize your quiz result?<a href="customnizeTestExpl.php"> What's this?</a></td>
+						<!-- To replace the hyperlink-->
+					</tr>
+					<tr>
+						<td><input type="radio" value="test_custom" name="mode1" checked="checked"/>Yes</td>
+					</tr>
+					<tr>
+						<td><input type="radio" value="test_simple" name="mode1"/>No, keep it simple.</td>
+					</tr>
+				</table>
+                </div>		
+          </td>
+		<td width="60%">
+		<div class="content-container">
+		<p><strong>Quiz of Test type</strong>: designed to determine knowledge
+		of a particular subject based on factual information of it. Hence,
+		there are right and wrong answers for each question. Below is an
+		example of Test type quiz.</p>
+		<table>
+			<tr>
+				<td>
+				<table>
+					<tr bgcolor="#FC0">
+						<td>Quiz title:</td>
+						<td>How well do you know Michael Jackson?</td>
+					</tr>
+					<tr>
+						<td>Question 1:</td>
+						<td>Where is he from?</td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td><input type="radio" disabled="disabled" />
+Thailand</td>
+				    </tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td><input type="radio" disabled="disabled" />
+The US (Correct
+					  answer)</td>
+				    </tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td><input type="radio" disabled="disabled" />
+England</td>
+				    </tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>
+						<input type="radio" disabled="disabled" />
+						Singapore					  </td>
+					</tr>
+				</table>				</td>
+			</tr>
+		</table>
+		</div>		
+        </td>
+	</tr>
+	<!-- Personality type-->
+	<tr>
+	  <td colspan="3"><h2><input id="personality" name="type" type="radio" value="2" disabled="disabled"/>Personality</h2></td>
+	  </tr>
+	<tr>
+		<td valign="top" width="40%">
+        <?php if ($row_resultType['fk_quiz_type'] == "2"){ ?>
+                <div id = "blk-2">
+        <?php } else { ?>
+        		<div id = "blk-2" style="display:none">
+        <?php } ?>
+				<table>
+					<tr>
+						<td>Do you want to make your quiz more accurate? <a
 							href="customnizeMultiExpl.php">What's this?</a></td>
-              <!-- To replace the hyperlink-->
-            </tr>
-            <tr>
-              <td><input type="radio" value="multi_accurate" name="mode" />
-                Yes</td>
-            </tr>
-            <tr>
-              <td><input type="radio" value="multi_simple" name="mode" />
-                No, keep it
-                simple</td>
-            </tr>
-          </table>
-        </div></td>
-        <td width="60%"><div class="content-container">
-          <p><strong>Quiz of Personality type:</strong> consisting of questions
-            whose purpose is to test on different aspects of a person's characters
-            such as behaviors, thoughts and feelings. There is no right or wong
-            answer and the result derives from how quiz takers choose their
-            reactions in certain situation. Below is an example of Personality
-            type quiz.</p>
-          <table>
-            <tr>
-              <td><table>
-                <tr bgcolor="#FC0">
-                  <td width="58">Quiz title:</td>
-                  <td>How serious are you?</td>
-                </tr>
-                <tr>
-                  <td>Question 1:</td>
-                  <td>When you're with your friends you&hellip;</td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><span class="style1">
-                    <input type="radio" disabled="disabled" />
-                    Make comments from
-                    time to time. You aren't quiet or boisterous</span></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><span class="style1">
-                    <input type="radio" disabled="disabled" />
-                    You just listen to
-                    what everyone else is talking about.</span></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><span class="style1">
-                    <input type="radio" disabled="disabled" />
-                    Always making jokes.</span></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><span class="style1">
-                    <input type="radio" disabled="disabled" />
-                    Don't care about
-                    anything.</span></td>
-                </tr>
-              </table></td>
-            </tr>
-          </table>
-        </div></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td align="right"><input type="submit" value="Next Step!" /></td>
-      </tr>
-    </table>
-  </form>
+						<!-- To replace the hyperlink-->
+					</tr>
+					<tr>
+						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" />Yes</td>
+					</tr>
+					<tr>
+						<td><input type="radio" value="multi_simple" name="mode2" />No, keep it
+						simple</td>
+					</tr>
+				</table>
+                </div>				
+        </td>
+		<td width="60%">
+		<div class="content-container">
+		<p><strong>Quiz of Personality type:</strong> consisting of questions
+		whose purpose is to test on different aspects of a person's characters
+		such as behaviors, thoughts and feelings. There is no right or wong
+		answer and the result derives from how quiz takers choose their
+		reactions in certain situation. Below is an example of Personality
+		type quiz.</p>
+		<table>
+			<tr>
+				<td>
+				<table>
+					<tr bgcolor="#FC0">
+						<td width="58">Quiz title:</td>
+						<td>How serious are you?</td>
+					</tr>
+					<tr>
+						<td>Question 1:</td>
+						<td>When you're with your friends you&hellip;</td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td><span class="style1">
+					    <input type="radio" disabled="disabled" />
+					    Make comments from
+					  time to time. You aren't quiet or boisterous</span></td>
+				    </tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td><span class="style1">
+					    <input type="radio" disabled="disabled" />
+					    You just listen to
+					  what everyone else is talking about.</span></td>
+				    </tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td><span class="style1">
+					    <input type="radio" disabled="disabled" />
+				      Always making jokes.</span></td>
+				    </tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td><span class="style1">
+					    <input type="radio" disabled="disabled" />
+Don't care about
+					  anything.</span></td>
+				    </tr>
+				</table>				
+                </td>
+				
+			</tr>
+		</table>
+		</div>		
+        </td>
+        </tr>
+    <tr>
+    	<td></td>
+        <td align="right"><input type="button" value="Next Step!" id="step0_true"/></td>
+	</tr>
+</table>
 </div>
-<?php break; case 1:
-// populate the categories
-$query_listCat = "SELECT cat_id, cat_name FROM q_quiz_cat";
-$listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
-$row_listCat = mysql_fetch_assoc($listCat);
-$totalRows_listCat = mysql_num_rows($listCat);
-?>
+</div>
+<div id="step_1">
 <div id="progress-container" class="framePanel rounded">
 <h2>Create Quiz: Quiz Information</h2>
 <div class="content-container">
@@ -247,11 +279,6 @@ creation process.</p>
 </div>
 </div>
 <div id="create-quiz" class="frame rounded">
-<form action="../modules/createQuizEngine.php?step=1" method="post"
-	enctype="multipart/form-data" name="createQuiz" id="createQuiz"
-	onsubmit="return submitCheck(Spry.Widget.Form.validate(this));"><input
-	type="hidden" name="id" value="<?php echo $quiz->quiz_id; ?>" /> <input
-	type="hidden" name="unikey" value="<?php echo $unikey; ?>" />
 <table width="95%" border="0" align="center" cellpadding="5"
 	cellspacing="0">
 	<tr>
@@ -336,13 +363,14 @@ creation process.</p>
 	</tr>
 	<tr>
 		<th valign="top" scope="row">&nbsp;</th>
-		<td align="right" class="desc"><input type="button" onClick="location.href='../webroot/createQuiz.php?step=0'" value='Previous Step'>&nbsp; <input type="submit"
+		<td align="right" class="desc"><input type="button" value='Previous Step' id="step1">&nbsp; <input type="submit"
 			name="next" id="next" value="Next Step!" /></td>
 	</tr>
 </table>
-</form>
 </div>
-		<?php // THE SECOND STEP: Quiz Results
+</div>
+</form>
+<?php // THE SECOND STEP: Quiz Results
 		break; case 2:
 		?>
 <div id="progress-container" class="framePanel rounded">
@@ -646,184 +674,22 @@ options. <?php } ?></p>
 	type="hidden" name="optionCounts" id="optionCounts" value="" /></form>
 </div>
 		<?php // THE FIRST STEP
-		break;}
-}else{ // if quizstate == false
-if($_GET['step'] == 0){
-?>
-
-<div id="progress-container" class="framePanel rounded">
-<h2>Create Quiz: Choose Quiz Type</h2>
-<div class="content-container">
-<p>You're just <strong>5</strong> steps away from creating your own
-quiz! <em>Step 1</em> is for you to choose your favourite quiz type and
-how you want it to be displayed.</p>
-<p>Please complete this step then move on to creating quiz process</p>
-<ul class="rounded">
-	<li class="current start"><strong>Step 1</strong> Quiz Type</li>
-	<li><strong>Step 2</strong> Quiz Information</li>
-	<li><strong>Step 3</strong> Results</li>
-	<li><strong>Step 4</strong> Question</li>
-	<li><strong>Step 5</strong> Publish</li>
-</ul>
+break;}
+}else{ ?>
+<div id="takequiz-preamble" class="framePanel rounded">
+  <h2>Opps, quiz not found!</h2>
+  <div class="content-container"> <span class="logo"><img src="../webroot/img/quizroo-question.png" alt="Member not found" width="248" height="236" /></span>
+    <p>Sorry! The quiz that you're looking for may no be available. Please check the ID of the quiz again.</p>
+    <p>The reason you're seeing this error could be due to:</p>
+    <ul>
+      <li>The URL is incorrect or doesn't  contain the ID of the quiz</li>
+      <li>No quiz with this ID exists</li>
+      <li>The owner could have removed the quiz</li>
+      <li>The quiz was taken down due to violations of  rules at Quizroo</li>
+    </ul>
+  </div>
 </div>
-</div>
-
-<div id="form_step" class="framePanel rounded">
-  <form action="../modules/createQuizEngine.php?step=0" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return confirmStep0()" >
-    <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
-      <!-- Test type-->
-      <tr>
-        <td colspan="3"><h2>
-          <input id="test" name="type" type="radio" value="1" />
-          Test</h2></td>
-      </tr>
-      <tr>
-        <td valign="top" width="40%"><div id = "blk-1" style="display:none">
-          <table>
-            <tr>
-              <td>Do you want to customize your quiz result?<a
-							href="customnizeTestExpl.php"> What's this?</a></td>
-              <!-- To replace the hyperlink-->
-            </tr>
-            <tr>
-              <td><input type="radio" value="test_custom" name="mode" />
-                Yes</td>
-            </tr>
-            <tr>
-              <td><input type="radio" value="test_simple" name="mode" />
-                No, keep it
-                simple</td>
-            </tr>
-          </table>
-        </div></td>
-        <td width="60%"><div class="content-container">
-          <p><strong>Quiz of Test type</strong>: designed to determine knowledge
-            of a particular subject based on factual information of it. Hence,
-            there are right and wrong answers for each question. Below is an
-            example of Test type quiz.</p>
-          <table>
-            <tr>
-              <td><table>
-                <tr bgcolor="#FC0">
-                  <td width="58">Quiz title:</td>
-                  <td>How well do you know Michael Jackson?</td>
-                </tr>
-                <tr>
-                  <td>Question 1:</td>
-                  <td>Where is he from?</td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><span class="style1">
-                    <input type="radio" disabled="disabled" />
-                    Thailand</span></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><span class="style1">
-                    <input type="radio" disabled="disabled" />
-                    The US (Correct answer)</span></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><span class="style1">
-                    <input type="radio" disabled="disabled" />
-                    England</span></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><span class="style1">
-                    <input type="radio" disabled="disabled" />
-                    Singapore</span></td>
-                </tr>
-              </table></td>
-            </tr>
-          </table>
-        </div></td>
-      </tr>
-      <!-- Personality type-->
-      <tr>
-        <td colspan="3"><h2>
-          <input id="personality" name="type" type="radio" value="2"/>
-          Personality</h2></td>
-      </tr>
-      <tr>
-        <td valign="top" width="40%"><div id = "blk-2" style="display:none">
-          <table>
-            <tr>
-              <td>Do you want to make your quiz more accurate? <a
-							href="customnizeMultiExpl.php">What's this?</a></td>
-              <!-- To replace the hyperlink-->
-            </tr>
-            <tr>
-              <td><input type="radio" value="multi_accurate" name="mode" />
-                Yes</td>
-            </tr>
-            <tr>
-              <td><input type="radio" value="multi_simple" name="mode" />
-                No, keep it
-                simple</td>
-            </tr>
-          </table>
-        </div></td>
-        <td width="60%"><div class="content-container">
-          <p><strong>Quiz of Personality type:</strong> consisting of questions
-            whose purpose is to test on different aspects of a person's characters
-            such as behaviors, thoughts and feelings. There is no right or wong
-            answer and the result derives from how quiz takers choose their
-            reactions in certain situation. Below is an example of Personality
-            type quiz.</p>
-          <table>
-            <tr>
-              <td><table>
-                <tr bgcolor="#FC0">
-                  <td width="58">Quiz title:</td>
-                  <td>How serious are you?</td>
-                </tr>
-                <tr>
-                  <td>Question 1:</td>
-                  <td>When you're with your friends you&hellip;</td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><span class="style1">
-                    <input type="radio" disabled="disabled" />
-                    Make comments from
-                    time to time. You aren't quiet or boisterous</span></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><span class="style1">
-                    <input type="radio" disabled="disabled" />
-                    You just listen to
-                    what everyone else is talking about.</span></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><span class="style1">
-                    <input type="radio" disabled="disabled" />
-                    Always making jokes.</span></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><span class="style1">
-                    <input type="radio" disabled="disabled" />
-                    Don't care about
-                    anything.</span></td>
-                </tr>
-              </table></td>
-            </tr>
-          </table>
-        </div></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td align="right"><input type="submit" value="Next Step!" /></td>
-      </tr>
-    </table>
-  </form>
-</div>
-<?php }else if ($_GET['step'] == 1){
+<?php }}else{ 
 // generate a one time hash key for the upload, (this hash key will stay with the quiz throughout the entire creation process)
 $unikey = get_rand_id(8);
 // bind it to a member
@@ -837,108 +703,8 @@ $listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
 $row_listCat = mysql_fetch_assoc($listCat);
 $totalRows_listCat = mysql_num_rows($listCat);
 ?>
-<div id="progress-container" class="framePanel rounded">
-<h2>Create Quiz: Quiz Information</h2>
-<div class="content-container">
-<p>You're just <strong>4</strong> steps away from creating your own
-quiz! <em>Step 2</em> contains all the basic information we need to help
-you setup your quiz. It allows you to tell a potential quiz taker what
-insights your quiz intends to deliver.</p>
-<p>If you have prepared several images for quiz, you can upload them all
-at once! You can choose which images to use at every step of the
-creation process.</p>
-<ul class="rounded">
-	<li class="completed_last start"><strong>Step 1</strong> Quiz Type</li>
-	<li class="current"><strong>Step 2</strong> Quiz Information</li>
-	<li><strong>Step 3</strong> Results</li>
-	<li><strong>Step 4</strong> Question</li>
-	<li><strong>Step 5</strong> Publish</li>
-</ul>
-</div>
-</div>
-<div id="create-quiz" class="frame rounded">
-<form action="../modules/createQuizEngine.php?step=1&type1=<?php echo ($_GET['type'])?>" method="post" enctype="multipart/form-data name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
-	<input type="hidden" name="unikey" value="<?php echo $unikey; ?>" />
-<h4>Quiz Information</h4>
-<p>The Quiz Information allows you to tell a potential quiz taker what
-insights your quiz intends to deliver.</p>
-<table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
-        <tr>
-          <th width="120" valign="top" scope="row"><label for="quiz_title">Title</label></th>
-          <td><span id="sprytextfield0" class="sprytextfield">
-            <input type="text" name="quiz_title" id="quiz_title" />
-          <span class="textfieldRequiredMsg">A title is required.</span></span> <span class="desc">Give your Quiz a meaningful title! Your title will be the first thing that catches a reader's attention.</span></td>
-        </tr>
-        <tr>
-          <th width="120" valign="top" scope="row"><label for="quiz_description">Description</label></th>
-          <td><span id="sprytextarea0" class="sprytextarea">
-            <textarea name="quiz_description" id="quiz_description" cols="45" rows="5"></textarea>
-            <span class="textareaRequiredMsg">Description should not be blank!</span></span><span class="desc">Provide a short description on what your quiz is about.</span></td>
-        </tr>
-        <tr>
-          <th valign="middle" scope="row"><label for="quiz_cat">Topic</label></th>
-          <td><select name="quiz_cat" id="quiz_cat">
-              <?php do { ?>
-              <option value="<?php echo $row_listCat['cat_id']?>"><?php echo $row_listCat['cat_name']?></option>
-              <?php } while ($row_listCat = mysql_fetch_assoc($listCat));
-			  $rows = mysql_num_rows($listCat);
-			  if($rows > 0) {
-				  mysql_data_seek($listCat, 0);
-				  $row_listCat = mysql_fetch_assoc($listCat);
-			  } ?>
-            </select></td>
-        </tr>
-        <tr>
-          <th rowspan="2" valign="top" scope="row"><label>Quiz Picture</label>
-          <input type="hidden" name="result_picture_0" id="result_picture_0" value="" /></th>
-          <td class="desc"><div id="swfupload-control-0" class="swfupload-control">
-              <table border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td><input name="uploader-0" type="button" id="uploader-0" /></td>
-                  <td valign="middle" class="formDesc">Upload a new picture (jpg, gif or png); You can select more than 1 file!</td>
-                </tr>
-              </table>
-              <table border="0" cellspacing="0" cellpadding="5">
-                <tr>
-                  <td><div id="selected-image-0" class="selected-image"></div></td>
-                  <td><p id="queuestatus-0"></p></td>
-                </tr>
-              </table>
-              <ol id="log-0" class="log">
-              </ol>
-            </div>
-            <div id="pictureChoser_0"></div></td>
-        </tr>
-        <tr>
-          <td class="desc"><div id="pictureChoser_0"></div></td>
-        </tr>
-	<tr>
-		<th valign="top" scope="row">&nbsp;</th>
-            <td align="right" class="desc"><input type="button" onClick="location.href='../webroot/createQuiz.php?step=0'" value='Previous Step'>&nbsp; <input type="submit"
-			name="next" id="next" value="Next Step!"/></td>
-	</tr>
-</table>
-</form>
-</div>
-			<?php } else { ?>
-<div id="takequiz-preamble" class="framePanel rounded">
-<h2>Opps, quiz not found!</h2>
-<div class="content-container"><span class="logo"><img
-	src="../webroot/img/quizroo-question.png" alt="Member not found"
-	width="248" height="236" /></span>
-<p>Sorry! The quiz that you're looking for may no be available. Please
-check the ID of the quiz again.</p>
-<p>The reason you're seeing this error could be due to:</p>
-<ul>
-	<li>The URL is incorrect or doesn't contain the ID of the quiz</li>
-	<li>No quiz with this ID exists</li>
-	<li>The owner could have removed the quiz</li>
-	<li>The quiz was taken down due to violations of rules at Quizroo</li>
-</ul>
-</div>
-</div>
-			<?php } ?>
-			<?php }}else{ // if step is not set?>
+  <form action="../modules/createQuizEngine.php?step=1" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
+<div id = "step_0">
 <div id="progress-container" class="framePanel rounded">
 <h2>Create Quiz: Choose Quiz Type</h2>
 <div class="content-container">
@@ -957,7 +723,6 @@ how you want it to be displayed.</p>
 </div>
 
 <div id="form_step0" class="framePanel rounded">
-<form action="../modules/createQuizEngine.php?step=0" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return confirmStep0()" >
 <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
 	<!-- Test type-->
 	<tr>
@@ -981,7 +746,7 @@ how you want it to be displayed.</p>
 					</tr>
 				</table>
                 </div>		
-                </td>
+          </td>
 		<td width="60%">
 		<div class="content-container">
 		<p><strong>Quiz of Test type</strong>: designed to determine knowledge
@@ -1108,10 +873,85 @@ Don't care about
         </tr>
     <tr>
     	<td></td>
-        <td align="right"><input type="submit" value="Next Step!"/></td>
+        <td align="right"><input type="button" value="Next Step!" id="step0"/></td>
 	</tr>
 </table>
-</form>
 </div>
-
-			<?php mysql_free_result($listCat); } ?>
+</div>
+<div id = "step_1" style="display:none">
+<div id="progress-container" class="framePanel rounded">
+  <h2>Create Quiz</h2>
+  <div class="content-container">
+  <p>You're just <strong>4</strong> steps away from creating your own quiz! <em>Step 1</em> contains all the basic information we need to help you setup your quiz. If you have prepared several images for quiz, you can upload them all at once! You can choose which images to use at every step of the creation process.</p>
+  <ul class="rounded">
+    <li class="completed_last start"><strong>Step 1</strong> Quiz Type</li>
+	<li class="current"><strong>Step 2</strong> Quiz Information</li>
+	<li><strong>Step 3</strong> Results</li>
+	<li><strong>Step 4</strong> Question</li>
+	<li><strong>Step 5</strong> Publish</li>
+  </ul>
+  </div>
+</div>
+<div id="create-quiz" class="frame rounded">
+    <input type="hidden" name="unikey" value="<?php echo $unikey; ?>" />
+    <h4>Quiz Information</h4>
+      <p>The Quiz Information allows you to tell a potential quiz taker what insights your quiz intends to deliver.</p>
+      <table width="95%" border="0" align="center" cellpadding="5" cellspacing="0">
+        <tr>
+          <th width="120" valign="top" scope="row"><label for="quiz_title">Title</label></th>
+          <td><span id="sprytextfield0" class="sprytextfield">
+            <input type="text" name="quiz_title" id="quiz_title" />
+          <span class="textfieldRequiredMsg">A title is required.</span></span> <span class="desc">Give your Quiz a meaningful title! Your title will be the first thing that catches a reader's attention.</span></td>
+        </tr>
+        <tr>
+          <th width="120" valign="top" scope="row"><label for="quiz_description">Description</label></th>
+          <td><span id="sprytextarea0" class="sprytextarea">
+            <textarea name="quiz_description" id="quiz_description" cols="45" rows="5"></textarea>
+            <span class="textareaRequiredMsg">Description should not be blank!</span></span><span class="desc">Provide a short description on what your quiz is about.</span></td>
+        </tr>
+        <tr>
+          <th valign="middle" scope="row"><label for="quiz_cat">Topic</label></th>
+          <td><select name="quiz_cat" id="quiz_cat">
+              <?php do { ?>
+              <option value="<?php echo $row_listCat['cat_id']?>"><?php echo $row_listCat['cat_name']?></option>
+              <?php } while ($row_listCat = mysql_fetch_assoc($listCat));
+			  $rows = mysql_num_rows($listCat);
+			  if($rows > 0) {
+				  mysql_data_seek($listCat, 0);
+				  $row_listCat = mysql_fetch_assoc($listCat);
+			  } ?>
+            </select></td>
+        </tr>
+        <tr>
+          <th rowspan="2" valign="top" scope="row"><label>Quiz Picture</label>
+          <input type="hidden" name="result_picture_0" id="result_picture_0" value="" /></th>
+          <td class="desc"><div id="swfupload-control-0" class="swfupload-control">
+              <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td><input name="uploader-0" type="button" id="uploader-0" /></td>
+                  <td valign="middle" class="formDesc">Upload a new picture (jpg, gif or png); You can select more than 1 file!</td>
+                </tr>
+              </table>
+              <table border="0" cellspacing="0" cellpadding="5">
+                <tr>
+                  <td><div id="selected-image-0" class="selected-image"></div></td>
+                  <td><p id="queuestatus-0"></p></td>
+                </tr>
+              </table>
+              <ol id="log-0" class="log">
+              </ol>
+            </div>
+            <div id="pictureChoser_0"></div></td>
+        </tr>
+        <tr>
+          <td class="desc"><div id="pictureChoser_0"></div></td>
+        </tr>
+        <tr>
+          <th valign="top" scope="row">&nbsp;</th>
+          <td align="right" class="desc"><input type="button" value='Previous Step' id="step1">&nbsp; <input type="submit" name="next" id="next" value="Next Step!" /></td>
+        </tr>
+      </table>
+</div>
+</div>
+</form>
+<?php mysql_free_result($listCat); } ?>
