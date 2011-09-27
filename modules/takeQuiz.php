@@ -10,6 +10,24 @@ $getQuizQuestions = mysql_query($query_getQuizQuestions, $quizroo) or die(mysql_
 $row_getQuizQuestions = mysql_fetch_assoc($getQuizQuestions);
 $totalRows_getQuizQuestions = mysql_num_rows($getQuizQuestions);
 
+$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %s", GetSQLValueString($url_id, "int"));
+		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
+		$row_resultMode = mysql_fetch_assoc($resultMode);
+		$resultforMode = array();
+		$mode = "";
+		do{
+			$resultforMode[] = array($row_resultMode['display_mode']);
+			if ($row_resultMode['display_mode'] == "multi_simple")
+				$mode = "simple";
+			if ($row_resultMode['display_mode'] == "multi_accurate")
+				$mode = "accurate";
+			if ($row_resultMode['display_mode'] == "test_simple")
+				$mode = "test_simple";	
+			if ($row_resultMode['display_mode'] == "test_custom")
+				$mode = "test_custom";				
+		}while($row_resultMode = mysql_fetch_assoc($resultMode));
+		
+
 $question_count = 1;
 ?>
 <div id="takequiz-preamble" class="framePanel rounded">
@@ -41,10 +59,12 @@ $question_count = 1;
     <div id="questionContainer">
       <div id="question_reel">
         <?php do { 
-			$query_getOptions = "SELECT * FROM q_options WHERE fk_question_id = ".$row_getQuizQuestions['question_id'];
-			$getOptions = mysql_query($query_getOptions, $quizroo) or die(mysql_error());
+			if ($mode == "simple" || "accurate") {
+			$query_getOptions = "SELECT * FROM q_options_multi WHERE fk_question_id = ".$row_getQuizQuestions['question_id'];
+			} else { $query_getOptions = "SELECT * FROM q_options_test WHERE fk_question_id = ".$row_getQuizQuestions['question_id']; }
+			$getOptions = mysql_query($query_getOptions, $quizroo) or die(mysql_error()); 
 			$row_getOptions = mysql_fetch_assoc($getOptions);
-			$totalRows_getOptions = mysql_num_rows($getOptions);	
+			$totalRows_getOptions = mysql_num_rows($getOptions);
 			
 			$option_count = 1;	  
 		  ?>
