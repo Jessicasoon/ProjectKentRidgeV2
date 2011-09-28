@@ -134,11 +134,11 @@
 }
 .quiz_box a:link, .quiz_box a:hover {
 	text-decoration: none;
-	color: #666;
+	color: #333;
 }
 .quiz_box a:visited {
 	text-decoration: underline;
-	color: #333;
+	color: #666;
 }
 .quiz_box:last-child {
 	border-bottom-style: none;
