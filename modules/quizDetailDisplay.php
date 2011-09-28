@@ -68,7 +68,7 @@ if($quiz->exists()){
 			$averageOptionCount = 0;
 		}
 		
-		// get results to build the pie chart
+		// get results to build the pie chart HAVE TO CHANGE
 		$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
 		$getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
 		$row_getResultChart = mysql_fetch_assoc($getResultChart);
@@ -82,7 +82,7 @@ if($quiz->exists()){
 		$totalRows_getTakeQuiz = mysql_num_rows($getTakeQuiz);
 		$count = 0;
 		
-		// quiz taker's log
+		// quiz taker's log HAVE TO CHANGE
 		$quizLogQuery = sprintf("SELECT member_id, member_name, result_title, `timestamp` FROM s_members m, q_store_result s, q_results r WHERE s.fk_member_id = m.member_id AND s.fk_result_id = r.result_id AND s.fk_quiz_id = %s GROUP BY member_name ORDER BY `timestamp` DESC LIMIT 0, 10", $quiz->quiz_id);
 		$getquizLog = mysql_query($quizLogQuery, $quizroo) or die(mysql_error());
 		$row_getquizLog = mysql_fetch_assoc($getquizLog);

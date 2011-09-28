@@ -15,7 +15,7 @@ if($method=='results'){
 	foreach($quiz_details as $quiz_detail){
 		$results['quiz_details'][] = $quiz_detail;
 	}
-		
+//HAVE TO CHANGE		
 	$result_details = $database->get('q_results',array('result_title','result_description','result_picture'),'result_id='.$result_id);
 	foreach($result_details as $result_detail){
 		$results['result_details'][] = $result_detail;

@@ -3,7 +3,7 @@ if(isset($_GET['load'])){
 	$unikey = $_GET['unikey'];
 	require('quizrooDB.php');
 	
-	$query = sprintf("SELECT result_id, result_title, result_description, result_picture FROM q_results WHERE fk_quiz_id = %d", GetSQLValueString($_GET['id'], "int"));
+	$query = sprintf("SELECT result_id, result_title, result_description, result_picture FROM q_results_test WHERE fk_quiz_id = %d", GetSQLValueString($_GET['id'], "int"));
 	$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 	$row_getQuery = mysql_fetch_assoc($getQuery);
 	$totalRows_getQuery = mysql_num_rows($getQuery);

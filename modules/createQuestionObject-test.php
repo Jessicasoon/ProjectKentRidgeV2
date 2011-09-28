@@ -1,6 +1,6 @@
 <?php require("quizrooDB.php");
 // prepare result options
-$querySQL = "SELECT result_id, result_title FROM q_results WHERE fk_quiz_id = ".GetSQLValueString($_GET['id'], "int");
+$querySQL = "SELECT result_id, result_title FROM q_results_test WHERE fk_quiz_id = ".GetSQLValueString($_GET['id'], "int");
 $resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
 $row_resultID = mysql_fetch_assoc($resultID);
 

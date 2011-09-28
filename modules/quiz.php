@@ -346,7 +346,7 @@ class Quiz{
 		// check if is member
 		if($this->isOwner($memberID)){
 			// Insert the result
-			$insertSQL = sprintf("INSERT INTO q_results(`result_title`, `result_description`, `result_picture`, `fk_quiz_id`) VALUES (%s, %s, %s, %d)",
+			$insertSQL = sprintf("INSERT INTO q_results_test(`result_title`, `result_description`, `result_picture`, `fk_quiz_id`) VALUES (%s, %s, %s, %d)",
 							   htmlentities(GetSQLValueString($result_title, "text")),
 							   htmlentities(GetSQLValueString($result_description, "text")),
 							   GetSQLValueString($result_picture, "text"),
@@ -416,7 +416,7 @@ class Quiz{
 		// check if is member
 		if($this->isOwner($memberID)){
 			// Insert the result
-			$insertSQL = sprintf("UPDATE q_results SET `result_title` = %s, `result_description` = %s, `result_picture` = %s WHERE `result_id` = %d",
+			$insertSQL = sprintf("UPDATE q_results_test SET `result_title` = %s, `result_description` = %s, `result_picture` = %s WHERE `result_id` = %d",
 							   htmlentities(GetSQLValueString($result_title, "text")),
 							   htmlentities(GetSQLValueString($result_description, "text")),
 							   GetSQLValueString($result_picture, "text"),
@@ -469,7 +469,7 @@ class Quiz{
 		// owner check
 		if($this->isOwner($memberID)){
 			// delete the result and also check if this results actually belongs to this quiz
-			$insertSQL = sprintf("DELETE FROM q_results WHERE `result_id` = %d AND `result_id` IN(%s)", GetSQLValueString($result_id, "int"), $this->getResultsTest());
+			$insertSQL = sprintf("DELETE FROM q_results_test WHERE `result_id` = %d AND `result_id` IN(%s)", GetSQLValueString($result_id, "int"), $this->getResultsTest());
 			mysql_query($insertSQL, $quizroo) or die(mysql_error());	
 			return true;
 		}else{
@@ -1067,7 +1067,7 @@ class Quiz{
 	// get the list of results belonging to this quiz HAVE TO CHANGE YL
 	function getResultsTest($type = NULL){
 		require('quizrooDB.php');
-		$query = sprintf("SELECT result_id FROM q_results WHERE fk_quiz_id = %d", $this->quiz_id);
+		$query = sprintf("SELECT result_id FROM q_results_test WHERE fk_quiz_id = %d", $this->quiz_id);
 		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 		$row_getQuery = mysql_fetch_assoc($getQuery);
 		$totalRows_getQuery = mysql_num_rows($getQuery);

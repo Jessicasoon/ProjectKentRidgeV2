@@ -22,7 +22,7 @@ $recent_activities = array();
 $facebookID = $member->id;
 
 /*
- * Get results of quizzes user took
+ * Get results of quizzes user took HAVE TO CHANGE
  */
 $query_user_results = sprintf("SELECT quiz_id, quiz_name, result_title, timestamp FROM q_store_result,q_quizzes,q_results WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = %s ORDER BY q_store_result.timestamp DESC LIMIT %d", $facebookID, $NUM_RECENT_SAMPLES);
 $user_results = mysql_query($query_user_results, $quizroo) or die(mysql_error());
@@ -63,7 +63,7 @@ if(count($friends)!=0){
 	$friends = "(".implode(",",$friends).")";
 	
 	/*
- 	 * Get all results of quizzes of friends taken within a 1 week interval (to limit results returned)
+ 	 * Get all results of quizzes of friends taken within a 1 week interval (to limit results returned) HAVE TO CHANGE
  	 */
 	$query_all_results = sprintf("SELECT quiz_id, quiz_name, result_title, member_id, member_name, timestamp FROM q_store_result,q_quizzes,q_results,s_members WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = member_id AND timestamp > DATE_SUB(NOW(), INTERVAL 1 MONTH) AND q_store_result.fk_member_id IN %s ORDER BY q_store_result.timestamp DESC",$friends);
 	$all_results = mysql_query($query_all_results, $quizroo) or die(mysql_error());

@@ -152,7 +152,7 @@ $row_getResultInfo = mysql_fetch_assoc($getResultInfo);
 $totalRows_getResultInfo = mysql_num_rows($getResultInfo);
 }
 
-// get results to build the pie chart
+// get results to build the pie chart HAVE TO CHANGE
 //$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
 $query_getResultChart = sprintf("SELECT count, result_title FROM (SELECT COUNT(*) AS count, fk_result_id FROM q_store_result WHERE q_store_result.fk_quiz_id = %d GROUP BY fk_result_id) r RIGHT JOIN (SELECT result_id, result_title FROM q_results WHERE fk_quiz_id = %d) t ON r.fk_result_id = t.result_id", $quiz->quiz_id, $quiz->quiz_id);
 $getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
