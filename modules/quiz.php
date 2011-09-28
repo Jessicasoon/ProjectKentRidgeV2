@@ -1166,7 +1166,7 @@ class Quiz{
 	// get the list of options belonging to a question TEST HAVE TO CHANGE YL
 	function getOptionsTest($question_id, $type = NULL){
 		require('quizrooDB.php');
-		$query = sprintf("SELECT option_id FROM q_options WHERE fk_question_id = %d", $question_id);
+		$query = sprintf("SELECT option_id FROM q_options_test WHERE fk_question_id = %d", $question_id);
 		$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 		$row_getQuery = mysql_fetch_assoc($getQuery);
 		$totalRows_getQuery = mysql_num_rows($getQuery);
