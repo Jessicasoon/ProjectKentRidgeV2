@@ -42,12 +42,10 @@ if(isset($_GET['load'])){
       <th width="25">&nbsp;</th>
       <th width="80">&nbsp;</th>
       <th align="left">Option Value</th>
-      <th width="150" align="center">Contributes to</th>
-      <th width="100" align="center">Weightage</th>
     </tr>
   </table>
     <?php 
-	$queryOption = sprintf("SELECT `option_id`, `option`, `fk_result`, `option_weightage` FROM q_options WHERE fk_question_id = %d ORDER BY option_id", GetSQLValueString($row_getQuery['question_id'], "int"));
+	$queryOption = sprintf("SELECT `option_id`, `option`, `isCorrect`, `fk_question_id`  FROM q_options_test WHERE fk_question_id = %d ORDER BY option_id", GetSQLValueString($row_getQuery['question_id'], "int"));
 	$getOption = mysql_query($queryOption, $quizroo) or die(mysql_error());
 	$row_getOption = mysql_fetch_assoc($getOption);
 	$totalRows_getOption = mysql_num_rows($getOption);
@@ -65,16 +63,16 @@ if(isset($_GET['load'])){
       <td><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $option; ?>" class="sprytextfield">
         <input name="q<?php echo $question; ?>o<?php echo $option; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $option; ?>" value="<?php echo $row_getOption['option']; ?>" />
         <span class="textfieldRequiredMsg">Enter a value for this option!</span></span></td>
-      <td width="150"><select name="q<?php echo $question; ?>r<?php echo $option; ?>" class="optionSelect" id="q<?php echo $question; ?>r<?php echo $option; ?>">
-          <?php foreach($results as $item){ ?>
-          <option value="<?php echo $item[0]; ?>" <?php if($item[0] == $row_getOption['fk_result']){ echo "selected"; }; ?>><?php echo $item[1]; ?></option>
-          <?php } ?>
-      </select></td>
-      <td width="100"><select name="q<?php echo $question; ?>w<?php echo $option; ?>" id="q<?php echo $question; ?>w<?php echo $option; ?>">
-          <option value="1" <?php if(1 == $row_getOption['option_weightage']){ echo "selected"; }; ?>>A little</option>
-          <option value="2" <?php if(2 == $row_getOption['option_weightage']){ echo "selected"; }; ?>>Somewhat</option>
-          <option value="3" <?php if(3 == $row_getOption['option_weightage']){ echo "selected"; }; ?>>A lot</option>
-      </select></td>
+      
+	  <?php if ($row_getOption['isCorrect'] == 1) { ?>
+          <td width ="150"><input type="checkbox" checked = "checked" name="q<?php echo $question; ?>r<?php echo $option ?>" value= "1"> Correct Answer</td> 
+		 <?php } 
+          else{ ?>
+		<td width ="150"><input type="checkbox" name="q<?php echo $question; ?>r<?php echo $option ?>" value= "1"> Correct Answer</td> 
+        <?php } ?>
+
+      </select>
+  
     </tr>
     </table>
     </div>
