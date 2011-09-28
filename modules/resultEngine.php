@@ -28,7 +28,7 @@ if(!$validate){
 	// invalid data, redirect to home
 	header("Location: index.php");
 }
-		//***********************************************ADD BY LIEN************************************************//
+//***********************************************ADD BY LIEN************************************************//
 		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
 		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
 		$row_resultMode = mysql_fetch_assoc($resultMode);
@@ -47,16 +47,15 @@ if(!$validate){
 		}while($row_resultMode = mysql_fetch_assoc($resultMode));
 
 		//***********************************************END OF ADD BY LIEN************************************************//
-		
-if($mode == "simple" || $mode == "accurate"){
-	// caculate and order the final result from the sum of options and their weightage
-	//LIEN: The below SQL statement is checking for all option_id in table which is contained in the entire $answers string. Optimum? Correct in this case? Unsure!
-	$query_getResults = "SELECT fk_result_id, SUM(option_weightage) AS count FROM q_options_multi WHERE option_id IN (".substr($answers, 0, strlen($answers)-1).") GROUP BY fk_result_id ORDER BY count DESC LIMIT 0,1";
-	$getResults = mysql_query($query_getResults, $quizroo) or die(mysql_error());
-	$row_getResults = mysql_fetch_assoc($getResults);
-	$totalRows_getResults = mysql_num_rows($getResults);
+
+if ( ($mode == "simple") || ($mode == "accurate") ) {
+// caculate and order the final result from the sum of options and their weightage
+$query_getResults = "SELECT fk_result_id, SUM(option_weightage) AS count FROM q_options_multi WHERE option_id IN (".substr($answers, 0, strlen($answers)-1).") GROUP BY fk_result_id ORDER BY count DESC LIMIT 0,1";
+$getResults = mysql_query($query_getResults, $quizroo) or die(mysql_error());
+$row_getResults = mysql_fetch_assoc($getResults);
+$totalRows_getResults = mysql_num_rows($getResults);
 }
-else{
+if ( ($mode == "test_simple") || ($mode == "test_custom") ) {
 	// caculate and order the final result from the sum of options and their weightage
 	/*$query_getResults = "SELECT fk_result, SUM(option_weightage) AS count FROM q_options WHERE option_id IN (".substr($answers, 0, strlen($answers)-1).") GROUP BY fk_result ORDER BY count DESC LIMIT 0,1";
 	$getResults = mysql_query($query_getResults, $quizroo) or die(mysql_error());
@@ -71,7 +70,13 @@ else{
 	$getNumQuestions = mysql_query($query_getNumQuestions, $quizroo) or die(mysql_error());
 	$row_getNumQuestions = mysql_fetch_assoc($getNumQuestions);
 	$totalRows_getNumQuestions = mysql_num_rows($getNumQuestions);
-	
+}
+if ($mode == "") {
+// caculate and order the final result from the sum of options and their weightage
+$query_getResults = "SELECT fk_result, SUM(option_weightage) AS count FROM q_options WHERE option_id IN (".substr($answers, 0, strlen($answers)-1).") GROUP BY fk_result ORDER BY count DESC LIMIT 0,1";
+$getResults = mysql_query($query_getResults, $quizroo) or die(mysql_error());
+$row_getResults = mysql_fetch_assoc($getResults);
+$totalRows_getResults = mysql_num_rows($getResults);
 }
 
 // check if the quiz is published
@@ -118,40 +123,41 @@ $achievement_array = checkAchievements($facebookID, $achievement_array);
 // Retrieve Quiz results for display
 //----------------------------------------
 
+if ( ($mode == "simple") || ($mode == "accurate") ) {
 // select the result data
-if ($mode == "simple" || $mode == "accurate") {
-$query_getResultInfo = "SELECT * FROM q_results_multi WHERE result_id = ".$row_getResults['fk_result'];
-}
-if ($mode == "test_simple"){
-$query_getResultInfo = sprintf("SELECT %d/%d AS result_title", row_getResults['test_numOfCorrect'], row_getNumQuestions['test_numOfQuestions']);
-}
-else {
-//$mode == "test_custom"
-$query_getResultInfo = "SELECT * FROM q_results_test WHERE result_id = ".$row_getResults['test_numOfCorrect'];
-}
+$query_getResultInfo = "SELECT * FROM q_results_multi WHERE result_id = ".$row_getResults['fk_result_id'];
 $getResultInfo = mysql_query($query_getResultInfo, $quizroo) or die(mysql_error());
 $row_getResultInfo = mysql_fetch_assoc($getResultInfo);
 $totalRows_getResultInfo = mysql_num_rows($getResultInfo);
-
-if($mode == "simple" || $mode == "accurate"){
-	// get results to build the pie chart
-	//$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
-	$query_getResultChart = sprintf("SELECT count, result_title FROM (SELECT COUNT(*) AS count, fk_result_id FROM q_store_result WHERE q_store_result.fk_quiz_id = %d GROUP BY fk_result_id) r RIGHT JOIN (SELECT result_id, result_title FROM q_results_multi WHERE fk_quiz_id = %d) t ON r.fk_result_id = t.result_id", $quiz->quiz_id, $quiz->quiz_id);
-	$getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
-	$row_getResultChart = mysql_fetch_assoc($getResultChart);
-	$totalRows_getResultChart = mysql_num_rows($getResultChart);
-}if ($mode == "test_simple"{
-	
-} else { 
-	// $mode == "test_custom"
-	// get results to build the pie chart
-	//$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
-	$query_getResultChart = sprintf("SELECT count, result_title FROM (SELECT COUNT(*) AS count, fk_result_id FROM q_store_result WHERE q_store_result.fk_quiz_id = %d GROUP BY fk_result_id) r RIGHT JOIN (SELECT result_id, result_title FROM q_results WHERE fk_quiz_id = %d) t ON r.fk_result_id = t.result_id", $quiz->quiz_id, $quiz->quiz_id);
-	$getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
-	$row_getResultChart = mysql_fetch_assoc($getResultChart);
-	$totalRows_getResultChart = mysql_num_rows($getResultChart); 
+}
+if ($mode == "test_simple"){
+//Lien: Mistake with bottom statement
+//$query_getResultInfo = sprintf("SELECT %d/%d AS result_title", row_getResults['test_numOfCorrect'], row_getNumQuestions['test_numOfQuestions']);
+$query_getResultInfo = "SELECT * FROM q_results_test WHERE result_id = ".$row_getResults['fk_result']; // just anyhow statement
+$getResultInfo = mysql_query($query_getResultInfo, $quizroo) or die(mysql_error());
+$row_getResultInfo = mysql_fetch_assoc($getResultInfo);
+$totalRows_getResultInfo = mysql_num_rows($getResultInfo);
+}
+if ($mode == "test_custom"){
+$query_getResultInfo = "SELECT * FROM q_results_test WHERE result_id = ".$row_getResults['test_numOfCorrect'];
+$getResultInfo = mysql_query($query_getResultInfo, $quizroo) or die(mysql_error());
+$row_getResultInfo = mysql_fetch_assoc($getResultInfo);
+$totalRows_getResultInfo = mysql_num_rows($getResultInfo);
+}
+if ($mode == "") {
+// select the result data
+$query_getResultInfo = "SELECT * FROM q_results WHERE result_id = ".$row_getResults['fk_result'];
+$getResultInfo = mysql_query($query_getResultInfo, $quizroo) or die(mysql_error());
+$row_getResultInfo = mysql_fetch_assoc($getResultInfo);
+$totalRows_getResultInfo = mysql_num_rows($getResultInfo);
 }
 
+// get results to build the pie chart
+//$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
+$query_getResultChart = sprintf("SELECT count, result_title FROM (SELECT COUNT(*) AS count, fk_result_id FROM q_store_result WHERE q_store_result.fk_quiz_id = %d GROUP BY fk_result_id) r RIGHT JOIN (SELECT result_id, result_title FROM q_results WHERE fk_quiz_id = %d) t ON r.fk_result_id = t.result_id", $quiz->quiz_id, $quiz->quiz_id);
+$getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
+$row_getResultChart = mysql_fetch_assoc($getResultChart);
+$totalRows_getResultChart = mysql_num_rows($getResultChart);
 ?>
 <?php if($quiz->isPublished() && $totalRows_getResultChart != 0){ ?>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>

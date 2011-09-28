@@ -113,7 +113,7 @@ foreach(glob("../quiz_images/".$unikey."*") as $filename){ ?>
         </tr>
         <tr>
           <th valign="top" scope="row">&nbsp;</th>
-          <td align="right" class="desc"><input type="submit" name="next" id="next" value="Next Part" /></td>
+          <td align="right" class="desc"><div class="add_container"><input type="submit" name="save" id="next" value="Next Part" /></div></td>
         </tr>
     </table>
 </div>
@@ -136,7 +136,7 @@ break; case 2:
 <div id="create-quiz" class="frame rounded">
 
 <?php
-		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz_id);
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
 		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
 		$row_resultMode = mysql_fetch_assoc($resultMode);
 		$resultforMode = array();
@@ -153,35 +153,15 @@ break; case 2:
 				$mode = "test_custom";				
 		}while($row_resultMode = mysql_fetch_assoc($resultMode));
 		
-//		$mode = "simple";
 ?>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
   <form action="../modules/modifyQuizEngine.php?step=2" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheckMulti(Spry.Widget.Form.validate(this));">
 <input type="hidden" name="id" value="<?php echo $quiz->quiz_id; ?>" />
-<div id="createResultContainer"></div>
 <?php }else{ ?>
   <form action="../modules/modifyQuizEngine.php?step=2" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheckTest(Spry.Widget.Form.validate(this));">
 <input type="hidden" name="id" value="<?php echo $quiz->quiz_id; ?>" />
 <?php } ?>
 
-<?php
-		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz_id);
-		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
-		$row_resultMode = mysql_fetch_assoc($resultMode);
-		$resultforMode = array();
-		$mode = "";
-		do{
-			$resultforMode[] = array($row_resultMode['display_mode']);
-			if ($row_resultMode['display_mode'] == "multi_simple")
-				$mode = "simple";
-			if ($row_resultMode['display_mode'] == "multi_accurate")
-				$mode = "accurate";
-			if ($row_resultMode['display_mode'] == "test_simple")
-				$mode = "test_simple";	
-			if ($row_resultMode['display_mode'] == "test_custom")
-				$mode = "test_custom";				
-		}while($row_resultMode = mysql_fetch_assoc($resultMode));
-?>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
     <div class="add_container">
       <input type="submit" name="save" id="prev" value="Previous Part" />&nbsp;
@@ -217,7 +197,7 @@ break; case 3:
 <div id="create-quiz" class="frame rounded">
 
 <?php
-		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz_id);
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
 		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
 		$row_resultMode = mysql_fetch_assoc($resultMode);
 		$resultforMode = array();
@@ -250,24 +230,6 @@ break; case 3:
 <div id="createQuestionContainer"></div>
 <?php } ?>
 
-<?php
-		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz_id);
-		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
-		$row_resultMode = mysql_fetch_assoc($resultMode);
-		$resultforMode = array();
-		$mode = "";
-		do{
-			$resultforMode[] = array($row_resultMode['display_mode']);
-			if ($row_resultMode['display_mode'] == "multi_simple")
-				$mode = "simple";
-			if ($row_resultMode['display_mode'] == "multi_accurate")
-				$mode = "accurate";
-			if ($row_resultMode['display_mode'] == "test_simple")
-				$mode = "test_simple";	
-			if ($row_resultMode['display_mode'] == "test_custom")
-				$mode = "test_custom";				
-		}while($row_resultMode = mysql_fetch_assoc($resultMode));
-?>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
     <div class="add_container">
       <input type="submit" name="save" id="prev" value="Previous Part" />&nbsp;
@@ -288,6 +250,25 @@ break; case 3:
 break; case 4:
 	require("../modules/variables.php");
 		
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
+		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
+		$row_resultMode = mysql_fetch_assoc($resultMode);
+		$resultforMode = array();
+		$mode = "";
+		do{
+			$resultforMode[] = array($row_resultMode['display_mode']);
+			if ($row_resultMode['display_mode'] == "multi_simple")
+				$mode = "simple";
+			if ($row_resultMode['display_mode'] == "multi_accurate")
+				$mode = "accurate";
+			if ($row_resultMode['display_mode'] == "test_simple")
+				$mode = "test_simple";	
+			if ($row_resultMode['display_mode'] == "test_custom")
+				$mode = "test_custom";				
+		}while($row_resultMode = mysql_fetch_assoc($resultMode));
+		
+//		$mode = "simple"; //LIEN SIMPLE
+
 	// check the number of results
 	if($mode == "simple" || $mode == "accurate"){	
 		$numResults = $quiz->getResultsMulti("count");		
