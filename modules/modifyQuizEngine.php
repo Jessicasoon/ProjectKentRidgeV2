@@ -16,7 +16,7 @@ if(isset($_GET['step'])){
 
 		$type = $_POST['type']; //get from form
 		$mode = $_POST['mode']; // get from form in createQuizMain
-		header("Location: ../webroot/modifyQuiz.php?step=1&type=".$type."&mode=".$mode); 
+		header("Location: ../webroot/createQuiz.php?step=1&type=".$type."&mode=".$mode); 
 		break;
 			
 		case 1: // save the quiz information
@@ -41,7 +41,7 @@ if(isset($_GET['step'])){
 		//if($_POST['save'] == "Previous Step"){
 			//header("Location: ../webroot/createQuiz.php?step=0");
 		//}else{
-			header("Location: ../webroot/modifyQuiz.php?step=2&id=".$quiz_id);
+			header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
 		//}
 
 		break;		
@@ -51,7 +51,7 @@ if(isset($_GET['step'])){
 		$quiz_id = $_POST['id'];
 
 		//***********************************************ADD BY LIEN************************************************//
-		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz_id);
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
 		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
 		$row_resultMode = mysql_fetch_assoc($resultMode);
 		$resultforMode = array();
@@ -104,9 +104,9 @@ if(isset($_GET['step'])){
 		
 		// check the direction to go
 		if($_POST['save'] == "Previous Part"){
-			header("Location: ../webroot/modifyQuiz.php?step=1&id=".$quiz_id);
+			header("Location: ../webroot/createQuiz.php?step=1&id=".$quiz_id);
 		}else{
-			header("Location: ../webroot/modifyQuiz.php?step=3&id=".$quiz_id);
+			header("Location: ../webroot/createQuiz.php?step=3&id=".$quiz_id);
 		}
 		
 		break;
@@ -116,7 +116,7 @@ if(isset($_GET['step'])){
 		$quiz_id = $_POST['id'];
 		
 		//***********************************************ADD BY LIEN************************************************//
-		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz_id);
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
 		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
 		$row_resultMode = mysql_fetch_assoc($resultMode);
 		$resultforMode = array();
@@ -220,9 +220,9 @@ if(isset($_GET['step'])){
 		}
 		// check the direction to go
 		if($_POST['save'] == "Previous Part"){
-			header("Location: ../webroot/modifyQuiz.php?step=2&id=".$quiz_id);
+			header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
 		}else{
-			header("Location: ../webroot/modifyQuiz.php?step=4&id=".$quiz_id);
+			header("Location: ../webroot/createQuiz.php?step=4&id=".$quiz_id);
 		}
 		
 		break;
@@ -233,7 +233,7 @@ if(isset($_GET['step'])){
 		
 		// check the direction to go
 		if($_POST['save'] == "Previous Part"){
-			header("Location: ../webroot/modifyQuiz.php?step=3&id=".$quiz_id);
+			header("Location: ../webroot/createQuiz.php?step=3&id=".$quiz_id);
 		}elseif($_POST['save'] == "Preview"){
 			header("Location: ../webroot/createQuizSuccess.php?id=".$quiz_id);
 		}else{
