@@ -100,7 +100,11 @@ how you want it to be displayed.</p>
 <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
 	<!-- Test type-->
 	<tr>
-	  <td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked" disabled="disabled"/>Test</h2></td>
+      <?php if ($row_resultType['fk_quiz_type'] == "1"){ ?>	
+		<td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked" disabled="disabled"/>Test</h2></td>
+	  <?php }else{ ?>
+		<td colspan="3"><h2><input id="test" name="type" type="radio" value="1" disabled="disabled"/>Test</h2></td>
+	  <?php }?>
 	</tr>
 	<tr>
 		<td valign="top" width="40%">
@@ -171,7 +175,11 @@ England</td>
 	</tr>
 	<!-- Personality type-->
 	<tr>
+	<?php if ($row_resultType['fk_quiz_type'] == "2"){ ?>
+	  <td colspan="3"><h2><input id="personality" name="type" type="radio" checked="checked" value="2" disabled="disabled"/>Personality</h2></td>
+	<?php }else{ ?>
 	  <td colspan="3"><h2><input id="personality" name="type" type="radio" value="2" disabled="disabled"/>Personality</h2></td>
+	<?php } ?>
 	  </tr>
 	<tr>
 		<td valign="top" width="40%">
