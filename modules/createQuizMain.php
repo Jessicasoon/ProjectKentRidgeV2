@@ -394,7 +394,7 @@ results as you like!</p>
 </div>
 <div id="create-quiz" class="frame rounded">
 <?php
-		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz_id);
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
 		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
 		$row_resultMode = mysql_fetch_assoc($resultMode);
 		$resultforMode = array();
@@ -411,7 +411,6 @@ results as you like!</p>
 				$mode = "test_custom";				
 		}while($row_resultMode = mysql_fetch_assoc($resultMode));
 		
-//		$mode = "simple";
 ?>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
@@ -467,7 +466,7 @@ each option contributes to a result.</p>
 </div>
 </div>
 <?php
-		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz_id);
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
 		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
 		$row_resultMode = mysql_fetch_assoc($resultMode);
 		$resultforMode = array();
@@ -529,7 +528,7 @@ button to add a question entry!</p>
 		<?php // THE FOURTH STEP: Confirm and publish
 		break; case 4:
 		
-		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz_id);
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
 		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
 		$row_resultMode = mysql_fetch_assoc($resultMode);
 		$resultforMode = array();
