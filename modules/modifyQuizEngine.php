@@ -16,7 +16,7 @@ if(isset($_GET['step'])){
 
 		$type = $_POST['type']; //get from form
 		$mode = $_POST['mode']; // get from form in createQuizMain
-		header("Location: ../webroot/createQuiz.php?step=1&type=".$type."&mode=".$mode); 
+		header("Location: ../webroot/modifyQuiz.php?step=1&type=".$type."&mode=".$mode); 
 		break;
 			
 		case 1: // save the quiz information
@@ -41,7 +41,7 @@ if(isset($_GET['step'])){
 		//if($_POST['save'] == "Previous Step"){
 			//header("Location: ../webroot/createQuiz.php?step=0");
 		//}else{
-			header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
+			header("Location: ../webroot/modifyQuiz.php?step=2&id=".$quiz_id);
 		//}
 
 		break;		

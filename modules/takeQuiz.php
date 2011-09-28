@@ -60,18 +60,36 @@ $question_count = 1;
       <div id="question_reel">
         <?php do { 
 
-			if ( ($mode == "simple") || ($mode == "accurate") ) 
-			{ $query_getOptions = "SELECT * FROM q_options_multi WHERE fk_question_id = ".$row_getQuizQuestions['question_id']; } 
+			if ( $mode == "simple" ) 
+			{ 	$query_getOptions = "SELECT * FROM q_options_multi WHERE fk_question_id = ".$row_getQuizQuestions['question_id']; 
+				$getOptions = mysql_query($query_getOptions, $quizroo) or die(mysql_error()); 
+				$row_getOptions = mysql_fetch_assoc($getOptions);
+				$totalRows_getOptions = mysql_num_rows($getOptions);
+			} 
+			if ($mode == "accurate")
+			{ 
+				//$query_getOptions = sprintf("SELECT * FROM q_options_multi WHERE fk_question_id = %d GROUP BY option_id HAVING COUNT(DISTINCT fk_result_id) = 1",$row_getQuizQuestions['question_id'] );	
+				$query_getOptions = sprintf(" SELECT Q.*  FROM q_options_multi Q JOIN (SELECT DISTINCT option_id as options FROM q_options_multi GROUP BY option_id) Q2 ON Q.option_id = Q2.options WHERE fk_question_id = %d GROUP BY option_id",$row_getQuizQuestions['question_id'] );
+				$getOptions = mysql_query($query_getOptions, $quizroo) or die(mysql_error()); 
+				$row_getOptions = mysql_fetch_assoc($getOptions);
+				$totalRows_getOptions = mysql_num_rows($getOptions); 
+			} 
 			if ( ($mode == "test_simple") || ($mode == "test_custom")) 
-			{ $query_getOptions = "SELECT * FROM q_options_test WHERE fk_question_id = ".$row_getQuizQuestions['question_id']; }
+			{ 
+				$query_getOptions = "SELECT * FROM q_options_test WHERE fk_question_id = ".$row_getQuizQuestions['question_id']; 
+				$getOptions = mysql_query($query_getOptions, $quizroo) or die(mysql_error()); 
+				$row_getOptions = mysql_fetch_assoc($getOptions);
+				$totalRows_getOptions = mysql_num_rows($getOptions);
+			}
 			if ($mode == "")
 			{ 
-			$query_getOptions = "SELECT * FROM q_options WHERE fk_question_id = ".$row_getQuizQuestions['question_id']; 
+				$query_getOptions = "SELECT * FROM q_options WHERE fk_question_id = ".$row_getQuizQuestions['question_id']; 
+				$getOptions = mysql_query($query_getOptions, $quizroo) or die(mysql_error()); 
+				$row_getOptions = mysql_fetch_assoc($getOptions);
+				$totalRows_getOptions = mysql_num_rows($getOptions);
 			}
 
-			$getOptions = mysql_query($query_getOptions, $quizroo) or die(mysql_error()); 
-			$row_getOptions = mysql_fetch_assoc($getOptions);
-			$totalRows_getOptions = mysql_num_rows($getOptions);
+
 			
 			$option_count = 1;	  
 		  ?>
@@ -84,6 +102,7 @@ $question_count = 1;
             <p><?php echo $row_getQuizQuestions['question']; ?></p>
             <table width="100%" border="0" cellpadding="5" cellspacing="0">
               <?php do { ?>
+              	
                 <tr>
                   <th width="30" scope="row"><input type="radio" name="q<?php echo $question_count; ?>" id="q<?php echo $question_count; ?>o<?php echo $option_count; ?>" value="<?php echo $row_getOptions['option_id']; ?>" /></th>
                   <td><label for="q<?php echo $question_count; ?>o<?php echo $option_count; ?>"><?php echo $row_getOptions['option']; ?></label></td>
