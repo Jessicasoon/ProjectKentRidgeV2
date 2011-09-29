@@ -558,7 +558,7 @@ class Quiz{
 		// owner check
 		if($this->isOwner($memberID)){
 			// delete the options and also check if this results actually belongs to this quiz
-			$insertSQL = sprintf("DELETE FROM q_options WHERE `fk_question_id` = %d AND `fk_question_id` IN(%s)", GetSQLValueString($question_id, "int"), $this->getQuestions());
+			$insertSQL = sprintf("DELETE FROM q_options_test WHERE `fk_question_id` = %d AND `fk_question_id` IN(%s)", GetSQLValueString($question_id, "int"), $this->getQuestions());
 			mysql_query($insertSQL, $quizroo) or die(mysql_error());				
 			// delete the result and also check if this results actually belongs to this quiz
 			$insertSQL = sprintf("DELETE FROM q_questions WHERE `question_id` = %d AND `question_id` IN(%s)", GetSQLValueString($question_id, "int"), $this->getQuestions());
@@ -747,7 +747,7 @@ class Quiz{
 		// owner check
 		if($this->isOwner($memberID)){
 			// delete the options and also check if this results actually belongs to this quiz
-			$insertSQL = sprintf("DELETE FROM q_options WHERE `option_id` = %d AND `fk_question_id` IN(%s)", GetSQLValueString($option_id, "int"), $this->getQuestions());
+			$insertSQL = sprintf("DELETE FROM q_options_test WHERE `option_id` = %d AND `fk_question_id` IN(%s)", GetSQLValueString($option_id, "int"), $this->getQuestions());
 			mysql_query($insertSQL, $quizroo) or die(mysql_error());				
 			return true;
 		}else{

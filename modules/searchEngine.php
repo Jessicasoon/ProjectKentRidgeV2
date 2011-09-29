@@ -67,6 +67,7 @@ if(isset($_GET['searchQuery'])){
 				$query_sql_2 = substr($query_sql_2, 0, -4);
 				$query_sql_3 = substr($query_sql_3, 0, -4);
 
+				//HAVE TO CHANGE
 				$query_listQuiz = sprintf("SELECT q.quiz_id, q.quiz_name, q.quiz_description, q.quiz_picture, q.fk_quiz_cat, m.member_name, fk_member_id, c.cat_name, q.likes FROM q_quizzes q, q_quiz_cat c, s_members m WHERE (%s OR q.quiz_id IN(SELECT quiz_id FROM q_quizzes, q_questions WHERE (%s) AND fk_quiz_id = quiz_id) OR q.quiz_id IN(SELECT quiz_id FROM q_quizzes, q_questions, q_options WHERE (%s) AND fk_quiz_id = quiz_id AND fk_question_id = question_id)) AND m.member_id = q.fk_member_id AND c.cat_id = q.fk_quiz_cat AND q.isPublished = 1", $query_sql_1, $query_sql_2, $query_sql_3);
 			}
 		}

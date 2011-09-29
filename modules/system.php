@@ -54,7 +54,7 @@ class System{
 				(SELECT COUNT(store_id) FROM q_store_result) AS quiz_total_taken,
 				(SELECT SUM(likes) FROM q_quizzes WHERE isPublished = 1) AS quiz_total_likes,
 				(SELECT COUNT(question_id) FROM q_quizzes, q_questions WHERE isPublished = 1 AND fk_quiz_id = quiz_id) AS quiz_total_questions,
-				(SELECT COUNT(option_id) FROM q_options, q_questions, q_quizzes WHERE isPublished = 1 AND fk_quiz_id = quiz_id AND fk_question_id = question_id) AS quiz_total_options";
+				(SELECT COUNT(option_id) FROM q_options, q_questions, q_quizzes WHERE isPublished = 1 AND fk_quiz_id = quiz_id AND fk_question_id = question_id) AS quiz_total_options"; //HAVE TO CHANGE
 			}else{
 				// Get fresh friends stats
 				$query = sprintf("SELECT
@@ -69,7 +69,7 @@ class System{
 				(SELECT COUNT(store_id) FROM q_store_result WHERE fk_member_id IN(%s)) AS quiz_total_taken,
 				(SELECT SUM(likes) FROM q_quizzes WHERE fk_member_id IN(%s) AND isPublished = 1) AS quiz_total_likes,
 				(SELECT COUNT(question_id) FROM q_quizzes, q_questions WHERE fk_member_id IN(%s) AND isPublished = 1 AND fk_quiz_id = quiz_id) AS quiz_total_questions,
-				(SELECT COUNT(option_id) FROM q_options, q_questions, q_quizzes WHERE fk_member_id IN(%s) AND isPublished = 1 AND fk_quiz_id = quiz_id AND fk_question_id = question_id) AS quiz_total_options", $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list);
+				(SELECT COUNT(option_id) FROM q_options, q_questions, q_quizzes WHERE fk_member_id IN(%s) AND isPublished = 1 AND fk_quiz_id = quiz_id AND fk_question_id = question_id) AS quiz_total_options", $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list, $friend_list); //HAVE TO CHANGE
 			}
 			$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 			$row_getQuery = mysql_fetch_assoc($getQuery);
