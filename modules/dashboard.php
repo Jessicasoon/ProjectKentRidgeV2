@@ -31,13 +31,13 @@ $total = mysql_query($query_total, $quizroo) or die(mysql_error());
 $totalRows_total = mysql_fetch_assoc($total);
 
 //retrieve most recent1 quizzes
-$query_quizzes1 = sprintf("SELECT DISTINCT quiz_id, quiz_name, quiz_description, isRecommended, quiz_picture, fk_quiz_cat, member_name, q_store_result.fk_member_id, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members, q_store_result WHERE fk_quiz_id = quiz_id AND member_id = q_quizzes.fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY timestamp DESC LIMIT %d, %d", $starting_quiz, $VAR_NUM_LISTINGS);
+$query_quizzes1 = sprintf("SELECT DISTINCT quiz_id, quiz_name, quiz_description, isRecommended, quiz_picture, fk_quiz_cat, member_name, q_store_result.fk_member_id, cat_name, likes, dislikes, MAX(timestamp) FROM q_quizzes, q_quiz_cat, s_members, q_store_result WHERE fk_quiz_id = quiz_id AND member_id = q_quizzes.fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 GROUP BY quiz_id ORDER BY MAX(timestamp) DESC LIMIT %d, %d", $starting_quiz, $VAR_NUM_LISTINGS);
 $quizzes1 = mysql_query($query_quizzes1, $quizroo) or die(mysql_error());
 $row_quizzes1 = mysql_fetch_assoc($quizzes1);
 $totalRows_quizzes1 = mysql_num_rows($quizzes1);
 
 // retrieve most recent2 quizzes
-$query_quizzes2 = sprintf("SELECT DISTINCT quiz_id, quiz_name, quiz_description, isRecommended, quiz_picture, fk_quiz_cat, member_name, q_store_result.fk_member_id, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members, q_store_result WHERE fk_quiz_id = quiz_id AND member_id = q_quizzes.fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY timestamp DESC LIMIT %d, %d", $starting_quiz+7, $VAR_NUM_LISTINGS);
+$query_quizzes2 = sprintf("SELECT DISTINCT quiz_id, quiz_name, quiz_description, isRecommended, quiz_picture, fk_quiz_cat, member_name, q_store_result.fk_member_id, cat_name, likes, dislikes, MAX(timestamp) FROM q_quizzes, q_quiz_cat, s_members, q_store_result WHERE fk_quiz_id = quiz_id AND member_id = q_quizzes.fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 GROUP BY quiz_id ORDER BY MAX(timestamp) DESC LIMIT %d, %d", $starting_quiz+7, $VAR_NUM_LISTINGS);
 $quizzes2 = mysql_query($query_quizzes2, $quizroo) or die(mysql_error());
 $row_quizzes2 = mysql_fetch_assoc($quizzes2);
 $totalRows_quizzes2 = mysql_num_rows($quizzes2);
