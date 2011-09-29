@@ -26,7 +26,7 @@ $row_recommendations = mysql_fetch_assoc($recommendations);
 $totalRows_recommendations = mysql_num_rows($recommendations);
 
 // retrieve popular quizzes
-$query_popular = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, fk_member_id, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 AND fk_quiz_cat = %d ORDER BY quiz_score DESC LIMIT %d, %d", GetSQLValueString($topic, "int"), $starting_quiz+7, $VAR_NUM_LISTINGS);
+$query_popular = sprintf("SELECT quiz_id, quiz_name, quiz_description, quiz_picture, member_name, fk_member_id, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 AND fk_quiz_cat = %d ORDER BY quiz_score DESC LIMIT %d, %d", GetSQLValueString($topic, "int"), $starting_quiz+$VAR_NUM_LISTINGS, $VAR_NUM_LISTINGS);
 $popular = mysql_query($query_popular, $quizroo) or die(mysql_error());
 $row_popular = mysql_fetch_assoc($popular);
 $totalRows_popular = mysql_num_rows($popular);
@@ -95,15 +95,55 @@ $totalRows_getTopics = mysql_num_rows($getTopics);
 	if($totalRows_total['quiz_total']%($VAR_NUM_LISTINGS*2) > 0){
 		$pageNum = floor($pageNum)+1;
 	}
-	for($page=1; $page<=$pageNum; $page++) {
+	$current_page = $starting_quiz/($VAR_NUM_LISTINGS*2) + 1;
+	if($pageNum>10){
+		if($current_page>4){
+			if($current_page+4 <= $pageNum){
+				$start_page = $current_page - 4;
+				$max_page = $current_page + 5;
+			}
+			else{
+				$max_page = $pageNum;
+				$start_page = $pageNum - 9;
+			}
+		}
+		else{
+			$start_page = 1;
+			$max_page = 10;
+		}
+	}
+	else{
+		$start_page = 1;
+		$max_page = $pageNum;
+	}
+	//first and previous
+	if($current_page == 1){
+		echo "First"; echo"&nbsp;&nbsp;"; echo "Previous"; echo"&nbsp;&nbsp;"; 
+	}
+	else { ?>
+	<a href ="../webroot/topics.php?topic=<?php echo $topic; ?>&starting=0"><?php echo "First"; echo "&nbsp;&nbsp;"; ?></a>	
+	<a href ="../webroot/topics.php?topic=<?php echo $topic; ?>&starting=<?php echo ($current_page-2)*$VAR_NUM_LISTINGS*2 ?>"><?php echo "Previous"; echo "&nbsp;&nbsp;"; ?></a>	
+	<?php }//end else
+
+	//number pages
+	for($page=$start_page; $page<=$max_page; $page++) {
 	if ($starting_quiz == ($page-1)*$VAR_NUM_LISTINGS*2){
 		echo $page; echo "&nbsp;&nbsp;";
 	}
 	else { ?>
 	<a href ="../webroot/topics.php?topic=<?php echo $topic; ?>&starting=<?php echo ($page-1)*$VAR_NUM_LISTINGS*2 ?>"><?php echo $page; echo "&nbsp;&nbsp;"; ?></a> 
 	<?php }}//end ifelse // end for loop ?>
+	
+	<?php //next and last
+	if($current_page == $pageNum){
+		echo "Next"; echo"&nbsp;&nbsp;"; echo "Last"; echo"&nbsp;&nbsp;"; 
+	}
+	else { ?>
+	<a href ="../webroot/topics.php?topic=<?php echo $topic; ?>&starting=<?php echo ($current_page)*$VAR_NUM_LISTINGS*2 ?>"><?php echo "Next"; echo "&nbsp;&nbsp;"; ?></a>	
+	<a href ="../webroot/topics.php?topic=<?php echo $topic; ?>&starting=<?php echo ($pageNum-1)*$VAR_NUM_LISTINGS*2 ?>"><?php echo "Last"; echo "&nbsp;&nbsp;"; ?></a>	
+	<?php }//end else	?>
 	</p>
-  </div>
+  </div>    
 </div>
 <?php
 mysql_free_result($recommendations);

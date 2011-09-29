@@ -19,7 +19,7 @@ $row_quizzes1 = mysql_fetch_assoc($quizzes1);
 $totalRows_quizzes1 = mysql_num_rows($quizzes1);
 
 // retrieve popular2 quizzes
-$query_quizzes2 = sprintf("SELECT quiz_id, quiz_name, quiz_description, isRecommended, quiz_picture, fk_quiz_cat, member_name, fk_member_id, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY quiz_score DESC LIMIT %d, %d", $starting_quiz+7, $VAR_NUM_LISTINGS);
+$query_quizzes2 = sprintf("SELECT quiz_id, quiz_name, quiz_description, isRecommended, quiz_picture, fk_quiz_cat, member_name, fk_member_id, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY quiz_score DESC LIMIT %d, %d", $starting_quiz+$VAR_NUM_LISTINGS, $VAR_NUM_LISTINGS);
 $quizzes2 = mysql_query($query_quizzes2, $quizroo) or die(mysql_error());
 $row_quizzes2 = mysql_fetch_assoc($quizzes2);
 $totalRows_quizzes2 = mysql_num_rows($quizzes2);
@@ -37,7 +37,7 @@ $row_quizzes1 = mysql_fetch_assoc($quizzes1);
 $totalRows_quizzes1 = mysql_num_rows($quizzes1);
 
 // retrieve most recent2 quizzes
-$query_quizzes2 = sprintf("SELECT DISTINCT quiz_id, quiz_name, quiz_description, isRecommended, quiz_picture, fk_quiz_cat, member_name, q_store_result.fk_member_id, cat_name, likes, dislikes, MAX(timestamp) FROM q_quizzes, q_quiz_cat, s_members, q_store_result WHERE fk_quiz_id = quiz_id AND member_id = q_quizzes.fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 GROUP BY quiz_id ORDER BY MAX(timestamp) DESC LIMIT %d, %d", $starting_quiz+7, $VAR_NUM_LISTINGS);
+$query_quizzes2 = sprintf("SELECT DISTINCT quiz_id, quiz_name, quiz_description, isRecommended, quiz_picture, fk_quiz_cat, member_name, q_store_result.fk_member_id, cat_name, likes, dislikes, MAX(timestamp) FROM q_quizzes, q_quiz_cat, s_members, q_store_result WHERE fk_quiz_id = quiz_id AND member_id = q_quizzes.fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 GROUP BY quiz_id ORDER BY MAX(timestamp) DESC LIMIT %d, %d", $starting_quiz+$VAR_NUM_LISTINGS, $VAR_NUM_LISTINGS);
 $quizzes2 = mysql_query($query_quizzes2, $quizroo) or die(mysql_error());
 $row_quizzes2 = mysql_fetch_assoc($quizzes2);
 $totalRows_quizzes2 = mysql_num_rows($quizzes2);
@@ -55,7 +55,7 @@ $row_quizzes1 = mysql_fetch_assoc($quizzes1);
 $totalRows_quizzes1 = mysql_num_rows($quizzes1);
 
 // retrieve newly created2 quizzes
-$query_quizzes2 = sprintf("SELECT quiz_id, quiz_name, quiz_description, isRecommended, quiz_picture, fk_quiz_cat, member_name, fk_member_id, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY creation_date DESC LIMIT %d, %d", $starting_quiz+7, $VAR_NUM_LISTINGS);
+$query_quizzes2 = sprintf("SELECT quiz_id, quiz_name, quiz_description, isRecommended, quiz_picture, fk_quiz_cat, member_name, fk_member_id, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 ORDER BY creation_date DESC LIMIT %d, %d", $starting_quiz+$VAR_NUM_LISTINGS, $VAR_NUM_LISTINGS);
 $quizzes2 = mysql_query($query_quizzes2, $quizroo) or die(mysql_error());
 $row_quizzes2 = mysql_fetch_assoc($quizzes2);
 $totalRows_quizzes2 = mysql_num_rows($quizzes2);
@@ -74,7 +74,7 @@ $row_quizzes1 = mysql_fetch_assoc($quizzes1);
 $totalRows_quizzes1 = mysql_num_rows($quizzes1);
 
 // retrieve recommended2 quizzes
-$query_quizzes2 = sprintf("SELECT quiz_id, quiz_name, quiz_description, isRecommended, quiz_picture, fk_quiz_cat, member_name, fk_member_id, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 AND isRecommended = 1 ORDER BY creation_date DESC LIMIT %d, %d", $starting_quiz+7, $VAR_NUM_LISTINGS);
+$query_quizzes2 = sprintf("SELECT quiz_id, quiz_name, quiz_description, isRecommended, quiz_picture, fk_quiz_cat, member_name, fk_member_id, cat_name, likes, dislikes FROM q_quizzes, q_quiz_cat, s_members WHERE member_id = fk_member_id AND cat_id = fk_quiz_cat AND isPublished = 1 AND isRecommended = 1 ORDER BY creation_date DESC LIMIT %d, %d", $starting_quiz+$VAR_NUM_LISTINGS, $VAR_NUM_LISTINGS);
 $quizzes2 = mysql_query($query_quizzes2, $quizroo) or die(mysql_error());
 $row_quizzes2 = mysql_fetch_assoc($quizzes2);
 $totalRows_quizzes2 = mysql_num_rows($quizzes2);
@@ -166,13 +166,53 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
 	if($totalRows_total['quiz_total']%($VAR_NUM_LISTINGS*2) > 0){
 		$pageNum = floor($pageNum)+1;
 	}
-	for($page=1; $page<=$pageNum; $page++) {
+	$current_page = $starting_quiz/($VAR_NUM_LISTINGS*2) + 1;
+	if($pageNum>10){
+		if($current_page>4){
+			if($current_page+4 <= $pageNum){
+				$start_page = $current_page - 4;
+				$max_page = $current_page + 5;
+			}
+			else{
+				$max_page = $pageNum;
+				$start_page = $pageNum - 9;
+			}
+		}
+		else{
+			$start_page = 1;
+			$max_page = 10;
+		}
+	}
+	else{
+		$start_page = 1;
+		$max_page = $pageNum;
+	}
+	//first and previous
+	if($current_page == 1){
+		echo "First"; echo"&nbsp;&nbsp;"; echo "Previous"; echo"&nbsp;&nbsp;"; 
+	}
+	else { ?>
+	<a href ="../webroot/index.php?starting=0&sort=<?php echo $get_type;?>"><?php echo "First"; echo "&nbsp;&nbsp;"; ?></a>	
+	<a href ="../webroot/index.php?starting=<?php echo ($current_page-2)*$VAR_NUM_LISTINGS*2 ?>&sort=<?php echo $get_type;?>"><?php echo "Previous"; echo "&nbsp;&nbsp;"; ?></a>	
+	<?php }//end else
+
+	//number pages
+	for($page=$start_page; $page<=$max_page; $page++) {
 	if ($starting_quiz == ($page-1)*$VAR_NUM_LISTINGS*2){
 		echo $page; echo "&nbsp;&nbsp;";
 	}
 	else { ?>
 	<a href ="../webroot/index.php?starting=<?php echo ($page-1)*$VAR_NUM_LISTINGS*2 ?>&sort=<?php echo $get_type;?>"><?php echo $page; echo "&nbsp;&nbsp;"; ?></a> 
 	<?php }}//end ifelse // end for loop ?>
+	
+	<?php //next and last
+	if($current_page == $pageNum){
+		echo "Next"; echo"&nbsp;&nbsp;"; echo "Last"; echo"&nbsp;&nbsp;"; 
+	}
+	else { ?>
+	<a href ="../webroot/index.php?starting=<?php echo ($current_page)*$VAR_NUM_LISTINGS*2 ?>&sort=<?php echo $get_type;?>"><?php echo "Next"; echo "&nbsp;&nbsp;"; ?></a>	
+	<a href ="../webroot/index.php?starting=<?php echo ($pageNum-1)*$VAR_NUM_LISTINGS*2 ?>&sort=<?php echo $get_type;?>"><?php echo "Last"; echo "&nbsp;&nbsp;"; ?></a>	
+	<?php }//end else	?>
 	</p>
   </div>
   
