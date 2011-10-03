@@ -439,14 +439,16 @@ button to add a result entry!</p>
 </div>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
-<div class="add_container"><input type="submit" name="save" id="prev"
-	value="Previous Step" />&nbsp; <input type="button" name="addResultBtn"
-	id="addResultBtn" value="Add new result" onclick="QuizResultMulti.add()" />&nbsp; <input type="submit" name="save" id="next" value="Next Step!" /></div>
+<div class="add_container">
+<input type="submit" name="save" id="prev" value="Previous Step" />&nbsp; 
+<input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onclick="QuizResultMulti.add()" />&nbsp; 
+<input type="submit" name="save" id="next" value="Next Step!" />
+</div>
 <?php }else{ ?>
-<div class="add_container"><input type="submit" name="save" id="prev"
-	value="Previous Step" />&nbsp; <input type="button" name="addResultBtn"
-	id="addResultBtn" value="Add new result" onclick="QuizResultTest.add()" />&nbsp;
-<input type="submit" name="save" id="next" value="Next Step!" /></div>
+<div class="add_container"><input type="submit" name="save" id="prev" value="Previous Step" />&nbsp; 
+<input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onclick="QuizResultTest.add()" />&nbsp;
+<input type="submit" name="save" id="next" value="Next Step!" />
+</div>
 <?php } ?>
 
 <input type="hidden" name="resultCount" id="resultCount" value="0" /></form>
