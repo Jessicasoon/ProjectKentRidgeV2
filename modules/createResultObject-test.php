@@ -108,7 +108,7 @@ $count = 1;
   </tr>
   <tr> <!--result range-->
 	<th width="120" valign="top" scope="row"><label>Range</label></th>
-	<td><div id="slider-range"></div><script>slider()</script><input type="text" name="slider-range" id="amount" /><span class="desc">Select the percentage range of correct answers you want the users to get to achieve this result.</span></td>
+	<td><div id="slider-range-<?php echo $result; ?>"></div><script>QuizResultTest.slider();</script><input type="text" name="slider-range" id="amount-<?php echo $result; ?>" /><span class="desc">Select the percentage range of correct answers you want the users to get to achieve this result.</span></td>
   </tr>
   <tr>
     <th width="120" rowspan="4" valign="top" scope="row"><label>Picture</label>

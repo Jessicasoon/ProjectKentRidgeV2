@@ -101,19 +101,24 @@ how you want it to be displayed.</p>
 	<!-- Test type-->
 	<tr>
       <?php if ($row_resultType['fk_quiz_type'] == "1"){ ?>	
-		<td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked" disabled="disabled"/>Test</h2></td>
+		<td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked" disabled="disabled"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Test</span></h2></td>
 	  <?php }else{ ?>
-		<td colspan="3"><h2><input id="test" name="type" type="radio" value="1" disabled="disabled"/>Test</h2></td>
+		<td colspan="3"><h2><input id="test" name="type" type="radio" value="1" disabled="disabled"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Test</span></h2></td>
 	  <?php }?>
 	</tr>
 	<tr>
-		<td valign="top" width="40%">
+		<td valign="top" width="20%">
         <?php if ($row_resultType['fk_quiz_type'] == "1"){ ?>
                 <div id = "blk-1">
         <?php } else { ?>
         		<div id = "blk-1" style="display:none">
         <?php } ?>       
-				<table>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
 					<tr>
 						<td>Do you want to customize your quiz result?<a href="customnizeTestExpl.php"> What's this?</a></td>
 						<!-- To replace the hyperlink-->
@@ -122,24 +127,29 @@ how you want it to be displayed.</p>
 						<td><input type="radio" value="test_custom" name="mode1" checked="checked"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_simple" name="mode1"/>No, keep it simple.</td>
+						<td><input type="radio" value="test_simple" name="mode1"/>No</td>
 					</tr>
 				</table>
                 </div>		
           </td>
-		<td width="60%">
+		<td width="80%">
 		<div class="content-container">
-		<p><strong>Quiz of Test type</strong>: designed to determine knowledge
+		<p><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz of Test type:</span> designed to determine knowledge
 		of a particular subject based on factual information of it. Hence,
 		there are right and wrong answers for each question. Below is an
 		example of Test type quiz.</p>
 		<table>
 			<tr>
 				<td>
-				<table>
-					<tr bgcolor="#FC0">
-						<td>Quiz title:</td>
-						<td>How well do you know Michael Jackson?</td>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
+					<tr>
+						<td><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz title:</span></td>
+						<td><strong>How well do you know Michael Jackson?</strong></td>
 					</tr>
 					<tr>
 						<td>Question 1:</td>
@@ -176,19 +186,24 @@ England</td>
 	<!-- Personality type-->
 	<tr>
 	<?php if ($row_resultType['fk_quiz_type'] == "2"){ ?>
-	  <td colspan="3"><h2><input id="personality" name="type" type="radio" checked="checked" value="2" disabled="disabled"/>Personality</h2></td>
+	  <td colspan="3"><h2><input id="personality" name="type" type="radio" checked="checked" value="2" disabled="disabled"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Personality</span></h2></td>
 	<?php }else{ ?>
-	  <td colspan="3"><h2><input id="personality" name="type" type="radio" value="2" disabled="disabled"/>Personality</h2></td>
+	  <td colspan="3"><h2><input id="personality" name="type" type="radio" value="2" disabled="disabled"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Personality</span></h2></td>
 	<?php } ?>
 	  </tr>
 	<tr>
-		<td valign="top" width="40%">
+		<td valign="top" width="20%">
         <?php if ($row_resultType['fk_quiz_type'] == "2"){ ?>
                 <div id = "blk-2">
         <?php } else { ?>
         		<div id = "blk-2" style="display:none">
         <?php } ?>
-				<table>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
 					<tr>
 						<td>Do you want to make your quiz more accurate? <a
 							href="customnizeMultiExpl.php">What's this?</a></td>
@@ -198,15 +213,14 @@ England</td>
 						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" />Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_simple" name="mode2" />No, keep it
-						simple</td>
+						<td><input type="radio" value="multi_simple" name="mode2" />No</td>
 					</tr>
 				</table>
                 </div>				
         </td>
-		<td width="60%">
+		<td width="80%">
 		<div class="content-container">
-		<p><strong>Quiz of Personality type:</strong> consisting of questions
+		<p><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz of Personality type:</span> consisting of questions
 		whose purpose is to test on different aspects of a person's characters
 		such as behaviors, thoughts and feelings. There is no right or wong
 		answer and the result derives from how quiz takers choose their
@@ -215,10 +229,15 @@ England</td>
 		<table>
 			<tr>
 				<td>
-				<table>
-					<tr bgcolor="#FC0">
-						<td width="58">Quiz title:</td>
-						<td>How serious are you?</td>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
+					<tr>
+						<td><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz title:</span></td>
+						<td><strong>How serious are you?</strong></td>
 					</tr>
 					<tr>
 						<td>Question 1:</td>
@@ -733,12 +752,17 @@ how you want it to be displayed.</p>
 <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
 	<!-- Test type-->
 	<tr>
-	  <td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked"/>Test</h2></td>
+	  <td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Test</span></h2></td>
 	</tr>
 	<tr>
-		<td valign="top" width="40%">
+		<td valign="top" width="20%">
                 <div id = "blk-1">
-				<table>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
 					<tr>
 						<td>Do you want to customize your quiz result?<a
 							href="customnizeTestExpl.php"> What's this?</a></td>
@@ -748,25 +772,30 @@ how you want it to be displayed.</p>
 						<td><input type="radio" value="test_custom" name="mode1" checked="checked"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_simple" name="mode1" />No, keep it
-						simple</td>
+						<td><input type="radio" value="test_simple" name="mode1" />
+						No</td>
 					</tr>
 				</table>
                 </div>		
           </td>
-		<td width="60%">
+		<td width="80%">
 		<div class="content-container">
-		<p><strong>Quiz of Test type</strong>: designed to determine knowledge
+		<p><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz of Test type: </span>designed to determine knowledge
 		of a particular subject based on factual information of it. Hence,
 		there are right and wrong answers for each question. Below is an
 		example of Test type quiz.</p>
 		<table>
 			<tr>
 				<td>
-				<table>
-					<tr bgcolor="#FC0">
-						<td>Quiz title:</td>
-						<td>How well do you know Michael Jackson?</td>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
+					<tr>
+						<td><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz title:</span></td>
+						<td><strong>How well do you know Michael Jackson?</strong></td>
 					</tr>
 					<tr>
 						<td>Question 1:</td>
@@ -802,12 +831,17 @@ England</td>
 	</tr>
 	<!-- Personality type-->
 	<tr>
-	  <td colspan="3"><h2><input id="personality" name="type" type="radio" value="2"/>Personality</h2></td>
+	  <td colspan="3"><h2><input id="personality" name="type" type="radio" value="2"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Personality</span></h2></td>
 	  </tr>
 	<tr>
-		<td valign="top" width="40%">
+		<td valign="top" width="20%">
                 <div id = "blk-2" style="display:none">
-				<table>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
 					<tr>
 						<td>Do you want to make your quiz more accurate? <a
 							href="customnizeMultiExpl.php">What's this?</a></td>
@@ -817,15 +851,14 @@ England</td>
 						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_simple" name="mode2" />No, keep it
-						simple</td>
+						<td><input type="radio" value="multi_simple" name="mode2" />No</td>
 					</tr>
 				</table>
                 </div>				
         </td>
-		<td width="60%">
+		<td width="80%">
 		<div class="content-container">
-		<p><strong>Quiz of Personality type:</strong> consisting of questions
+		<p><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz of Personality type:</span> consisting of questions
 		whose purpose is to test on different aspects of a person's characters
 		such as behaviors, thoughts and feelings. There is no right or wong
 		answer and the result derives from how quiz takers choose their
@@ -834,10 +867,15 @@ England</td>
 		<table>
 			<tr>
 				<td>
-				<table>
-					<tr bgcolor="#FC0">
-						<td width="58">Quiz title:</td>
-						<td>How serious are you?</td>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
+					<tr>
+						<td><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz title:</span></td>
+						<td><strong>How serious are you?</strong></td>
 					</tr>
 					<tr>
 						<td>Question 1:</td>

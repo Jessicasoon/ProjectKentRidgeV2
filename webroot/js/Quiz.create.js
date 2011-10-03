@@ -93,6 +93,19 @@ var QuizResultTest = {
 		
 	},
 	
+	slider: function() { //http://jqueryui.com/demos/slider/#rangemax
+		$( "#slider-range-"+this.resultCount).slider({
+			range: "max",
+			min: 0,
+			max: 100,
+			value: 75,
+			slide: function( event, ui ) {
+				$( "#amount-"+this.resultCount).val("100% - " + ui.value + "%");
+			}
+		});
+		$( "#amount-"+this.resultCount).val("100% - " + $( "#slider-range-"+this.resultCount).slider( "value" ) + "%");
+	},
+	
 	add: function(){
 		// add the result widget
 		$.ajax({
@@ -118,7 +131,7 @@ var QuizResultTest = {
 		// update the count
 		this.updateCount();
 		// Modify by Hien on 14 Sep for getting value from the input text area
-		var test =  document.getElementById('');
+		var test =  document.getElementById('amount-'+this.resultCount);
 		alert(test.value);
 		// end modification
 		return this.resultCount;
@@ -989,17 +1002,4 @@ function submitCheck(value){
 	}
 }
 
-function slider() { //http://jqueryui.com/demos/slider/#rangemax
-		$( "#slider-range" ).slider({
-			range: "max",
-			min: 0,
-			max: 100,
-			value: 75,
-			slide: function( event, ui ) {
-				$( "#amount" ).val("100% - " + ui.value + "%");
-			}
-		});
-		$( "#amount" ).val("100% - " + $( "#slider-range" ).slider( "value" ) + "%");
-		
-		var min = $( ".selector" ).slider( "option", "min" );
-	}
+	
