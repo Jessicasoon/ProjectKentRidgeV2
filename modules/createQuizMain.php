@@ -455,17 +455,25 @@ results as you like!</p>
 <div id="createResultContainer">
 <p id="resultTip" class="containerTip">Click on the "Add new result"
 button to add a result entry!</p>
+<?php if($mode == "simple" || $mode == "accurate"){ ?>
+<body onload="QuizResultMulti.add()">
+<?php }else{ ?>
+<body onload="QuizResultTest.add()">
+<?php } ?>
 </div>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
-<div class="add_container"><input type="submit" name="save" id="prev"
-	value="Previous Step" />&nbsp; <input type="button" name="addResultBtn"
-	id="addResultBtn" value="Add new result" onclick="QuizResultMulti.add()" />&nbsp; <input type="submit" name="save" id="next" value="Next Step!" /></div>
+<div class="add_container">
+<input type="submit" name="save" id="prev" value="Previous Step" />&nbsp; 
+<input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onclick="QuizResultMulti.add()" />&nbsp; 
+<input type="submit" name="save" id="next" value="Next Step!" />
+</div>
 <?php }else{ ?>
-<div class="add_container"><input type="submit" name="save" id="prev"
-	value="Previous Step" />&nbsp; <input type="button" name="addResultBtn"
-	id="addResultBtn" value="Add new result" onclick="QuizResultTest.add()" />&nbsp;
-<input type="submit" name="save" id="next" value="Next Step!" /></div>
+<div class="add_container">
+<input type="submit" name="save" id="prev" value="Previous Step" />&nbsp; 
+<input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onclick="QuizResultTest.add()" />&nbsp;
+<input type="submit" name="save" id="next" value="Next Step!" />
+</div>
 <?php } ?>
 
 <input type="hidden" name="resultCount" id="resultCount" value="0" /></form>
@@ -534,6 +542,11 @@ each option contributes to a result.</p>
 <div id="createQuestionContainer">
 <p id="questionTip" class="containerTip">Click on the "Add new question"
 button to add a question entry!</p>
+<?php if($mode == "simple" || $mode == "accurate"){ ?>
+<body onload="QuizQuestionMulti.add()">
+<?php }else{ ?>
+<body onload="QuizQuestionTest.add()">
+<?php } ?>
 </div>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?> 

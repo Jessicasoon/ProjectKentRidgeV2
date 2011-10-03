@@ -292,7 +292,7 @@ var QuizResult_NOTUSED = {
 		// populate the quiz
 		$.ajax({
 			type: "GET",
-			url: "../modules/createResultObject-test.php?load",
+			url: "../modules/createResultObject.php?load",
 			data: "resultNumber="+this.resultCount+"&unikey="+QuizInfo.key+"&id="+QuizInfo.id,
 			async: false,
 			success: function(data) {
@@ -326,7 +326,7 @@ var QuizResult_NOTUSED = {
 		// add the result widget
 		$.ajax({
 			type: "GET",
-			url: "../modules/createResultObject-test.php",
+			url: "../modules/createResultObject.php",
 			data: "resultNumber="+this.resultCount+"&unikey="+QuizInfo.key,
 			async: false,
 			success: function(data) {
