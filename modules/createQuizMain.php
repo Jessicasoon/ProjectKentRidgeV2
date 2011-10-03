@@ -419,6 +419,7 @@ results as you like!</p>
 </ul>
 </div>
 </div>
+
 <div id="create-quiz" class="frame rounded">
 <?php
 		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
@@ -455,28 +456,34 @@ results as you like!</p>
 <div id="createResultContainer">
 <p id="resultTip" class="containerTip">Click on the "Add new result"
 button to add a result entry!</p>
+</div>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
 <body onload="QuizResultMulti.add()">
 <?php }else{ ?>
-<body onload="QuizResultTest.add()">
+<body onLoad="QuizResultTest.add()">
 <?php } ?>
-</div>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
 <div class="add_container">
-<input type="submit" name="save" id="prev" value="Previous Step" />&nbsp; 
-<input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onclick="QuizResultMulti.add()" />&nbsp; 
-<input type="submit" name="save" id="next" value="Next Step!" />
+<table>
+<tr>
+<td><input type="submit" name="save" id="prev" value="Previous Step" /></td>
+<td><input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultMulti.add()" /></td> 
+<td><input type="submit" name="save" id="next" value="Next Step!" /></td>
+<tr>
+</table>
 </div>
 <?php }else{ ?>
 <div class="add_container">
-<input type="submit" name="save" id="prev" value="Previous Step" />&nbsp; 
-<input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onclick="QuizResultTest.add()" />&nbsp;
-<input type="submit" name="save" id="next" value="Next Step!" />
+<table>
+<td><input type="submit" name="save" id="prev" value="Previous Step" /></td> 
+<td><input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultTest.add()" /></td>
+<td><input type="submit" name="save" id="next" value="Next Step!" /></td>
+</table>
 </div>
 <?php } ?>
-
-<input type="hidden" name="resultCount" id="resultCount" value="0" /></form>
+<input type="hidden" name="resultCount" id="resultCount" value="0" />
+</form>
 </div>
 		<?php // THE THIRD STEP: Quiz Questions
 		break; case 3:
@@ -742,7 +749,7 @@ $listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
 $row_listCat = mysql_fetch_assoc($listCat);
 $totalRows_listCat = mysql_num_rows($listCat);
 ?>
-  <form action="../modules/createQuizEngine.php?step=1" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
+  <form action="../modules/createQuizEngine.php?step=1" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onSubmit="return submitCheck(Spry.Widget.Form.validate(this));">
 <div id = "step_0">
 <div id="progress-container" class="framePanel rounded">
 <h2>Create Quiz: Choose Quiz Type</h2>
