@@ -557,17 +557,20 @@ button to add a question entry!</p>
 </div>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?> 
-<div class="add_container"><input type="submit" name="save" id="prev"
-	value="Previous Step" />&nbsp; <input type="button"
-	name="addQuestionBtn" id="addQuestionBtn" value="Add new question"
-	onclick="QuizQuestionMulti.add()" />&nbsp; <input type="submit" name="save"
-	id="next" value="Next Step!" /></div>
+<div class="add_container">
+<table>
+<td><input type="submit" name="save" id="prev" value="Previous Step" /></td>
+<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onclick="QuizQuestionMulti.add()" /></td><td><input type="submit" name="save" id="next" value="Next Step!" /></td>
+</table>
+</div>
 <?php }else{ ?>
-<div class="add_container"><input type="submit" name="save" id="prev"
-	value="Previous Step" />&nbsp; <input type="button"
-	name="addQuestionBtn" id="addQuestionBtn" value="Add new question"
-	onclick="QuizQuestionTest.add()" />&nbsp; <input type="submit" name="save"
-	id="next" value="Next Step!" /></div>
+<div class="add_container">
+<table>
+<td><input type="submit" name="save" id="prev" value="Previous Step" /></td> 
+<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onclick="QuizQuestionTest.add()" /></td>
+<td><input type="submit" name="save" id="next" value="Next Step!" /></td> 
+</table>
+</div>
 <?php } ?>
 	
 </form>
