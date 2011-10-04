@@ -93,6 +93,7 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
     </div>
   </div>
   <?php } ?>
+  <br/>
   <div id="topics-bar" class="clear">
   <ul style="font-size:18px" > <!--------------TABBING LOGIC------------------->
 	  <li><?php if($get_type==0){echo "Most Popular";} else{?><a href ="../webroot/index.php?starting=0&sort=0">Most Popular</a><?php }?></li>

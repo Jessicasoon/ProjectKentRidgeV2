@@ -38,8 +38,13 @@ if(isset($_GET['step'])){
 			$quiz_id = $quiz->createQuiz($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id, $key, $mode, $type);
 		}
 		
-		// direct them to step 2
-		header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
+		// direct them to step 3 if the quiz is of test type and simple display mode, else direct to step 2
+		if($type == "1" && $mode == "test_simple"){
+			header("Location: ../webroot/createQuiz.php?step=3&id=".$quiz_id);
+		}
+		else{
+			header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
+		}
 		
 		break;		
 		case 2: // save the quiz results
@@ -222,7 +227,13 @@ if(isset($_GET['step'])){
 		
 		// check the direction to go
 		if($_POST['save'] == "Previous Step"){
-			header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
+			// skip step 2
+			if($mode == "test_simple"){
+				header("Location: ../webroot/createQuiz.php?step=1&id=".$quiz_id);
+			}
+			else{
+				header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
+			}
 		}else{
 			header("Location: ../webroot/createQuiz.php?step=4&id=".$quiz_id);
 		}

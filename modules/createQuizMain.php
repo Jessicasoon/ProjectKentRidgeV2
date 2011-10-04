@@ -464,7 +464,7 @@ button to add a result entry!</p>
 <?php } ?>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
-<div class="add_container">
+<div class="add_container" align="center">
 <table>
 <tr>
 <td><input type="submit" name="save" id="prev" value="Previous Step" /></td>
@@ -474,11 +474,13 @@ button to add a result entry!</p>
 </table>
 </div>
 <?php }else{ ?>
-<div class="add_container">
+<div class="add_container" align="center">
 <table>
+<tr>
 <td><input type="submit" name="save" id="prev" value="Previous Step" /></td> 
 <td><input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultTest.add()" /></td>
 <td><input type="submit" name="save" id="next" value="Next Step!" /></td>
+</tr>
 </table>
 </div>
 <?php } ?>
@@ -557,18 +559,22 @@ button to add a question entry!</p>
 </div>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?> 
-<div class="add_container">
+<div class="add_container" align="center">
 <table>
+<tr>
 <td><input type="submit" name="save" id="prev" value="Previous Step" /></td>
-<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onclick="QuizQuestionMulti.add()" /></td><td><input type="submit" name="save" id="next" value="Next Step!" /></td>
+<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onClick="QuizQuestionMulti.add()" /></td><td><input type="submit" name="save" id="next" value="Next Step!" /></td>
+</tr>
 </table>
 </div>
 <?php }else{ ?>
-<div class="add_container">
+<div class="add_container" align="center">
 <table>
+<tr>
 <td><input type="submit" name="save" id="prev" value="Previous Step" /></td> 
-<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onclick="QuizQuestionTest.add()" /></td>
+<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onClick="QuizQuestionTest.add()" /></td>
 <td><input type="submit" name="save" id="next" value="Next Step!" /></td> 
+</tr>
 </table>
 </div>
 <?php } ?>
