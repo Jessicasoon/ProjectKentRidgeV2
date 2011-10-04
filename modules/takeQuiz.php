@@ -68,8 +68,14 @@ $question_count = 1;
 			} 
 			if ($mode == "accurate")
 			{ 
-				//$query_getOptions = sprintf("SELECT * FROM q_options_multi WHERE fk_question_id = %d GROUP BY option_id HAVING COUNT(DISTINCT fk_result_id) = 1",$row_getQuizQuestions['question_id'] );	
-				$query_getOptions = sprintf(" SELECT Q.*  FROM q_options_multi Q JOIN (SELECT DISTINCT option_id as options FROM q_options_multi GROUP BY option_id) Q2 ON Q.option_id = Q2.options WHERE fk_question_id = %d GROUP BY option_id",$row_getQuizQuestions['question_id'] );
+				$query_getResultInfo = sprintf("SELECT result_id FROM q_results_multi WHERE fk_quiz_id = %s LIMIT 1", GetSQLValueString($url_id, "int"));
+				$getResultInfo = mysql_query($query_getResultInfo, $quizroo) or die(mysql_error());
+				$row_getResultInfo = mysql_fetch_assoc($getResultInfo);
+				$totalRows_getResultInfo = mysql_num_rows($getResultInfo);
+				
+			//$query_getOptions = sprintf("SELECT * FROM q_options_multi WHERE fk_question_id = %d GROUP BY 'option' HAVING COUNT(DISTINCT 'option') > 0",$row_getQuizQuestions['question_id'] );	
+				//$query_getOptions = sprintf(" SELECT Q.*  FROM q_options_multi Q JOIN (SELECT DISTINCT option_id as options FROM q_options_multi GROUP BY option_id) Q2 ON Q.option_id = Q2.options WHERE fk_question_id = %d GROUP BY option_id",$row_getQuizQuestions['question_id'] );
+				$query_getOptions = sprintf("SELECT * FROM q_options_multi WHERE fk_question_id = %d AND fk_result_id = %d ",$row_getQuizQuestions['question_id'], $row_getResultInfo['result_id']);
 				$getOptions = mysql_query($query_getOptions, $quizroo) or die(mysql_error()); 
 				$row_getOptions = mysql_fetch_assoc($getOptions);
 				$totalRows_getOptions = mysql_num_rows($getOptions); 
