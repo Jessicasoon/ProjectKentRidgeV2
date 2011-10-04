@@ -30,6 +30,16 @@
 		 $("#step_1").hide("");
 		 $("#step_0").show("");
    	 });
+	  $("#test_simple").change(function(event){
+		 event.preventDefault();
+		 $("#next_step1").hide("");
+		 $("#next_alert").show("");
+   	 });
+	  $("#test_custom").change(function(event){
+		 event.preventDefault();
+		 $("#next_alert").hide("");
+		 $("#next_step1").show("");
+   	 });
  });
 </script>
 <?php
@@ -798,10 +808,10 @@ how you want it to be displayed.</p>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_custom" name="mode1" checked="checked"/>Yes</td>
+						<td><input type="radio" value="test_custom" name="mode1" checked="checked" id="test_custom"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_simple" name="mode1" />
+						<td><input type="radio" value="test_simple" name="mode1" id="test_simple" />
 						No</td>
 					</tr>
 				</table>
@@ -1022,7 +1032,11 @@ Don't care about
         </tr>
         <tr>
           <th valign="top" scope="row">&nbsp;</th>
-          <td align="right" class="desc"><input type="button" value='Previous Step' id="step1">&nbsp; <input type="submit" name="next" id="next" value="Next Step!" /></td>
+          <td align="right" class="desc">
+          <input type="button" value='Previous Step' id="step1">&nbsp; 
+          <input type="submit" name="next" id="next_step1" value="Next Step!"/>
+          <input type="submit" name="next" id="next_alert" value="Next Step!" style="display:none" onClick="javascript:alert('For your information, since TEST type with SIMPLE mode were chosen, step 3 will be skipped. It will take a while until the next step is loaded.')"/>
+          </td>
         </tr>
       </table>
 </div>
