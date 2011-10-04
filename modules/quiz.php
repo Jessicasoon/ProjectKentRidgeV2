@@ -1010,7 +1010,7 @@ class Quiz{
 		require('variables.php');
 		
 		// check if the quiz is already published
-		if($this->isPublished() && $this->isOwner($memberID)){		
+		if($this->isOwner($memberID)){		
 			// set the publish flag to 0
 			$query = sprintf("UPDATE q_quizzes SET isPublished = 3 WHERE quiz_id = %d", $this->quiz_id);
 			mysql_query($query, $quizroo) or die(mysql_error());
