@@ -57,10 +57,6 @@ $totalRows_getResults = mysql_num_rows($getResults);
 }
 if ( ($mode == "test_simple") || ($mode == "test_custom") ) {
 	// caculate and order the final result from the sum of options and their weightage
-	/*$query_getResults = "SELECT fk_result, SUM(option_weightage) AS count FROM q_options WHERE option_id IN (".substr($answers, 0, strlen($answers)-1).") GROUP BY fk_result ORDER BY count DESC LIMIT 0,1";
-	$getResults = mysql_query($query_getResults, $quizroo) or die(mysql_error());
-	$row_getResults = mysql_fetch_assoc($getResults);
-	$totalRows_getResults = mysql_num_rows($getResults);*/ // REMOVED BY LIEN
 	$query_getResults = "SELECT COUNT(isCorrect) AS test_numOfCorrect FROM q_options_test WHERE option_id IN (".substr($answers,0,strlen($answers)-1).") AND isCorrect = 1 ";
 	$getResults = mysql_query($query_getResults, $quizroo) or die(mysql_error());
 	$row_getResults = mysql_fetch_assoc($getResults);
@@ -70,7 +66,9 @@ if ( ($mode == "test_simple") || ($mode == "test_custom") ) {
 	$getNumQuestions = mysql_query($query_getNumQuestions, $quizroo) or die(mysql_error());
 	$row_getNumQuestions = mysql_fetch_assoc($getNumQuestions);
 	$totalRows_getNumQuestions = mysql_num_rows($getNumQuestions);
+
 }
+
 if ($mode == "") {
 // caculate and order the final result from the sum of options and their weightage
 $query_getResults = "SELECT fk_result, SUM(option_weightage) AS count FROM q_options WHERE option_id IN (".substr($answers, 0, strlen($answers)-1).") GROUP BY fk_result ORDER BY count DESC LIMIT 0,1";
@@ -131,14 +129,11 @@ $row_getResultInfo = mysql_fetch_assoc($getResultInfo);
 $totalRows_getResultInfo = mysql_num_rows($getResultInfo);
 }
 if ($mode == "test_simple"){
-//Lien: Mistake with bottom statement
-//$query_getResultInfo = sprintf("SELECT %d/%d AS result_title", row_getResults['test_numOfCorrect'], row_getNumQuestions['test_numOfQuestions']);
-$query_getResultInfo = "SELECT * FROM q_results_test WHERE result_id = ".$row_getResults['fk_result']; // just anyhow statement
-$getResultInfo = mysql_query($query_getResultInfo, $quizroo) or die(mysql_error());
-$row_getResultInfo = mysql_fetch_assoc($getResultInfo);
-$totalRows_getResultInfo = mysql_num_rows($getResultInfo);
+	$testSimple_results = ($row_getResults['test_numOfCorrect'] / $row_getNumQuestions['test_numOfQuestions'] * 100);
 }
 if ($mode == "test_custom"){
+	$testSimple_results = ($row_getResults['test_numOfCorrect'] / $row_getNumQuestions['test_numOfQuestions'] * 100);
+	//have to get result from range ^
 $query_getResultInfo = "SELECT * FROM q_results_test WHERE result_id = ".$row_getResults['test_numOfCorrect'];
 $getResultInfo = mysql_query($query_getResultInfo, $quizroo) or die(mysql_error());
 $row_getResultInfo = mysql_fetch_assoc($getResultInfo);
@@ -152,13 +147,28 @@ $row_getResultInfo = mysql_fetch_assoc($getResultInfo);
 $totalRows_getResultInfo = mysql_num_rows($getResultInfo);
 }
 
-// get results to build the pie chart HAVE TO CHANGE
+// get results to build the pie chart HAVE TO CHANGE no chart for test simple?
 //$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
+if ($mode == "test_custom"){
+$query_getResultChart = sprintf("SELECT count, result_title FROM (SELECT COUNT(*) AS count, fk_result_id FROM q_store_result WHERE q_store_result.fk_quiz_id = %d GROUP BY fk_result_id) r RIGHT JOIN (SELECT result_id, result_title FROM q_results_test WHERE fk_quiz_id = %d) t ON r.fk_result_id = t.result_id", $quiz->quiz_id, $quiz->quiz_id);
+$getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
+$row_getResultChart = mysql_fetch_assoc($getResultChart);
+$totalRows_getResultChart = mysql_num_rows($getResultChart);
+}
+if ( ($mode == "simple") || ($mode == "accurate") ) {
+$query_getResultChart = sprintf("SELECT count, result_title FROM (SELECT COUNT(*) AS count, fk_result_id FROM q_store_result WHERE q_store_result.fk_quiz_id = %d GROUP BY fk_result_id) r RIGHT JOIN (SELECT result_id, result_title FROM q_results_multi WHERE fk_quiz_id = %d) t ON r.fk_result_id = t.result_id", $quiz->quiz_id, $quiz->quiz_id);
+$getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
+$row_getResultChart = mysql_fetch_assoc($getResultChart);
+$totalRows_getResultChart = mysql_num_rows($getResultChart);
+}
+if ($mode == "") {
 $query_getResultChart = sprintf("SELECT count, result_title FROM (SELECT COUNT(*) AS count, fk_result_id FROM q_store_result WHERE q_store_result.fk_quiz_id = %d GROUP BY fk_result_id) r RIGHT JOIN (SELECT result_id, result_title FROM q_results WHERE fk_quiz_id = %d) t ON r.fk_result_id = t.result_id", $quiz->quiz_id, $quiz->quiz_id);
 $getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
 $row_getResultChart = mysql_fetch_assoc($getResultChart);
 $totalRows_getResultChart = mysql_num_rows($getResultChart);
+}
 ?>
+
 <?php if($quiz->isPublished() && $totalRows_getResultChart != 0){ ?>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -201,6 +211,13 @@ $(document).ready(function(){
 <p>Here's the result of the quiz! You can 'Like' this quiz or recommend it to your friends! You can also see how others have fared while taking this quiz.</p>
 </div>
 </div>
+
+<?php if ($mode == "test_simple"){ ?>
+<div id="result-panel" class="frame rounded">
+<h2><?php echo "You got "; echo $testSimple_results; echo "% correct!"; ?></h2>
+<?php include('sharingInterface.php') ?>
+</div>
+<?php }else{ ?>
 <div id="result-panel" class="frame rounded">
 <h2><?php echo $row_getResultInfo['result_title']; ?></h2>
 <?php if($row_getResultInfo['result_picture'] != "none.gif"){ ?>
@@ -209,6 +226,8 @@ $(document).ready(function(){
 <!-- Include user sharing interface for liking, posting feed and recommending to friends -->
 <?php include('sharingInterface.php') ?>
 </div>
+<?php } ?>
+
 
 <?php if($quiz->isPublished() && $totalRows_getResultChart != 0){ ?>
 <div class="framePanel rounded">
