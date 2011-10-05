@@ -102,7 +102,7 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
 	</ul>
     </div>
   <div class="clear">
-    <div id="quizzes1" class="framePanel rounded left-right">
+    <div id="recommendations" class="framePanel rounded left-right">
       <!--<h2>Popular1</h2>-->
       <div class="repeat-container">
       <?php if($totalRows_quizzes1 != 0){ do { ?>
@@ -130,7 +130,7 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
         <?php } ?>
         </div>
     </div>
-    <div id="quizzes2" class="framePanel rounded left-right clear">
+    <div id="popular" class="framePanel rounded left-right clear">
       <!--<h2>Popular2</h2>-->
       <div class="repeat-container">
       <?php if($totalRows_quizzes2 !=0 ){ do { ?>
