@@ -30,6 +30,26 @@
 		 $("#step_1").hide("");
 		 $("#step_0").show("");
    	 });
+	  $("#test_simple").change(function(event){
+		 event.preventDefault();
+		 $("#next_step1").hide("");
+		 $("#next_alert").show("");
+   	 });
+	  $("#test_custom").change(function(event){
+		 event.preventDefault();
+		 $("#next_alert").hide("");
+		 $("#next_step1").show("");
+   	 });
+	 $("#multi_accurate").change(function(event){
+		 event.preventDefault();
+		 $("#next_alert").hide("");
+		 $("#next_step1").show("");
+   	 });
+	 $("#multi_simple").change(function(event){
+		 event.preventDefault();
+		 $("#next_alert").hide("");
+		 $("#next_step1").show("");
+   	 });
  });
 </script>
 <?php
@@ -68,7 +88,7 @@ $listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
 $row_listCat = mysql_fetch_assoc($listCat);
 $totalRows_listCat = mysql_num_rows($listCat);
 //Modified on 27 Sep by Hien for jquery
-$queryType = sprintf("SELECT fk_quiz_type FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
+$queryType = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
 $resultType =  mysql_query($queryType, $quizroo) or die(mysql_error());
 $row_resultType = mysql_fetch_assoc($resultType);
 ?>
@@ -100,46 +120,63 @@ how you want it to be displayed.</p>
 <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
 	<!-- Test type-->
 	<tr>
-      <?php if ($row_resultType['fk_quiz_type'] == "1"){ ?>	
-		<td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked" disabled="disabled"/>Test</h2></td>
+      <?php if ($row_resultType['display_mode'] == "test_simple" || $row_resultType['display_mode'] == "test_custom" ){ ?>	
+		<td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked" disabled="disabled"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Test</span></h2></td>
 	  <?php }else{ ?>
-		<td colspan="3"><h2><input id="test" name="type" type="radio" value="1" disabled="disabled"/>Test</h2></td>
+		<td colspan="3"><h2><input id="test" name="type" type="radio" value="1" disabled="disabled"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Test</span></h2></td>
 	  <?php }?>
 	</tr>
 	<tr>
-		<td valign="top" width="40%">
-        <?php if ($row_resultType['fk_quiz_type'] == "1"){ ?>
+		<td valign="top" width="20%">
+        <?php if ($row_resultType['display_mode'] == "test_simple" || $row_resultType['display_mode'] == "test_custom" ){ ?>
                 <div id = "blk-1">
         <?php } else { ?>
         		<div id = "blk-1" style="display:none">
         <?php } ?>       
-				<table>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
 					<tr>
 						<td>Do you want to customize your quiz result?<a href="customnizeTestExpl.php"> What's this?</a></td>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_custom" name="mode1" checked="checked"/>Yes</td>
+                    <?php if ($row_resultType['display_mode'] == "test_custom") {?>
+						<td><input type="radio" value="test_custom" name="mode1" checked="checked" id="test_custom"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_simple" name="mode1"/>No, keep it simple.</td>
+						<td><input type="radio" value="test_simple" name="mode1" id="test_simple"/>No</td>
+                    <?php } else { ?>
+                    <td><input type="radio" value="test_custom" name="mode1" id="test_custom"/>Yes</td>
+					</tr>
+					<tr>
+						<td><input type="radio" value="test_simple" name="mode1"  checked="checked" id="test_simple"/>No</td>
+                    <?php } ?>
 					</tr>
 				</table>
                 </div>		
           </td>
-		<td width="60%">
+		<td width="80%">
 		<div class="content-container">
-		<p><strong>Quiz of Test type</strong>: designed to determine knowledge
+		<p><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz of Test type:</span> designed to determine knowledge
 		of a particular subject based on factual information of it. Hence,
 		there are right and wrong answers for each question. Below is an
 		example of Test type quiz.</p>
 		<table>
 			<tr>
 				<td>
-				<table>
-					<tr bgcolor="#FC0">
-						<td>Quiz title:</td>
-						<td>How well do you know Michael Jackson?</td>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
+					<tr>
+						<td><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz title:</span></td>
+						<td><strong>How well do you know Michael Jackson?</strong></td>
 					</tr>
 					<tr>
 						<td>Question 1:</td>
@@ -175,38 +212,49 @@ England</td>
 	</tr>
 	<!-- Personality type-->
 	<tr>
-	<?php if ($row_resultType['fk_quiz_type'] == "2"){ ?>
-	  <td colspan="3"><h2><input id="personality" name="type" type="radio" checked="checked" value="2" disabled="disabled"/>Personality</h2></td>
+	<?php if ($row_resultType['display_mode'] == "multi_simple" || $row_resultType['display_mode'] == "multi_accurate" ){ ?>
+	  <td colspan="3"><h2><input id="personality" name="type" type="radio" checked="checked" value="2" disabled="disabled"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Personality</span></h2></td>
 	<?php }else{ ?>
-	  <td colspan="3"><h2><input id="personality" name="type" type="radio" value="2" disabled="disabled"/>Personality</h2></td>
+	  <td colspan="3"><h2><input id="personality" name="type" type="radio" value="2" disabled="disabled"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Personality</span></h2></td>
 	<?php } ?>
 	  </tr>
 	<tr>
-		<td valign="top" width="40%">
-        <?php if ($row_resultType['fk_quiz_type'] == "2"){ ?>
+		<td valign="top" width="20%">
+        <?php if ($row_resultType['display_mode'] == "multi_simple" || $row_resultType['display_mode'] == "multi_accurate" ){ ?>
                 <div id = "blk-2">
         <?php } else { ?>
         		<div id = "blk-2" style="display:none">
         <?php } ?>
-				<table>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
 					<tr>
 						<td>Do you want to make your quiz more accurate? <a
 							href="customnizeMultiExpl.php">What's this?</a></td>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" />Yes</td>
+                    <?php if ($row_resultType['display_mode'] == "multi_accurate") {?>
+						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" id="multi_accurate"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_simple" name="mode2" />No, keep it
-						simple</td>
+						<td><input type="radio" value="multi_simple" name="mode2" id="multi_simple"/>No</td>
+                    <?php } else { ?>
+                    	<td><input type="radio" value="multi_accurate" name="mode2" id="multi_accurate"/>Yes</td>
+					</tr>
+					<tr>
+						<td><input type="radio" value="multi_simple" name="mode2" checked="checked" id="multi_simple"/>No</td>
+                    <?php } ?>
 					</tr>
 				</table>
                 </div>				
         </td>
-		<td width="60%">
+		<td width="80%">
 		<div class="content-container">
-		<p><strong>Quiz of Personality type:</strong> consisting of questions
+		<p><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz of Personality type:</span> consisting of questions
 		whose purpose is to test on different aspects of a person's characters
 		such as behaviors, thoughts and feelings. There is no right or wong
 		answer and the result derives from how quiz takers choose their
@@ -215,10 +263,15 @@ England</td>
 		<table>
 			<tr>
 				<td>
-				<table>
-					<tr bgcolor="#FC0">
-						<td width="58">Quiz title:</td>
-						<td>How serious are you?</td>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
+					<tr>
+						<td><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz title:</span></td>
+						<td><strong>How serious are you?</strong></td>
 					</tr>
 					<tr>
 						<td>Question 1:</td>
@@ -400,6 +453,7 @@ results as you like!</p>
 </ul>
 </div>
 </div>
+
 <div id="create-quiz" class="frame rounded">
 <?php
 		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
@@ -436,28 +490,36 @@ results as you like!</p>
 <div id="createResultContainer">
 <p id="resultTip" class="containerTip">Click on the "Add new result"
 button to add a result entry!</p>
+</div>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
 <body onload="QuizResultMulti.add()">
 <?php }else{ ?>
-<body onload="QuizResultTest.add()">
+<body onLoad="QuizResultTest.add()">
 <?php } ?>
-</div>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
-<div class="add_container">
-<input type="submit" name="save" id="prev" value="Previous Step" />&nbsp; 
-<input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onclick="QuizResultMulti.add()" />&nbsp; 
-<input type="submit" name="save" id="next" value="Next Step!" />
+<div class="add_container" align="center">
+<table>
+<tr>
+<td><input type="submit" name="save" id="prev" value="Previous Step" /></td>
+<td><input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultMulti.add()" /></td> 
+<td><input type="submit" name="save" id="next" value="Next Step!" /></td>
+<tr>
+</table>
 </div>
 <?php }else{ ?>
-<div class="add_container">
-<input type="submit" name="save" id="prev" value="Previous Step" />&nbsp; 
-<input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onclick="QuizResultTest.add()" />&nbsp;
-<input type="submit" name="save" id="next" value="Next Step!" />
+<div class="add_container" align="center">
+<table>
+<tr>
+<td><input type="submit" name="save" id="prev" value="Previous Step" /></td> 
+<td><input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultTest.add()" /></td>
+<td><input type="submit" name="save" id="next" value="Next Step!" /></td>
+</tr>
+</table>
 </div>
 <?php } ?>
-
-<input type="hidden" name="resultCount" id="resultCount" value="0" /></form>
+<input type="hidden" name="resultCount" id="resultCount" value="0" />
+</form>
 </div>
 		<?php // THE THIRD STEP: Quiz Questions
 		break; case 3:
@@ -531,17 +593,24 @@ button to add a question entry!</p>
 </div>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?> 
-<div class="add_container"><input type="submit" name="save" id="prev"
-	value="Previous Step" />&nbsp; <input type="button"
-	name="addQuestionBtn" id="addQuestionBtn" value="Add new question"
-	onclick="QuizQuestionMulti.add()" />&nbsp; <input type="submit" name="save"
-	id="next" value="Next Step!" /></div>
+<div class="add_container" align="center">
+<table>
+<tr>
+<td><input type="submit" name="save" id="prev" value="Previous Step" /></td>
+<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onClick="QuizQuestionMulti.add()" /></td><td><input type="submit" name="save" id="next" value="Next Step!" /></td>
+</tr>
+</table>
+</div>
 <?php }else{ ?>
-<div class="add_container"><input type="submit" name="save" id="prev"
-	value="Previous Step" />&nbsp; <input type="button"
-	name="addQuestionBtn" id="addQuestionBtn" value="Add new question"
-	onclick="QuizQuestionTest.add()" />&nbsp; <input type="submit" name="save"
-	id="next" value="Next Step!" /></div>
+<div class="add_container" align="center">
+<table>
+<tr>
+<td><input type="submit" name="save" id="prev" value="Previous Step" /></td> 
+<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onClick="QuizQuestionTest.add()" /></td>
+<td><input type="submit" name="save" id="next" value="Next Step!" /></td> 
+</tr>
+</table>
+</div>
 <?php } ?>
 	
 </form>
@@ -723,7 +792,7 @@ $listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
 $row_listCat = mysql_fetch_assoc($listCat);
 $totalRows_listCat = mysql_num_rows($listCat);
 ?>
-  <form action="../modules/createQuizEngine.php?step=1" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onsubmit="return submitCheck(Spry.Widget.Form.validate(this));">
+  <form action="../modules/createQuizEngine.php?step=1" method="post" enctype="multipart/form-data" name="createQuiz" id="createQuiz" onSubmit="return submitCheck(Spry.Widget.Form.validate(this));">
 <div id = "step_0">
 <div id="progress-container" class="framePanel rounded">
 <h2>Create Quiz: Choose Quiz Type</h2>
@@ -746,40 +815,50 @@ how you want it to be displayed.</p>
 <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
 	<!-- Test type-->
 	<tr>
-	  <td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked"/>Test</h2></td>
+	  <td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Test</span></h2></td>
 	</tr>
 	<tr>
-		<td valign="top" width="40%">
+		<td valign="top" width="20%">
                 <div id = "blk-1">
-				<table>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
 					<tr>
 						<td>Do you want to customize your quiz result?<a
 							href="customnizeTestExpl.php"> What's this?</a></td>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_custom" name="mode1" checked="checked"/>Yes</td>
+						<td><input type="radio" value="test_custom" name="mode1" checked="checked" id="test_custom"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_simple" name="mode1" />No, keep it
-						simple</td>
+						<td><input type="radio" value="test_simple" name="mode1" id="test_simple" />
+						No</td>
 					</tr>
 				</table>
                 </div>		
           </td>
-		<td width="60%">
+		<td width="80%">
 		<div class="content-container">
-		<p><strong>Quiz of Test type</strong>: designed to determine knowledge
+		<p><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz of Test type: </span>designed to determine knowledge
 		of a particular subject based on factual information of it. Hence,
 		there are right and wrong answers for each question. Below is an
 		example of Test type quiz.</p>
 		<table>
 			<tr>
 				<td>
-				<table>
-					<tr bgcolor="#FC0">
-						<td>Quiz title:</td>
-						<td>How well do you know Michael Jackson?</td>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
+					<tr>
+						<td><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz title:</span></td>
+						<td><strong>How well do you know Michael Jackson?</strong></td>
 					</tr>
 					<tr>
 						<td>Question 1:</td>
@@ -815,30 +894,34 @@ England</td>
 	</tr>
 	<!-- Personality type-->
 	<tr>
-	  <td colspan="3"><h2><input id="personality" name="type" type="radio" value="2"/>Personality</h2></td>
+	  <td colspan="3"><h2><input id="personality" name="type" type="radio" value="2"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Personality</span></h2></td>
 	  </tr>
 	<tr>
-		<td valign="top" width="40%">
+		<td valign="top" width="20%">
                 <div id = "blk-2" style="display:none">
-				<table>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
 					<tr>
 						<td>Do you want to make your quiz more accurate? <a
 							href="customnizeMultiExpl.php">What's this?</a></td>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked"/>Yes</td>
+						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" id="multi_accurate"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_simple" name="mode2" />No, keep it
-						simple</td>
+						<td><input type="radio" value="multi_simple" name="mode2" id="multi_simple"/>No</td>
 					</tr>
 				</table>
                 </div>				
         </td>
-		<td width="60%">
+		<td width="80%">
 		<div class="content-container">
-		<p><strong>Quiz of Personality type:</strong> consisting of questions
+		<p><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz of Personality type:</span> consisting of questions
 		whose purpose is to test on different aspects of a person's characters
 		such as behaviors, thoughts and feelings. There is no right or wong
 		answer and the result derives from how quiz takers choose their
@@ -847,10 +930,15 @@ England</td>
 		<table>
 			<tr>
 				<td>
-				<table>
-					<tr bgcolor="#FC0">
-						<td width="58">Quiz title:</td>
-						<td>How serious are you?</td>
+				<table style="font-size: 14px;
+	margin-right: 15px;
+	margin-left: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #333;">
+					<tr>
+						<td><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quiz title:</span></td>
+						<td><strong>How serious are you?</strong></td>
 					</tr>
 					<tr>
 						<td>Question 1:</td>
@@ -968,7 +1056,11 @@ Don't care about
         </tr>
         <tr>
           <th valign="top" scope="row">&nbsp;</th>
-          <td align="right" class="desc"><input type="button" value='Previous Step' id="step1">&nbsp; <input type="submit" name="next" id="next" value="Next Step!" /></td>
+          <td align="right" class="desc">
+          <input type="button" value='Previous Step' id="step1">&nbsp; 
+          <input type="submit" name="next" id="next_step1" value="Next Step!"/>
+          <input type="submit" name="next" id="next_alert" value="Next Step!" style="display:none" onClick="javascript:alert('For your information, since TEST type with SIMPLE mode were chosen, step 3 will be skipped. It will take a while until the next step is loaded.')"/>
+          </td>
         </tr>
       </table>
 </div>

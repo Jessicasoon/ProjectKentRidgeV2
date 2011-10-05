@@ -38,8 +38,13 @@ if(isset($_GET['step'])){
 			$quiz_id = $quiz->createQuiz($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id, $key, $mode, $type);
 		}
 		
-		// direct them to step 2
-		header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
+		// direct them to step 3 if the quiz is of test type and simple display mode, else direct to step 2
+		if($type == "1" && $mode == "test_simple"){
+			header("Location: ../webroot/createQuiz.php?step=3&id=".$quiz_id);
+		}
+		else{
+			header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
+		}
 		
 		break;		
 		case 2: // save the quiz results
@@ -174,11 +179,11 @@ if(isset($_GET['step'])){
 								if(isset($_POST['uq'.$i.'o'.$j])){
 									//function from quiz.php: updateOption($option, $result, $weightage, $option_id, $memberID)
 									//$quiz->updateOption($_POST['q'.$i.'o'.$j], $_POST['q'.$i.'r'.$j], $_POST['q'.$i.'w'.$j], $_POST['uq'.$i.'o'.$j], $member->id);
-									$quiz->updateOptionMulti($_POST['q'.$i.'o'.$j], $_POST['q'.$i.'r'.$k], $_POST['q'.$i.'o'.$j.'w'.$k], $_POST['uq'.$i.'o'.$j], $member->id);
+									$quiz->updateOptionMulti($_POST['q'.$i.'o'.$j], $_POST['q'.$i.'o'.$j.'r'.$k], $_POST['q'.$i.'o'.$j.'w'.$k], $_POST['uq'.$i.'o'.$j], $member->id);
 									
 								}else{
 									//function from quiz.php: addOption($option, $result, $weightage, $question, $memberID)
-									$quiz->addOptionMulti($_POST['q'.$i.'o'.$j], $_POST['q'.$i.'r'.$k], $_POST['q'.$i.'o'.$j.'w'.$k], $question_id, $member->id);
+									$quiz->addOptionMulti($_POST['q'.$i.'o'.$j], $_POST['q'.$i.'o'.$j.'r'.$k], $_POST['q'.$i.'o'.$j.'w'.$k], $question_id, $member->id);
 								}
 							}// end for k loop
 						} 
@@ -222,7 +227,13 @@ if(isset($_GET['step'])){
 		
 		// check the direction to go
 		if($_POST['save'] == "Previous Step"){
-			header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
+			// skip step 2
+			if($mode == "test_simple"){
+				header("Location: ../webroot/createQuiz.php?step=1&id=".$quiz_id);
+			}
+			else{
+				header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
+			}
 		}else{
 			header("Location: ../webroot/createQuiz.php?step=4&id=".$quiz_id);
 		}
