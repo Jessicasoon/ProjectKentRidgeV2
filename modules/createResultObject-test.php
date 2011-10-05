@@ -106,14 +106,12 @@ $count = 1;
     <td><span id="sprytextarea-result_description_<?php echo $result; ?>" class="sprytextarea"><textarea name="result_description_<?php echo $result; ?>" id="result_description_<?php echo $result; ?>" cols="45" rows="5"></textarea><span class="textareaRequiredMsg">Description should not be blank!</span></span>
     <span class="desc">Tell the quiz taker what this result means</span></td>
   </tr>
-  <?php $test = $result + 1; ?>
-  <tr> <!--result range-->
-	<th width="120" valign="top" scope="row"><label>Range</label></th>
-	<td><div id="slider-range-<?php echo $result; ?>"></div><script>QuizResultTest.slider();</script><input type="text" name="slider-range" id="amount-<?php echo $result; ?>" /><span class="desc">Select the percentage range of correct answers you want the users to get to achieve this result.</span></td>
-  </tr>
   
-   <tr> <!--result range-->
+
+	
+	   <tr> <!--result range-->
   <th width="120" valign="top" scope="row"><label>Range</label></th> 
+  <script>QuizResultTest.slider();</script>
 <div class="slider">
 	<span class="amount"></span>
       
