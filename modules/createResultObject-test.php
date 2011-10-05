@@ -106,10 +106,37 @@ $count = 1;
     <td><span id="sprytextarea-result_description_<?php echo $result; ?>" class="sprytextarea"><textarea name="result_description_<?php echo $result; ?>" id="result_description_<?php echo $result; ?>" cols="45" rows="5"></textarea><span class="textareaRequiredMsg">Description should not be blank!</span></span>
     <span class="desc">Tell the quiz taker what this result means</span></td>
   </tr>
+  <?php $test = $result + 1; ?>
   <tr> <!--result range-->
 	<th width="120" valign="top" scope="row"><label>Range</label></th>
 	<td><div id="slider-range-<?php echo $result; ?>"></div><script>QuizResultTest.slider();</script><input type="text" name="slider-range" id="amount-<?php echo $result; ?>" /><span class="desc">Select the percentage range of correct answers you want the users to get to achieve this result.</span></td>
   </tr>
+  
+   <tr> <!--result range-->
+  <th width="120" valign="top" scope="row"><label>Range</label></th> 
+<div class="slider">
+	<span class="amount"></span>
+      
+      <!-- // might help in getting value for next result starting % - LIEN
+      <span>Start:
+        <span id="start"></span>
+    </span>
+    <span>
+        <span id="delta"></span>
+    </span>
+     //end of might-help -->
+    
+      <div class="slider-range"></div> 
+      <?php $what = 21  ;// testing purpose,along with next line - LIEN ?>
+      <input class="lowerbound" type="hidden" name="lowerbound" value="<?php echo $what ?>" />
+ </div>
+ <span class="desc">Select the percentage range of correct answers you want the users to get to achieve this result.</span>
+ <tr></tr>
+ </tr>
+
+
+
+ 
   <tr>
     <th width="120" rowspan="4" valign="top" scope="row"><label>Picture</label>
       <input name="result_picture_<?php echo $result; ?>" type="hidden" id="result_picture_<?php echo $result; ?>" value="" /></th>
