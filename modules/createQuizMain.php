@@ -30,6 +30,26 @@
 		 $("#step_1").hide("");
 		 $("#step_0").show("");
    	 });
+	  $("#test_simple").change(function(event){
+		 event.preventDefault();
+		 $("#next_step1").hide("");
+		 $("#next_alert").show("");
+   	 });
+	  $("#test_custom").change(function(event){
+		 event.preventDefault();
+		 $("#next_alert").hide("");
+		 $("#next_step1").show("");
+   	 });
+	 $("#multi_accurate").change(function(event){
+		 event.preventDefault();
+		 $("#next_alert").hide("");
+		 $("#next_step1").show("");
+   	 });
+	 $("#multi_simple").change(function(event){
+		 event.preventDefault();
+		 $("#next_alert").hide("");
+		 $("#next_step1").show("");
+   	 });
  });
 </script>
 <?php
@@ -68,7 +88,7 @@ $listCat = mysql_query($query_listCat, $quizroo) or die(mysql_error());
 $row_listCat = mysql_fetch_assoc($listCat);
 $totalRows_listCat = mysql_num_rows($listCat);
 //Modified on 27 Sep by Hien for jquery
-$queryType = sprintf("SELECT fk_quiz_type FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
+$queryType = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
 $resultType =  mysql_query($queryType, $quizroo) or die(mysql_error());
 $row_resultType = mysql_fetch_assoc($resultType);
 ?>
@@ -100,7 +120,7 @@ how you want it to be displayed.</p>
 <table width="100%" style="font-size: 12px; font: Verdana, Arial, Helvetica, sans-serif">
 	<!-- Test type-->
 	<tr>
-      <?php if ($row_resultType['fk_quiz_type'] == "1"){ ?>	
+      <?php if ($row_resultType['display_mode'] == "test_simple" || $row_resultType['display_mode'] == "test_custom" ){ ?>	
 		<td colspan="3"><h2><input id="test" name="type" type="radio" value="1" checked="checked" disabled="disabled"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Test</span></h2></td>
 	  <?php }else{ ?>
 		<td colspan="3"><h2><input id="test" name="type" type="radio" value="1" disabled="disabled"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Test</span></h2></td>
@@ -108,7 +128,7 @@ how you want it to be displayed.</p>
 	</tr>
 	<tr>
 		<td valign="top" width="20%">
-        <?php if ($row_resultType['fk_quiz_type'] == "1"){ ?>
+        <?php if ($row_resultType['display_mode'] == "test_simple" || $row_resultType['display_mode'] == "test_custom" ){ ?>
                 <div id = "blk-1">
         <?php } else { ?>
         		<div id = "blk-1" style="display:none">
@@ -124,10 +144,17 @@ how you want it to be displayed.</p>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_custom" name="mode1" checked="checked"/>Yes</td>
+                    <?php if ($row_resultType['display_mode'] == "test_custom") {?>
+						<td><input type="radio" value="test_custom" name="mode1" checked="checked" id="test_custom"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_simple" name="mode1"/>No</td>
+						<td><input type="radio" value="test_simple" name="mode1" id="test_simple"/>No</td>
+                    <?php } else { ?>
+                    <td><input type="radio" value="test_custom" name="mode1" id="test_custom"/>Yes</td>
+					</tr>
+					<tr>
+						<td><input type="radio" value="test_simple" name="mode1"  checked="checked" id="test_simple"/>No</td>
+                    <?php } ?>
 					</tr>
 				</table>
                 </div>		
@@ -185,7 +212,7 @@ England</td>
 	</tr>
 	<!-- Personality type-->
 	<tr>
-	<?php if ($row_resultType['fk_quiz_type'] == "2"){ ?>
+	<?php if ($row_resultType['display_mode'] == "multi_simple" || $row_resultType['display_mode'] == "multi_accurate" ){ ?>
 	  <td colspan="3"><h2><input id="personality" name="type" type="radio" checked="checked" value="2" disabled="disabled"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Personality</span></h2></td>
 	<?php }else{ ?>
 	  <td colspan="3"><h2><input id="personality" name="type" type="radio" value="2" disabled="disabled"/><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">&nbsp;&nbsp;Personality</span></h2></td>
@@ -193,7 +220,7 @@ England</td>
 	  </tr>
 	<tr>
 		<td valign="top" width="20%">
-        <?php if ($row_resultType['fk_quiz_type'] == "2"){ ?>
+        <?php if ($row_resultType['display_mode'] == "multi_simple" || $row_resultType['display_mode'] == "multi_accurate" ){ ?>
                 <div id = "blk-2">
         <?php } else { ?>
         		<div id = "blk-2" style="display:none">
@@ -210,10 +237,17 @@ England</td>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" />Yes</td>
+                    <?php if ($row_resultType['display_mode'] == "multi_accurate") {?>
+						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" id="multi_accurate"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_simple" name="mode2" />No</td>
+						<td><input type="radio" value="multi_simple" name="mode2" id="multi_simple"/>No</td>
+                    <?php } else { ?>
+                    	<td><input type="radio" value="multi_accurate" name="mode2" id="multi_accurate"/>Yes</td>
+					</tr>
+					<tr>
+						<td><input type="radio" value="multi_simple" name="mode2" checked="checked" id="multi_simple"/>No</td>
+                    <?php } ?>
 					</tr>
 				</table>
                 </div>				
@@ -464,7 +498,7 @@ button to add a result entry!</p>
 <?php } ?>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
-<div class="add_container">
+<div class="add_container" align="center">
 <table>
 <tr>
 <td><input type="submit" name="save" id="prev" value="Previous Step" /></td>
@@ -474,11 +508,13 @@ button to add a result entry!</p>
 </table>
 </div>
 <?php }else{ ?>
-<div class="add_container">
+<div class="add_container" align="center">
 <table>
+<tr>
 <td><input type="submit" name="save" id="prev" value="Previous Step" /></td> 
 <td><input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultTest.add()" /></td>
 <td><input type="submit" name="save" id="next" value="Next Step!" /></td>
+</tr>
 </table>
 </div>
 <?php } ?>
@@ -557,18 +593,22 @@ button to add a question entry!</p>
 </div>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?> 
-<div class="add_container">
+<div class="add_container" align="center">
 <table>
+<tr>
 <td><input type="submit" name="save" id="prev" value="Previous Step" /></td>
-<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onclick="QuizQuestionMulti.add()" /></td><td><input type="submit" name="save" id="next" value="Next Step!" /></td>
+<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onClick="QuizQuestionMulti.add()" /></td><td><input type="submit" name="save" id="next" value="Next Step!" /></td>
+</tr>
 </table>
 </div>
 <?php }else{ ?>
-<div class="add_container">
+<div class="add_container" align="center">
 <table>
+<tr>
 <td><input type="submit" name="save" id="prev" value="Previous Step" /></td> 
-<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onclick="QuizQuestionTest.add()" /></td>
+<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onClick="QuizQuestionTest.add()" /></td>
 <td><input type="submit" name="save" id="next" value="Next Step!" /></td> 
+</tr>
 </table>
 </div>
 <?php } ?>
@@ -792,10 +832,10 @@ how you want it to be displayed.</p>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_custom" name="mode1" checked="checked"/>Yes</td>
+						<td><input type="radio" value="test_custom" name="mode1" checked="checked" id="test_custom"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_simple" name="mode1" />
+						<td><input type="radio" value="test_simple" name="mode1" id="test_simple" />
 						No</td>
 					</tr>
 				</table>
@@ -871,10 +911,10 @@ England</td>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked"/>Yes</td>
+						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" id="multi_accurate"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_simple" name="mode2" />No</td>
+						<td><input type="radio" value="multi_simple" name="mode2" id="multi_simple"/>No</td>
 					</tr>
 				</table>
                 </div>				
@@ -1016,7 +1056,11 @@ Don't care about
         </tr>
         <tr>
           <th valign="top" scope="row">&nbsp;</th>
-          <td align="right" class="desc"><input type="button" value='Previous Step' id="step1">&nbsp; <input type="submit" name="next" id="next" value="Next Step!" /></td>
+          <td align="right" class="desc">
+          <input type="button" value='Previous Step' id="step1">&nbsp; 
+          <input type="submit" name="next" id="next_step1" value="Next Step!"/>
+          <input type="submit" name="next" id="next_alert" value="Next Step!" style="display:none" onClick="javascript:alert('For your information, since TEST type with SIMPLE mode were chosen, step 3 will be skipped. It will take a while until the next step is loaded.')"/>
+          </td>
         </tr>
       </table>
 </div>
