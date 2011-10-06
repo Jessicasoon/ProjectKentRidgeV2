@@ -491,12 +491,13 @@ results as you like!</p>
 <p id="resultTip" class="containerTip">Click on the "Add new result"
 button to add a result entry!</p>
 </div>
+<?php if(!isset($_GET['for']) && $_GET['for']!="prev"){ ?>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
 <body onload="QuizResultMulti.add()">
 <?php }else{ ?>
 <body onLoad="QuizResultTest.add()">
 <?php } ?>
-
+<?php } ?>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
 <div class="add_container" align="center">
 <table>
@@ -585,10 +586,12 @@ each option contributes to a result.</p>
 <div id="createQuestionContainer">
 <p id="questionTip" class="containerTip">Click on the "Add new question"
 button to add a question entry!</p>
+<?php if(!isset($_GET['for']) && $_GET['for']!="prev"){ ?>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
 <body onload="QuizQuestionMulti.add()">
 <?php }else{ ?>
 <body onload="QuizQuestionTest.add()">
+<?php } ?>
 <?php } ?>
 </div>
 
