@@ -472,7 +472,23 @@ results as you like!</p>
 			if ($row_resultMode['display_mode'] == "test_custom")
 				$mode = "test_custom";				
 		}while($row_resultMode = mysql_fetch_assoc($resultMode));
-		
+
+	if($mode == "simple" || $mode == "accurate"){
+		$queryResult = sprintf("SELECT COUNT(result_id) as count FROM q_results_multi WHERE fk_quiz_id = %d LIMIT 1" , $quiz->quiz_id);
+		$resultForResult = mysql_query($queryResult, $quizroo) or die(mysql_error());
+		$row_resultForResult = mysql_fetch_assoc($resultForResult);
+	}
+	if($mode == "test_simple" || $mode == "test_custom"){
+		$queryResult = sprintf("SELECT COUNT(result_id) as count FROM q_results_test WHERE fk_quiz_id = %d LIMIT 1" , $quiz->quiz_id);
+		$resultForResult = mysql_query($queryResult, $quizroo) or die(mysql_error());
+		$row_resultForResult = mysql_fetch_assoc($resultForResult);
+	}
+	if($mode == ""){
+		$queryResult = sprintf("SELECT COUNT(result_id) as count FROM q_results WHERE fk_quiz_id = %d LIMIT 1" , $quiz->quiz_id);
+		$resultForResult = mysql_query($queryResult, $quizroo) or die(mysql_error());
+		$row_resultForResult = mysql_fetch_assoc($resultForResult);
+	}
+
 ?>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
@@ -491,10 +507,10 @@ results as you like!</p>
 <p id="resultTip" class="containerTip">Click on the "Add new result"
 button to add a result entry!</p>
 </div>
-<?php if(!isset($_GET['for']) && $_GET['for']!="prev"){ ?>
+<?php if($row_resultForResult['count']==0){ ?>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
-<body onload="QuizResultMulti.add()">
-<?php }else{ ?>
+<body onLoad="QuizResultMulti.add()">
+<?php }if ($mode == "test_simple" || $mode == "test_custom") { ?>
 <body onLoad="QuizResultTest.add()">
 <?php } ?>
 <?php } ?>
@@ -553,8 +569,12 @@ each option contributes to a result.</p>
 			if ($row_resultMode['display_mode'] == "test_custom")
 				$mode = "test_custom";				
 		}while($row_resultMode = mysql_fetch_assoc($resultMode));
+	
+		$queryQuestion = sprintf("SELECT COUNT(question_id) as count FROM q_questions WHERE fk_quiz_id = %d LIMIT 1" , $quiz->quiz_id);
+		$resultQuestion = mysql_query($queryQuestion, $quizroo) or die(mysql_error());
+		$row_resultQuestion = mysql_fetch_assoc($resultQuestion);
 		
-//		$mode = "simple";
+		$resultForQuestion = array();
 ?>
 
 <div id="create-quiz" class="frame rounded">
@@ -578,7 +598,7 @@ each option contributes to a result.</p>
 <div id="createQuestionContainer">
 <p id="questionTip" class="containerTip">Click on the "Add new question"
 button to add a question entry!</p>
-<?php if(!isset($_GET['for']) && $_GET['for']!="prev"){ ?>
+<?php if($row_resultQuestion['count']==0){ ?>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
 <body onload="QuizQuestionMulti.add()">
 <?php }else{ ?>
