@@ -846,7 +846,7 @@ class Quiz{
 	}
 
 	// check if quiz is ready to be published HAVE TO CHANGE YL
-	function checkPublishTest(){
+	function checkPublishTest($mode){
 		require('variables.php');		
 		// check the number of results
 		$numResults = $this->getResultsTest("count");
@@ -870,10 +870,17 @@ class Quiz{
 			$optionState = false;
 		}
 		// run through the checks, return false if failed
-		if($numResults < $VAR_QUIZ_MIN_RESULT || $numQuestions < $VAR_QUIZ_MIN_QUESTIONS || !$optionState){
-			return false;
+		if($numQuestions < $VAR_QUIZ_MIN_QUESTIONS || !$optionState){
+				return false;
 		}else{
-			return true;
+				return true;
+		}
+		if($mode != 'test_simple'){
+			if($numResults < $VAR_QUIZ_MIN_RESULT){
+				return false;
+			}else{
+				return true;
+			}
 		}
 	}
 	
