@@ -691,7 +691,7 @@ button to add a question entry!</p>
 			}
 		}
 		else{
-			if(!$quiz->checkPublishTest()){
+			if(!$quiz->checkPublishTest($mode)){
 				$quizState = false;
 			}else{
 				$quizState = true;
@@ -726,12 +726,20 @@ The table below shows the review of your quiz.</p>
 		<th scope="col">Count</th>
 		<th scope="col">Remarks</th>
 	</tr>
+    <!-- Modify on 6 Oct: for test_simple quiz, dont need to check for number of result-->
+    <?php 
+	$queryType = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
+	$resultType =  mysql_query($queryType, $quizroo) or die(mysql_error());
+	$row_resultType = mysql_fetch_assoc($resultType);
+	if ($row_resultType['display_mode'] != "test_simple"){
+	?>
 	<tr>
 		<th>Results</th>
 		<td align="center"><?php echo $numResults; ?></td>
 		<td><?php if($numResults < $VAR_QUIZ_MIN_RESULT){ ?>You need at least
 		<?php echo $VAR_QUIZ_MIN_RESULT; ?> results<?php }else{ ?>Ok!<?php } ?></td>
 	</tr>
+    <?php } ?>
 	<tr>
 		<th>Question</th>
 		<td align="center"><?php echo $numQuestions; ?></td>
@@ -749,10 +757,9 @@ The table below shows the review of your quiz.</p>
 <p><?php if($quizState){ ?> Congratuations! Your quiz has passed the
 basic requirements. You can choose to preview your quiz first, or
 publish your quiz now. <?php }else{ ?> Opps! It seems that your quiz
-doesn't fulfill certain requirements. All quizzes require a minimum of <?php echo $VAR_QUIZ_MIN_RESULT; ?>
-result(s) and <?php echo $VAR_QUIZ_MIN_QUESTIONS; ?> questions(s). Each
-question also required at least <?php echo $VAR_QUIZ_MIN_OPTIONS; ?>
-options. <?php } ?></p>
+doesn't fulfill certain requirements. All quizzes require a minimum of <?php if ($row_resultType['display_mode'] != "test_simple"){echo $VAR_QUIZ_MIN_RESULT; ?>
+result(s) and <?php } ?><?php echo $VAR_QUIZ_MIN_QUESTIONS; ?> questions(s). Each
+question also required at least <?php echo $VAR_QUIZ_MIN_OPTIONS; ?> options. <?php } ?></p>
 <table width="95%" border="0" align="center" cellpadding="5"
 	cellspacing="0">
 	<tr>
