@@ -233,7 +233,7 @@ if(isset($_GET['step'])){
 				header("Location: ../webroot/createQuiz.php?step=1&id=".$quiz_id);
 			}
 			else{
-				header("Location: ../webroot/createQuiz.php?step=2&for=prev&id=".$quiz_id);
+				header("Location: ../webroot/createQuiz.php?step=2&id=".$quiz_id);
 			}
 		}else{
 			header("Location: ../webroot/createQuiz.php?step=4&id=".$quiz_id);
@@ -247,7 +247,7 @@ if(isset($_GET['step'])){
 		
 		// check the direction to go
 		if($_POST['save'] == "Previous Step"){
-			header("Location: ../webroot/createQuiz.php?step=3&for=prev&id=".$quiz_id);
+			header("Location: ../webroot/createQuiz.php?step=3&id=".$quiz_id);
 		}elseif($_POST['save'] == "Preview"){
 			header("Location: ../webroot/createQuizSuccess.php?id=".$quiz_id);
 		}else{
