@@ -671,7 +671,7 @@ button to add a question entry!</p>
 			}
 		}
 		else{
-			if(!$quiz->checkPublishTest()){
+			if(!$quiz->checkPublishTest($mode)){
 				$quizState = false;
 			}else{
 				$quizState = true;
