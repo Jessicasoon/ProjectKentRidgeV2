@@ -13,7 +13,7 @@
    	 });
 	 $("#step0").click(function(event){
 		 event.preventDefault();
-		 var answer = confirm("Are you sure you want to create a quiz of these settings? Once you have passed this step, you cannot modify the quiz type");
+		 var answer = confirm("Are you sure you want to create a quiz of these settings?");
 		 if (answer){
 			 $("#step_0").hide("");
 			 $("#step_1").show("");
@@ -112,7 +112,7 @@ how you want it to be displayed.</p>
 	<li><strong>Step 4</strong> Question</li>
 	<li><strong>Step 5</strong> Publish</li>
 </ul>
-<p style="color:#FF0000">You can modify display mode but you cannot modify quiz type because the quiz of this type has been created. If you still wish to, just delete this quiz and create an entirely new quiz.</p>
+<p style="color:#FF0000">You cannot modify quiz type because the quiz of this type has been created. If you still wish to, just delete this quiz and create an entirely new quiz.</p>
 </div>
 </div>
 
@@ -145,15 +145,15 @@ how you want it to be displayed.</p>
 					</tr>
 					<tr>
                     <?php if ($row_resultType['display_mode'] == "test_custom") {?>
-						<td><input type="radio" value="test_custom" name="mode1" checked="checked" id="test_custom"/>Yes</td>
+						<td><input type="radio" value="test_custom" name="mode1" checked="checked" id="test_custom" disabled="disable"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_simple" name="mode1" id="test_simple"/>No</td>
+						<td><input type="radio" value="test_simple" name="mode1" id="test_simple" disabled="disabled"/>No</td>
                     <?php } else { ?>
-                    <td><input type="radio" value="test_custom" name="mode1" id="test_custom"/>Yes</td>
+                    <td><input type="radio" value="test_custom" name="mode1" id="test_custom" disabled="disabled"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_simple" name="mode1"  checked="checked" id="test_simple"/>No</td>
+						<td><input type="radio" value="test_simple" name="mode1"  checked="checked" id="test_simple" disabled="disabled"/>No</td>
                     <?php } ?>
 					</tr>
 				</table>
@@ -238,15 +238,15 @@ England</td>
 					</tr>
 					<tr>
                     <?php if ($row_resultType['display_mode'] == "multi_accurate") {?>
-						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" id="multi_accurate"/>Yes</td>
+						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" id="multi_accurate" disabled="disabled"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_simple" name="mode2" id="multi_simple"/>No</td>
+						<td><input type="radio" value="multi_simple" name="mode2" id="multi_simple" disabled="disabled"/>No</td>
                     <?php } else { ?>
-                    	<td><input type="radio" value="multi_accurate" name="mode2" id="multi_accurate"/>Yes</td>
+                    	<td><input type="radio" value="multi_accurate" name="mode2" id="multi_accurate" disabled="disabled"/>Yes</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_simple" name="mode2" checked="checked" id="multi_simple"/>No</td>
+						<td><input type="radio" value="multi_simple" name="mode2" checked="checked" id="multi_simple" disabled="disabled"/>No</td>
                     <?php } ?>
 					</tr>
 				</table>
@@ -424,7 +424,7 @@ creation process.</p>
 	</tr>
 	<tr>
 		<th valign="top" scope="row">&nbsp;</th>
-		<td align="right" class="desc"><input type="button" value='Previous Step' id="step1">&nbsp; <input type="submit"
+		<td align="right" class="desc"><!--input type="button" value='Previous Step' id="step1"-->&nbsp; <input type="submit"
 			name="next" id="next" value="Next Step!" /></td>
 	</tr>
 </table>
@@ -1053,8 +1053,8 @@ Don't care about
           <th valign="top" scope="row">&nbsp;</th>
           <td align="right" class="desc">
           <input type="button" value='Previous Step' id="step1">&nbsp; 
-          <input type="submit" name="next" id="next_step1" value="Next Step!"/>
-          <input type="submit" name="next" id="next_alert" value="Next Step!" style="display:none" onClick="javascript:alert('For your information, since TEST type with SIMPLE mode were chosen, step 3 will be skipped. It will take a while until the next step is loaded.')"/>
+          <input type="submit" name="next" id="next_step1" value="Next Step!" onClick="javascript: if(!confirm('Please note that once you pass this step, quiz type and display mode cannot be modify. You still can modify quiz information. If you want to modify step 1, delete the quiz and create an entirely new quiz.')) return false;"/>
+          <input type="submit" name="next" id="next_alert" value="Next Step!" style="display:none" onClick="javascript: if(!confirm('Please note that once you pass this step, quiz type and display mode cannot be modify. You still can modify quiz information. If you want to modify step 1, delete the quiz and create an entirely new quiz.\n\nFor your information, since TEST type with SIMPLE mode were chosen, step 3 will be skipped. It will take a while until the next step is loaded.')) return false;"/>
           </td>
         </tr>
       </table>
