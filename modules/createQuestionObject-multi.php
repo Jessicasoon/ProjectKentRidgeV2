@@ -134,11 +134,13 @@ if(isset($_GET['load'])){ //user is modifying quiz, load from database
 		  <td><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $option; ?>" class="sprytextfield">
 			<input name="q<?php echo $question; ?>o<?php echo $option; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $option; ?>" value="<?php echo $row_getOption['option']; ?>" />
 			<span class="textfieldRequiredMsg">Enter a value for this option!</span></span></td>
-			  <td width="150"> <input type="hidden" name="q<?php echo $question; ?>r<?php echo $result_count; ?>" id="q<?php echo $question; ?>r<?php echo $result_count; ?>" value="<?php echo $results[$result_count][0]; ?>" />  </td>
+			  <td width="150"> </td>
  	  </tr>
    	 </table>
    	  </div>
       <?php } //end if $result_count == 0 ?>
+      
+            <input type="hidden" name="q<?php echo $question; ?>o<?php echo $option_countForResult; ?>r<?php echo $result_count; ?>" id="q<?php echo $question; ?>o<?php echo $option; ?>r<?php echo $result_countForResult; ?>" value="<?php echo $results[$result_count][0]; ?>" />  
             
                   <tr class = "optionTable">
                   <th width="25">&nbsp;</th>
@@ -146,12 +148,13 @@ if(isset($_GET['load'])){ //user is modifying quiz, load from database
                   <th align="left">&nbsp;</th>
                   <td width="150" align="center"> <?php echo $results[$result_count][1]; ?> </td>  
          <?php echo $question; echo $option_countForResult; echo $result_count; //DEBUG PURPOSE - LIEN?>
+         <?php echo $results[$result_count][0]; echo "HELLO"; echo $row_getOption['fk_result_id']; // DEBUG PURPOSE - LIEN?>
          
                   <td width="100"  align = "center"><select name="q<?php echo $question; ?>o<?php echo $option_countForResult; ?>w<?php echo $result_count;?>" id="q<?php echo $question; ?>o<?php echo $option_countForResult; ?>w<?php echo $result_count;?>">
     
-                      <option value="1" <?php if(1 == $row_getOption['option_weightage']){ echo "selected"; }; ?>>1</option> 
-                      <option value="2" <?php if(2 == $row_getOption['option_weightage']){ echo "selected"; }; ?>>2</option>
-                      <option value="3" <?php if(3 == $row_getOption['option_weightage']){ echo "selected"; }; ?>>3</option>  
+                      <option value="1" <?php if(1 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>1</option> 
+                      <option value="2" <?php if(2 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>2</option>
+                      <option value="3" <?php if(3 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>3</option>  
                
                   
                   </select></td>        
@@ -246,9 +249,9 @@ $quiz = $_GET['id'];
                   <th align="left">&nbsp;</th>
                   <td width="150" align="center"> <?php echo $item[1]; ?> </td>  
                   
-                  <input type="hidden" name="q<?php echo $question; ?>r<?php echo $result_count?>" id="q<?php echo $question; ?>r<?php echo $result_count?>" value="<?php echo $item[0] ?>" />        
+                  <input type="hidden" name="q<?php echo $question; ?>o0r<?php echo $result_count; ?>" id="q<?php echo $question; ?>o0r<?php echo $result_count; ?>" value="<?php echo $item[0] ?>" />        
                   
-                  <td width="100" align = "center"><select name="q<?php echo $question;?>o0w<?php echo $result_count?>" id="q<?php echo $question; ?>o0w<?php echo $result_count?>">
+                  <td width="100" align = "center"><select name="q<?php echo $question;?>o0w<?php echo $result_count; ?>" id="q<?php echo $question; ?>o0w<?php echo $result_count; ?>">
                 
                       <option value="1">1</option>
                       <option value="2">2</option>
@@ -287,9 +290,9 @@ $quiz = $_GET['id'];
                   <th align="left">&nbsp;</th>
                   <td width="150" align="center"> <?php echo $item[1]; ?> </td>  
                   
-                  <input type="hidden" name="q<?php echo $question; ?>r<?php echo $result_count?>" id="q<?php echo $question; ?>r<?php echo $result_count?>" value="<?php echo $item[0] ?>" /> 
+                  <input type="hidden" name="q<?php echo $question; ?>o1r<?php echo $result_count; ?>" id="q<?php echo $question; ?>o1r<?php echo $result_count; ?>" value="<?php echo $item[0] ?>" /> 
                     
-                  <td width="100" align ="center"><select name="q<?php echo $question;?>o1w<?php echo $result_count?>" id="q<?php echo $question; ?>o1w<?php echo $result_count?>">
+                  <td width="100" align ="center"><select name="q<?php echo $question;?>o1w<?php echo $result_count; ?>" id="q<?php echo $question; ?>o1w<?php echo $result_count; ?>">
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>

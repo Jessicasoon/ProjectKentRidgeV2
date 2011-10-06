@@ -499,24 +499,16 @@ button to add a result entry!</p>
 <?php } ?>
 <?php } ?>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
-<div class="add_container" align="center">
-<table>
-<tr>
-<td><input type="submit" name="save" id="prev" value="Previous Step" /></td>
-<td><input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultMulti.add()" /></td> 
-<td><input type="submit" name="save" id="next" value="Next Step!" /></td>
-<tr>
-</table>
+<div class="add_container">
+<input type="submit" name="save" id="prev" value="Previous Step" /> 
+<input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultMulti.add()" /> &nbsp;
+<input type="submit" name="save" id="next" value="Next Step!" />
 </div>
 <?php }else{ ?>
-<div class="add_container" align="center">
-<table>
-<tr>
-<td><input type="submit" name="save" id="prev" value="Previous Step" /></td> 
-<td><input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultTest.add()" /></td>
-<td><input type="submit" name="save" id="next" value="Next Step!" /></td>
-</tr>
-</table>
+<div class="add_container">
+<input type="submit" name="save" id="prev" value="Previous Step" />
+<input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultTest.add()" /> &nbsp;
+<input type="submit" name="save" id="next" value="Next Step!" />
 </div>
 <?php } ?>
 <input type="hidden" name="resultCount" id="resultCount" value="0" />
@@ -596,23 +588,16 @@ button to add a question entry!</p>
 </div>
 
 <?php if($mode == "simple" || $mode == "accurate"){ ?> 
-<div class="add_container" align="center">
-<table>
-<tr>
-<td><input type="submit" name="save" id="prev" value="Previous Step" /></td>
-<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onClick="QuizQuestionMulti.add()" /></td><td><input type="submit" name="save" id="next" value="Next Step!" /></td>
-</tr>
-</table>
+<div class="add_container">
+<input type="submit" name="save" id="prev" value="Previous Step" /> &nbsp;
+<input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onClick="QuizQuestionMulti.add()" /> &nbsp;
+<input type="submit" name="save" id="next" value="Next Step!" />
 </div>
 <?php }else{ ?>
-<div class="add_container" align="center">
-<table>
-<tr>
-<td><input type="submit" name="save" id="prev" value="Previous Step" /></td> 
-<td><input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onClick="QuizQuestionTest.add()" /></td>
-<td><input type="submit" name="save" id="next" value="Next Step!" /></td> 
-</tr>
-</table>
+<div class="add_container">
+<input type="submit" name="save" id="prev" value="Previous Step" /> &nbsp;
+<input type="button" name="addQuestionBtn" id="addQuestionBtn" value="Add new question" onClick="QuizQuestionTest.add()" /> &nbsp;
+<input type="submit" name="save" id="next" value="Next Step!" />
 </div>
 <?php } ?>
 	

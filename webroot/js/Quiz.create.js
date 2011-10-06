@@ -93,18 +93,72 @@ var QuizResultTest = {
 		
 	},
 	
-	slider: function() { //http://jqueryui.com/demos/slider/#rangemax
+
+	slider: function() {
+		$(".slider").each(function() {
+			// $this is a reference to .slider in current iteration of each
+			$this = $(this);
+			 $lower = $(this).parent().find(".lowerbound").val();
+			// find any .slider-range element WITHIN scope of $this
+			$(".slider-range", $this).slider({
+				range: true,
+				min: 0,
+				max: 100,
+				values: [ $lower, 100 ],
+				slide: function( event, ui ) {
+				   // find any element with class .amount WITHIN scope of $this
+				   $(this).parent().find(".amount").html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "% " );
+				  
+				}
+				
+				/*  
+				//might help in getting value for next result starting % - LIEN
+				//rmb to put comma above if using these functions
+				start: function(event, ui) {
+					start = ui.value;
+					$("#start").text(start);
+				},
+				
+				stop: function(event, ui) {
+					$("#delta").text(ui.value > start ? "increasing" : "decreasing");
+				}
+				*/ // end of might-help
+		
+			});
+			$(".amount").html( $(".slider-range").slider("values", 0 ) + "% - " + $(".slider-range").slider("values", 1 ) + "% " );
+	});
+	
+	
+	
+	
+}, 
+	/*slider: function() { //http://jqueryui.com/demos/slider/#range --using this logic for above - LIEN
+		$( "#slider-range").slider({
+			range: true,
+			min: 0,
+			max: 500,
+			values: [75, 300],
+			slide: function( event, ui ) {
+				$( "#amount").val( "$" + ui.values[0] + " - $" + ui.values[1] );
+			}
+		});
+		$( "#amount").val( "$" + $( "#slider-range").slider( "values", 0 ) + " - $" + $( "#slider-range").slider( "values", 1 ) );
+	},
+	*/
+	
+/*	slider: function() { //http://jqueryui.com/demos/slider/#rangemax
 		$( "#slider-range-"+this.resultCount).slider({
 			range: "max",
 			min: 0,
 			max: 100,
 			value: 75,
 			slide: function( event, ui ) {
-				$( "#amount-"+this.resultCount).val("100% - " + ui.value + "%");
+				$( "#amount-"+this.resultCount).val("100% - " + ui.value + "%"); // ui.value changes according to value user slides the bar by
 			}
 		});
-		$( "#amount-"+this.resultCount).val("100% - " + $( "#slider-range-"+this.resultCount).slider( "value" ) + "%");
+		$( "#amount-"+this.resultCount).val("100% - " + $( "#slider-range-"+this.resultCount).slider( "value" ) + "%"); // initial value stated in text box
 	},
+	*/
 	
 	add: function(){
 		// add the result widget
