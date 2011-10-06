@@ -552,8 +552,12 @@ each option contributes to a result.</p>
 			if ($row_resultMode['display_mode'] == "test_custom")
 				$mode = "test_custom";				
 		}while($row_resultMode = mysql_fetch_assoc($resultMode));
+	
+		$queryQuestion = sprintf("SELECT `question_id`, `question` FROM q_questions WHERE fk_quiz_id = %d LIMIT 1" , $quiz->quiz_id);
+		$resultQuestion = mysql_query($queryQuestion, $quizroo) or die(mysql_error());
+		$row_resultQuestion = mysql_fetch_assoc($resultQuestion);
 		
-//		$mode = "simple";
+		$resultForQuestion = array();
 ?>
 
 <div id="create-quiz" class="frame rounded">
