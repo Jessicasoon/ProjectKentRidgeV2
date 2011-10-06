@@ -165,7 +165,9 @@ if(isset($_GET['step'])){
 						if(isset($_POST['q'.$i.'o'.$j]) && isset($_POST['q'.$i.'r'.$j]) ){
 							if(isset($_POST['uq'.$i.'o'.$j])){
 								$quiz->updateOptionMulti($_POST['q'.$i.'o'.$j], $_POST['q'.$i.'r'.$j], 1 , $_POST['uq'.$i.'o'.$j], $member->id); //default of weightage = 1
-							}else{
+							}
+							if(!isset($_POST['uq'.$i.'o'.$j])){
+								//function from quiz.php: addOptionMulti($option, $result, $weightage, $question, $memberID)
 								$quiz->addOptionMulti($_POST['q'.$i.'o'.$j], $_POST['q'.$i.'r'.$j], 1 , $question_id, $member->id); //default of weightage = 1
 							}
 						}
@@ -183,7 +185,7 @@ if(isset($_GET['step'])){
 									$quiz->updateOptionMulti($_POST['q'.$i.'o'.$j], $_POST['q'.$i.'o'.$j.'r'.$k], $_POST['q'.$i.'o'.$j.'w'.$k], $_POST['uq'.$i.'o'.$j], $member->id);
 									
 								}else{
-									//function from quiz.php: addOption($option, $result, $weightage, $question, $memberID)
+									//function from quiz.php: addOptionMulti($option, $result, $weightage, $question, $memberID)
 									$quiz->addOptionMulti($_POST['q'.$i.'o'.$j], $_POST['q'.$i.'o'.$j.'r'.$k], $_POST['q'.$i.'o'.$j.'w'.$k], $question_id, $member->id);
 								}
 							}// end for k loop
