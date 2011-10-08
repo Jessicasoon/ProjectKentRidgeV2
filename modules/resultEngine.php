@@ -66,7 +66,7 @@ if ( ($mode == "test_simple") || ($mode == "test_custom") ) {
 	$getNumQuestions = mysql_query($query_getNumQuestions, $quizroo) or die(mysql_error());
 	$row_getNumQuestions = mysql_fetch_assoc($getNumQuestions);
 	$totalRows_getNumQuestions = mysql_num_rows($getNumQuestions);
-
+	
 }
 
 if ($mode == "") {
@@ -132,9 +132,20 @@ if ($mode == "test_simple"){
 	$testSimple_results = ($row_getResults['test_numOfCorrect'] / $row_getNumQuestions['test_numOfQuestions'] * 100);
 }
 if ($mode == "test_custom"){
-	$testSimple_results = ($row_getResults['test_numOfCorrect'] / $row_getNumQuestions['test_numOfQuestions'] * 100);
+	$testCustom_results = ($row_getResults['test_numOfCorrect'] / $row_getNumQuestions['test_numOfQuestions'] * 100);
 	//have to get result from range ^
-$query_getResultInfo = "SELECT * FROM q_results_test WHERE result_id = ".$row_getResults['test_numOfCorrect'];
+$query_getRangeInfo = sprintf("SELECT result_id, range_max, range_min FROM q_results_test WHERE fk_quiz_id = %d", $quiz->quiz_id);
+$getRangeInfo = mysql_query($query_getRangeInfo, $quizroo) or die(mysql_error());
+$row_getRangeInfo = mysql_fetch_assoc($getRangeInfo);
+$totalRows_getRangeInfo = mysql_num_rows($getRangeInfo);
+
+if($totalRows_getRangeInfo != 0) do {
+	if($testCustom_results<=$row_getRangeInfo['range_max'] && $testCustom_results>=$row_getRangeInfo['range_min']){
+	$finalResultID = $row_getRangeInfo['result_id'];
+	}
+} while($row_getRangeInfo = mysql_fetch_assoc($getRangeInfo));
+
+$query_getResultInfo = "SELECT * FROM q_results_test WHERE result_id = ".$finalResultID;
 $getResultInfo = mysql_query($query_getResultInfo, $quizroo) or die(mysql_error());
 $row_getResultInfo = mysql_fetch_assoc($getResultInfo);
 $totalRows_getResultInfo = mysql_num_rows($getResultInfo);

@@ -1096,7 +1096,7 @@ class Quiz{
 		}
 	}
 	
-	// get the list of results belonging to this quiz HAVE TO CHANGE YL
+	// get the list of results belonging to this quiz
 	function getResultsTest($type = NULL){
 		require('quizrooDB.php');
 		$query = sprintf("SELECT result_id FROM q_results_test WHERE fk_quiz_id = %d", $this->quiz_id);
@@ -1195,7 +1195,7 @@ class Quiz{
 		}
 	}
 
-	// get the list of options belonging to a question TEST HAVE TO CHANGE YL
+	// get the list of options belonging to a question
 	function getOptionsTest($question_id, $type = NULL){
 		require('quizrooDB.php');
 		$query = sprintf("SELECT option_id FROM q_options_test WHERE fk_question_id = %d", $question_id);

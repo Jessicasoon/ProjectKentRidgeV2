@@ -507,14 +507,15 @@ results as you like!</p>
 <p id="resultTip" class="containerTip">Click on the "Add new result"
 button to add a result entry!</p>
 </div>
-<?php if($row_resultForResult['count']==0){ ?>
+<?php if($row_resultForResult['count'] == 0){ ?>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
 <body onLoad="QuizResultMulti.add()">
 <?php }if ($mode == "test_simple" || $mode == "test_custom") { ?>
 <body onLoad="QuizResultTest.add()">
 <?php } ?>
 <?php } ?>
-<?php if($mode == "simple" || $mode == "accurate"){ ?>
+
+<?php if($mode == "simple" || $mode == "accurate"){?>
 <div class="add_container">
 <input type="submit" name="save" id="prev" value="Previous Step" /> 
 <input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultMulti.add()" /> &nbsp;
@@ -601,7 +602,7 @@ button to add a question entry!</p>
 <?php if($row_resultQuestion['count']==0){ ?>
 <?php if($mode == "simple" || $mode == "accurate"){ ?>
 <body onload="QuizQuestionMulti.add()">
-<?php }else{ ?>
+<?php }if($mode == "test_simple" || $mode == "test_custom"){ ?>
 <body onload="QuizQuestionTest.add()">
 <?php } ?>
 <?php } ?>
