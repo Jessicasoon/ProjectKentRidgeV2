@@ -21,10 +21,39 @@ $NUM_RECENT_SHOW = 3;
 $recent_activities = array();
 $facebookID = $member->id;
 
+		//***********************************************ADD BY LIEN************************************************//
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
+		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
+		$row_resultMode = mysql_fetch_assoc($resultMode);
+		$resultforMode = array();
+		$mode = "";
+		do{
+			$resultforMode[] = array($row_resultMode['display_mode']);
+			if ($row_resultMode['display_mode'] == "multi_simple")
+				$mode = "simple";
+			if ($row_resultMode['display_mode'] == "multi_accurate")
+				$mode = "accurate";
+			if ($row_resultMode['display_mode'] == "test_simple")
+				$mode = "test_simple";	
+			if ($row_resultMode['display_mode'] == "test_custom")
+				$mode = "test_custom";				
+		}while($row_resultMode = mysql_fetch_assoc($resultMode));
+
+		//***********************************************END OF ADD BY LIEN************************************************//
+		
 /*
- * Get results of quizzes user took HAVE TO CHANGE
+ * Get results of quizzes user took
  */
-$query_user_results = sprintf("SELECT quiz_id, quiz_name, result_title, timestamp FROM q_store_result,q_quizzes,q_results WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = %s ORDER BY q_store_result.timestamp DESC LIMIT %d", $facebookID, $NUM_RECENT_SAMPLES);
+ 		if($mode == "simple" || $mode == "accurate"){
+			$query_user_results = sprintf("SELECT quiz_id, quiz_name, result_title, timestamp FROM q_store_result,q_quizzes,q_results_multi WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = %s ORDER BY q_store_result.timestamp DESC LIMIT %d", $facebookID, $NUM_RECENT_SAMPLES);
+		}
+		if($mode == "test_simple" || $mode == "test_custom"){
+			$query_user_results = sprintf("SELECT quiz_id, quiz_name, result_title, timestamp FROM q_store_result,q_quizzes,q_results_test WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = %s ORDER BY q_store_result.timestamp DESC LIMIT %d", $facebookID, $NUM_RECENT_SAMPLES);
+		}
+		if($mode == ""){
+			$query_user_results = sprintf("SELECT quiz_id, quiz_name, result_title, timestamp FROM q_store_result,q_quizzes,q_results WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = %s ORDER BY q_store_result.timestamp DESC LIMIT %d", $facebookID, $NUM_RECENT_SAMPLES);
+		}
+	
 $user_results = mysql_query($query_user_results, $quizroo) or die(mysql_error());
 $row_user_results = mysql_fetch_assoc($user_results);
 $totalRows_user_results = mysql_num_rows($user_results);
@@ -65,7 +94,16 @@ if(count($friends)!=0){
 	/*
  	 * Get all results of quizzes of friends taken within a 1 week interval (to limit results returned) HAVE TO CHANGE
  	 */
-	$query_all_results = sprintf("SELECT quiz_id, quiz_name, result_title, member_id, member_name, timestamp FROM q_store_result,q_quizzes,q_results,s_members WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = member_id AND timestamp > DATE_SUB(NOW(), INTERVAL 1 MONTH) AND q_store_result.fk_member_id IN %s ORDER BY q_store_result.timestamp DESC",$friends);
+	  	if($mode == "simple" || $mode == "accurate"){
+			$query_all_results = sprintf("SELECT quiz_id, quiz_name, result_title, member_id, member_name, timestamp FROM q_store_result,q_quizzes,q_results_multi,s_members WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = member_id AND timestamp > DATE_SUB(NOW(), INTERVAL 1 MONTH) AND q_store_result.fk_member_id IN %s ORDER BY q_store_result.timestamp DESC",$friends);
+		}
+		if($mode == "test_simple" || $mode == "test_custom"){
+			$query_all_results = sprintf("SELECT quiz_id, quiz_name, result_title, member_id, member_name, timestamp FROM q_store_result,q_quizzes,q_results_test,s_members WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = member_id AND timestamp > DATE_SUB(NOW(), INTERVAL 1 MONTH) AND q_store_result.fk_member_id IN %s ORDER BY q_store_result.timestamp DESC",$friends);
+		}
+		if($mode == ""){
+			$query_all_results = sprintf("SELECT quiz_id, quiz_name, result_title, member_id, member_name, timestamp FROM q_store_result,q_quizzes,q_results,s_members WHERE q_store_result.fk_quiz_id=q_quizzes.quiz_id AND fk_result_id=result_id AND q_store_result.fk_member_id = member_id AND timestamp > DATE_SUB(NOW(), INTERVAL 1 MONTH) AND q_store_result.fk_member_id IN %s ORDER BY q_store_result.timestamp DESC",$friends);
+		}
+		
 	$all_results = mysql_query($query_all_results, $quizroo) or die(mysql_error());
 	$row_all_results = mysql_fetch_assoc($all_results);
 	$totalRows_all_results = mysql_num_rows($all_results);

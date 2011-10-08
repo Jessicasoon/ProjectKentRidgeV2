@@ -52,7 +52,7 @@ if($quiz->exists()){
 				if($mode == "simple" || $mode == "accurate"){
 					$numOptions = $quiz->getOptionsMulti($question, "count");
 				}
-				else{ //HAVE TO CHANGE FOR TEST YL
+				else{
 					$numOptions = $quiz->getOptionsTest($question, "count");
 				}
 				if($numOptions < $VAR_QUIZ_MIN_OPTIONS){
@@ -68,8 +68,16 @@ if($quiz->exists()){
 			$averageOptionCount = 0;
 		}
 		
-		// get results to build the pie chart HAVE TO CHANGE
-		$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
+		// get results to build the pie chart
+		if($mode == "simple" || $mode == "accurate"){
+			$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results_multi WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
+		}
+		if($mode == "test_simple" || $mode == "test_custom"){
+			$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results_test WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
+		}
+		if($mode == ""){
+			$query_getResultChart = sprintf("SELECT COUNT(*) AS count, result_title FROM q_store_result, q_results WHERE q_store_result.fk_quiz_id = %d AND result_id = fk_result_id GROUP BY fk_result_id", $quiz->quiz_id);
+		}
 		$getResultChart = mysql_query($query_getResultChart, $quizroo) or die(mysql_error());
 		$row_getResultChart = mysql_fetch_assoc($getResultChart);
 		$totalRows_getResultChart = mysql_num_rows($getResultChart);
@@ -81,9 +89,18 @@ if($quiz->exists()){
 		$row_getTakeQuiz = mysql_fetch_assoc($getTakeQuiz);
 		$totalRows_getTakeQuiz = mysql_num_rows($getTakeQuiz);
 		$count = 0;
+
 		
 		// quiz taker's log HAVE TO CHANGE
-		$quizLogQuery = sprintf("SELECT member_id, member_name, result_title, `timestamp` FROM s_members m, q_store_result s, q_results r WHERE s.fk_member_id = m.member_id AND s.fk_result_id = r.result_id AND s.fk_quiz_id = %s GROUP BY member_name ORDER BY `timestamp` DESC LIMIT 0, 10", $quiz->quiz_id);
+		if($mode == "simple" || $mode == "accurate"){
+			$quizLogQuery = sprintf("SELECT member_id, member_name, result_title, `timestamp` FROM s_members m, q_store_result s, q_results_multi r WHERE s.fk_member_id = m.member_id AND s.fk_result_id = r.result_id AND s.fk_quiz_id = %s GROUP BY member_name ORDER BY `timestamp` DESC LIMIT 0, 10", $quiz->quiz_id);
+		}
+		if($mode == "test_simple" || $mode == "test_custom"){
+			$quizLogQuery = sprintf("SELECT member_id, member_name, result_title, `timestamp` FROM s_members m, q_store_result s, q_results_test r WHERE s.fk_member_id = m.member_id AND s.fk_result_id = r.result_id AND s.fk_quiz_id = %s GROUP BY member_name ORDER BY `timestamp` DESC LIMIT 0, 10", $quiz->quiz_id);
+		}
+		if($mode == ""){
+			$quizLogQuery = sprintf("SELECT member_id, member_name, result_title, `timestamp` FROM s_members m, q_store_result s, q_results r WHERE s.fk_member_id = m.member_id AND s.fk_result_id = r.result_id AND s.fk_quiz_id = %s GROUP BY member_name ORDER BY `timestamp` DESC LIMIT 0, 10", $quiz->quiz_id);
+		}
 		$getquizLog = mysql_query($quizLogQuery, $quizroo) or die(mysql_error());
 		$row_getquizLog = mysql_fetch_assoc($getquizLog);
 		$totalRows_getquizLog = mysql_num_rows($getquizLog);
@@ -218,7 +235,7 @@ $(document).ready(function(){
     <p class="factDesc">Options</p></div>
     <div class="factbox rounded">
       <p class="unit">has</p>
-      <div class="factValue"><?php echo if($mode == "simple" || $mode == "accurate"){$quiz->getResultsMulti('count');}else{$quiz->getResultsTest('count');} ?></div><!--HAVE TO CHANGE FOR TEST YL-->
+      <div class="factValue"><?php echo if($mode == "simple" || $mode == "accurate"){$quiz->getResultsMulti('count');}else{$quiz->getResultsTest('count');} ?></div>
       <p class="factDesc">Results</p>
     </div>
     </div>

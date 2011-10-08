@@ -421,9 +421,13 @@ WHERE member_id = %s", $this->id);
 			$queryStat = sprintf("SELECT COUNT(question_id) AS count FROM q_questions WHERE fk_quiz_id IN (SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %s)", $this->id);
 			break;
 			
-			// Total number of options for quizzes created HAVE TO CHANGE
+			// Total number of options for quizzes created
 			case "options":
-			$queryStat = sprintf("SELECT COUNT(option_id) AS count FROM q_options WHERE fk_question_id IN (SELECT question_id FROM q_questions WHERE fk_quiz_id IN (SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %s))", $this->id);
+			$queryStatNorm = sprintf("SELECT COUNT(option_id) AS count FROM q_options WHERE fk_question_id IN (SELECT question_id FROM q_questions WHERE fk_quiz_id IN (SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %s))", $this->id);
+			$queryStatMulti = sprintf("SELECT COUNT(option_id) AS count FROM q_options_multi WHERE fk_question_id IN (SELECT question_id FROM q_questions WHERE fk_quiz_id IN (SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %s))", $this->id);
+			$queryStatTest = sprintf("SELECT COUNT(option_id) AS count FROM q_options_test WHERE fk_question_id IN (SELECT question_id FROM q_questions WHERE fk_quiz_id IN (SELECT quiz_id FROM q_quizzes WHERE fk_member_id = %s))", $this->id);			
+
+			$queryStat = $queryStatNorm + $queryStatMulti + $queryStatTest;
 			break;
 			
 			// Total likes from quizzes
