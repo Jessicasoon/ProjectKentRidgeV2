@@ -40,10 +40,11 @@ default: case 1:
   <p>Part 1<em></em> contains all the basic information we need to help you setup your quiz. It allows you to tell a potential quiz taker what insights your quiz intends to deliver.</p>
   <p>If you have prepared several images for quiz, you can upload them all at once! Images that you have uploaded previously with this quiz can also be used. You can choose which images to use at every part of the  process.</p>
   <ul class="rounded">
-    <li class="current"><strong>Part 1</strong> Quiz Information</li>
-    <li><strong>Part 2</strong> Results</li>
-    <li><strong>Part 3</strong> Question</li>
-    <li><strong>Part 4</strong> Update</li>
+    <li class="completed_last start"><strong>Step 1</strong> Quiz Type</li>
+	<li class="current"><strong>Step 2</strong> Quiz Information</li>
+	<li><strong>Step 3</strong> Results</li>
+	<li><strong>Step 4</strong> Question</li>
+	<li><strong>Step 5</strong> Publish</li>
   </ul>
   </div>
 </div>

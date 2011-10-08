@@ -132,7 +132,7 @@ class Quiz{
 	}
 	
 	// update the quiz
-	function update_NOTUSED($title, $description, $cat, $picture, $memberID){
+	function update($title, $description, $cat, $picture, $memberID){
 		require('quizrooDB.php');
 		
 		// check if is member
@@ -152,30 +152,6 @@ class Quiz{
 		}
 	}
 	
-	/**************************************************************
-	 * Added by Hien on Oct 5 for updating quiz with new database
-	 **************************************************************/
-	function update($title, $description, $cat, $picture, $memberID, $display_mode, $fk_quiz_type){
-		require('quizrooDB.php');
-		
-		// check if is member
-		if($this->isOwner($memberID)){
-			// insert into the quiz table
-			$insertSQL = sprintf("UPDATE q_quizzes SET `quiz_name`=%s, `quiz_description`=%s, `fk_quiz_cat`=%d, `quiz_picture`=%s, `display_mode`=%s, `fk_quiz_type`=%d WHERE `quiz_id` = %d",
-							   htmlentities(GetSQLValueString($title, "text")),
-							   htmlentities(GetSQLValueString($description, "text")),
-							   GetSQLValueString($cat, "int"),
-							   GetSQLValueString($picture, "text"),
-							   GetSQLValueString($display_mode, "text"),
-							   GetSQLValueString($fk_quiz_type, "int"),
-							   GetSQLValueString($this->quiz_id, "int"));
-			mysql_query($insertSQL, $quizroo) or die(mysql_error());
-			
-			return $this->quiz_id;
-		}else{
-			return false;
-		}
-	}
 	// delete the quiz
 	function deleteMulti($memberID){
 		require('quizrooDB.php');
