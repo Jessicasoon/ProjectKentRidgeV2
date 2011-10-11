@@ -72,6 +72,8 @@ mysql_free_result($resultID);
          <th align="left">&nbsp;</th>
          <?php } ?>
          <td width="150" align="center"> <?php echo $item[1]; ?> </td>  
+         
+          <input type="hidden" name="q<?php echo $question; ?>o<?php echo $option;?>r<?php echo $result_count; ?>" id="q<?php echo $question; ?>o<?php echo $option;?>r<?php echo $result_count; ?>" value="<?php echo $item[0] ?>" /> 
                         
          <td width="100" align = "center"><select name="q<?php echo $question;?>o<?php echo $option;?>w<?php echo $result_count?>" id="q<?php echo $question; ?>o<?php echo $option;?>w<?php echo $result_count?>">
         
