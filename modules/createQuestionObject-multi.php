@@ -241,12 +241,15 @@ $quiz = $_GET['id'];
        
       <?php if ($mode == "accurate") { 
 	  	$result_count = 0; ?>
-      <td width="150">
+      <!--td width="150"-->
           <?php foreach($results as $item){ ?>
+           <!-- Modified by Hien on 12 Oct for formatting the table-->
+          		  <?php if ($result_count > 0) { ?>
                   <tr class = "optionTable">
                   <th width="25">&nbsp;</th>
                   <th width="80">&nbsp;</th>
                   <th align="left">&nbsp;</th>
+                  <?php } ?>
                   <td width="150" align="center"> <?php echo $item[1]; ?> </td>  
                   
                   <input type="hidden" name="q<?php echo $question; ?>o0r<?php echo $result_count; ?>" id="q<?php echo $question; ?>o0r<?php echo $result_count; ?>" value="<?php echo $item[0] ?>" />        
@@ -257,11 +260,14 @@ $quiz = $_GET['id'];
                       <option value="2">2</option>
                       <option value="3">3</option>
                   </select></td> 
+                  <!-- Modified by Hien on 12 Oct for formatting the table-->
+          		  <?php if ($result_count > 0) { ?>
                   </tr>
+                  <?php } ?>
                   <?php $result_count++; ?>
              <?php } //end  foreach results as item?>
           <?php } //end if $mode == accurate?>
-          </td>
+          <!--/td-->
 
     </tr>
     <tr>
@@ -282,12 +288,15 @@ $quiz = $_GET['id'];
       <?php } ?>
       <?php if ($mode == "accurate") { 
 	  	$result_count = 0; ?>
-      <td width="150">
+      <!--td width="150"-->
           <?php foreach($results as $item){ ?>
+          <!-- Modified by Hien on 12 Oct for formatting the table-->
+          		  <?php if ($result_count > 0) { ?>
                   <tr class = "optionTable">
                   <th width="25">&nbsp;</th>
                   <th width="80">&nbsp;</th>
                   <th align="left">&nbsp;</th>
+                  <?php } ?>
                   <td width="150" align="center"> <?php echo $item[1]; ?> </td>  
                   
                   <input type="hidden" name="q<?php echo $question; ?>o1r<?php echo $result_count; ?>" id="q<?php echo $question; ?>o1r<?php echo $result_count; ?>" value="<?php echo $item[0] ?>" /> 
@@ -296,8 +305,11 @@ $quiz = $_GET['id'];
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
-                  </select></td> 
+                  </select></td>
+                  <!-- Modified by Hien on 12 Oct for formatting the table-->
+                  <?php if ($result_count > 0) { ?> 
                   </tr>
+                   <?php } ?>
                   <?php $result_count++; ?>
              <?php } //end foreach results as item?>
           <?php } //end if mode == accurate?>
