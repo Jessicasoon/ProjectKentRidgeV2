@@ -26,20 +26,30 @@ $queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %s", Ge
 			if ($row_resultMode['display_mode'] == "test_custom")
 				$mode = "test_custom";				
 		}while($row_resultMode = mysql_fetch_assoc($resultMode));
-		
 
 $question_count = 1;
-?>
+$page_count = 1;
+$total_pages = ceil( $row_getQuizInfo['question_count'] / 5) ;
+$total_questions =  $row_getQuizInfo['question_count']; ?>
+
+<script type="text/javascript">
+var numQuestions = <?php echo $total_questions ?>;
+</script>
+
+
+<!-- <h4>Total Questions in this quiz:  <?php //echo $total_questions; ?> </h4> -->
+
 <div id="takequiz-preamble" class="framePanel rounded">
   <h2>Take a quiz</h2>
   <div class="content-container">
   <p>You're now taking the quiz,<em> &quot;<?php echo $row_getQuizInfo['quiz_name']; ?>&quot;</em> by <?php echo $row_getQuizInfo['member_name']; ?>. You may stop taking the quiz anytime by navigating away from this page. No data will be collected unless you complete the quiz.</p>
   <div id="progress_panel">
       <div id="question_paging">
-        <?php for($i = 0; $i < $totalRows_getQuizQuestions; $i++) { ?>
-        <a href="javascript:;" title="Jump to Question <?php echo ($i+1); ?>" rel="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></a>
+        <?php for($i = 0; $i < $total_pages; $i++) { ?>
+        <a href="javascript:;" title="Jump to Page <?php echo ($i+1); ?>" rel="<?php echo ($i+1); ?>"><?php echo ($i+1); ?></a>
         <?php } ?>
       </div>
+ 
       <span id="final-bulb">&#10003;</span>
       <!--<p id="progress_text">Overall Progress (<span id="progress_percentage">0</span>%)</p>-->
       <div id="progress_bar">
@@ -47,7 +57,7 @@ $question_count = 1;
       </div>
   </div>
   <div id="incomplete" class="rounded">
-    <p>Questions marked with a white circle are not answered!</p>
+    <p>Pages marked with a white circle has question/s that  is/are not answered!</p>
     <p>Use the &quot;Previous&quot; and &quot;Next&quot; buttons to navigate between questions.</p>
   </div>
   </div>
@@ -58,8 +68,19 @@ $question_count = 1;
     <input type="hidden" name="logtime" id="logtime" value="<?php date_default_timezone_set("Asia/Singapore"); echo time(); ?>" />
     <div id="questionContainer">
       <div id="question_reel">
-        <?php do { 
-
+        <?php do {  
+		    if ($total_questions > 5) {
+				if (($total_questions - $question_count) < 5) $limit = $total_questions - $question_count + 1;
+				else $limit = 5; 
+			}
+			else $limit = $total_questions;?>
+            
+           		        
+			<div class="question_slide">
+			<fieldset>  
+			<?php
+			for ($questionOnPage = 0; $questionOnPage < $limit; $questionOnPage ++) 
+			{
 			if ( $mode == "simple" ) 
 			{ 	$query_getOptions = "SELECT * FROM q_options_multi WHERE fk_question_id = ".$row_getQuizQuestions['question_id']; 
 				$getOptions = mysql_query($query_getOptions, $quizroo) or die(mysql_error()); 
@@ -94,29 +115,36 @@ $question_count = 1;
 				$row_getOptions = mysql_fetch_assoc($getOptions);
 				$totalRows_getOptions = mysql_num_rows($getOptions);
 			}
-
-
-			
-			$option_count = 1;	  
+  			$option_count = 1;
 		  ?>
-        <div class="question_slide">
-          <fieldset>
-            <h4>Question <?php echo $question_count; ?></h4>
+ 		
+    
+            
+             <h4>Question<?php echo $question_count; ?> </h4>
+            
+            
+ 
             <?php if($row_getQuizQuestions['question_image'] != NULL){ ?>
             <span id="question-image"><img src="../quiz_images/imgcrop.php?w=500&h=375&f=<?php echo $row_getQuizQuestions['question_image']; ?>" width="500" height="375" /></span>
             <?php } ?>
+                 
             <p><?php echo $row_getQuizQuestions['question']; ?></p>
+            
+            <?php if ($questionOnPage != 4) $row_getQuizQuestions = mysql_fetch_assoc($getQuizQuestions); ?>
             <table width="100%" border="0" cellpadding="5" cellspacing="0">
               <?php do { ?>
-              	
                 <tr>
                   <th width="30" scope="row"><input type="radio" name="q<?php echo $question_count; ?>" id="q<?php echo $question_count; ?>o<?php echo $option_count; ?>" value="<?php echo $row_getOptions['option_id']; ?>" /></th>
                   <td><label for="q<?php echo $question_count; ?>o<?php echo $option_count; ?>"><?php echo $row_getOptions['option']; ?></label></td>
                 </tr>
                 <?php $option_count++; } while ($row_getOptions = mysql_fetch_assoc($getOptions)); ?>
+                <?php $question_count++; mysql_free_result($getOptions); ?>
             </table>
+           <?php } ?>
+           
+             
             <table width="95%" border="0" align="center" cellpadding="5" cellspacing="0" id="question_navigation">
-              <?php if($question_count != $totalRows_getQuizQuestions){ if($question_count == 1){ ?>
+              <?php if($page_count != $total_pages){ if($page_count == 1){ ?>
               <tr>
                 <td align="left" scope="row">&nbsp;</td>
                 <td align="right"><input name="nextBtn<?php echo $question_count; ?>" type="button" class="styleBtn" id="nextBtn<?php echo $question_count; ?>" value="Next" /></td>
@@ -126,16 +154,24 @@ $question_count = 1;
                 <td align="left" scope="row"><input name="prevBtn<?php echo $question_count; ?>" type="button" class="styleBtn" id="prevBtn<?php echo $question_count; ?>" value="Previous" /></td>
                 <td align="right"><input name="nextBtn<?php echo $question_count; ?>" type="button" class="styleBtn" id="nextBtn<?php echo $question_count; ?>" value="Next" /></td>
               </tr>
-              <?php }}else{ ?>
+              <?php }}else{ if ($total_pages == 1) {?>
+               <tr>
+               <td align="left" scope="row">&nbsp;</td>
+               <td align="right"><input name="finishQuiz" type="submit" class="btnDisabled" id="finishQuiz" value="Complete Quiz" /></td>
+              </tr>
+              <?php } else { ?>
               <tr>
                 <td align="left" scope="row"><input name="prevBtn<?php echo $question_count; ?>" type="button" class="styleBtn" id="prevBtn<?php echo $question_count; ?>" value="Previous" /></td>
                 <td align="right"><input name="finishQuiz" type="submit" class="btnDisabled" id="finishQuiz" value="Complete Quiz" /></td>
               </tr>
-              <?php } ?>
+              <?php }} ?>
             </table>
           </fieldset>
         </div>
-        <?php $question_count++; mysql_free_result($getOptions); } while ($row_getQuizQuestions = mysql_fetch_assoc($getQuizQuestions)); ?>
+        <?php 
+		$page_count ++;
+		
+		} while ($row_getQuizQuestions = mysql_fetch_assoc($getQuizQuestions) ); ?>
       </div>
     </div>
   </form>

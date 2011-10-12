@@ -144,7 +144,7 @@ var QuizResultTest = {
 				values: 75,
 				slide: function( event, ui ) {
 				   // find any element with class .amount WITHIN scope of $this
-				   $(this).parent().find(".amount").html( ui.value + "% ");
+				   $(this).parent().find(".amount" ).html( ui.value + "% ");
 				  
 				}
 			});
