@@ -91,7 +91,7 @@ if(isset($_GET['step'])){
 				}
 			}
 		}
-		else{ //HAVE TO CHANGE FOR TEST BY YL
+		else{
 			for($i = 0; $i < $_POST['resultCount']; $i++){
 				if(isset($_POST['result_title_'.$i]) && isset($_POST['result_description_'.$i]) && isset($_POST['result_picture_'.$i])){
 					$result_title = $_POST['result_title_'.$i];
@@ -194,7 +194,7 @@ if(isset($_GET['step'])){
 		
 				} // END OF CHUNK ADDED BY LIEN
 			}
-		}else{ //MODE FOR TEST HAVE TO CHANGE BY YL
+		}else{ //MODE FOR TEST
 			// Insert the questions and options
 			$questionArray = explode("_", $_POST['optionCounts']);
 
