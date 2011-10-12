@@ -27,7 +27,7 @@ if(isset($_GET['id'])){
 			if($level == false){
 				// authentication error
 				$quiz_exist = false;
-			}elseif($level == -2){
+			}else if($level == -2){
 				// publish failed, redirect user
 				header("Location: modifyQuiz.php?step=4&id=".$quiz->quiz_id);
 			}else{

@@ -908,7 +908,7 @@ class Quiz{
 					}
 				}
 				else{
-					if(!$this->checkPublishTest()){
+					if(!$this->checkPublishTest($mode)){
 						return -2;
 					}				
 				}

@@ -61,24 +61,32 @@ mysql_free_result($resultID);
       <input name="q<?php echo $question; ?>o<?php echo $option; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $option; ?>" />
     <span class="textfieldRequiredMsg">Enter a value for this option!</span></span></td>
 
- <td width="150">
+ <!--td width="150"-->
  	<?php $result_count = 0; ?>
      <?php foreach($results as $item){ ?>
+     <!-- Modified by Hien on 12 Oct for formatting the table-->
+         <?php if ($result_count > 0) { ?>
          <tr class = "optionTable">
          <th width="25">&nbsp;</th>
          <th width="80">&nbsp;</th>
          <th align="left">&nbsp;</th>
+         <?php } ?>
          <td width="150" align="center"> <?php echo $item[1]; ?> </td>  
+         
+          <input type="hidden" name="q<?php echo $question; ?>o<?php echo $option;?>r<?php echo $result_count; ?>" id="q<?php echo $question; ?>o<?php echo $option;?>r<?php echo $result_count; ?>" value="<?php echo $item[0] ?>" /> 
                         
          <td width="100" align = "center"><select name="q<?php echo $question;?>o<?php echo $option;?>w<?php echo $result_count?>" id="q<?php echo $question; ?>o<?php echo $option;?>w<?php echo $result_count?>">
         
          <option value="1">1</option>
          <option value="2">2</option>
          <option value="3">3</option>
-         </select></td> 
+         </select></td>
+          <!-- Modified by Hien on 12 Oct for formatting the table-->
+         <?php if ($result_count > 0) { ?> 
          </tr>
+          <?php } ?>
          <?php $result_count++; ?>
-    <?php } //end foreach results as item?>    
+    <?php } //end foreach results as item?>
   </tr>
 </table>
 </div>
