@@ -114,7 +114,7 @@ if(isset($_GET['load'])){ //user is modifying quiz, load from database
 	  
       <?php if ($mode == "accurate") { 
            
-            $queryOption = sprintf("SELECT `option`,`option_id`, `fk_result_id`, `option_weightage` FROM q_options_multi WHERE fk_question_id = %d ORDER BY `option`, `fk_result_id` ", GetSQLValueString($row_getQuery['question_id'], "int"));
+            $queryOption = sprintf("SELECT `option`,`option_id`, `fk_result_id`, `option_weightage` FROM q_options_multi WHERE fk_question_id = %d", GetSQLValueString($row_getQuery['question_id'], "int"));
 			$getOption = mysql_query($queryOption, $quizroo) or die(mysql_error());
 			$row_getOption = mysql_fetch_assoc($getOption);
 			$totalRows_getOption = mysql_num_rows($getOption);
@@ -139,8 +139,7 @@ if(isset($_GET['load'])){ //user is modifying quiz, load from database
    	 </table>
    	  </div>-->
       <?php } //end if $result_count == 0 ?>
-      
-            <input type="hidden" name="q<?php echo $question; ?>o<?php echo $option_countForResult; ?>r<?php echo $result_count; ?>" id="q<?php echo $question; ?>o<?php echo $option; ?>r<?php echo $result_countForResult; ?>" value="<?php echo $results[$result_count][0]; ?>" />  
+        
             <!-- Modified by Hien on 12 Oct for formatting the table-->
           		  <?php if ($result_count > 0) { ?>
                   <tr class = "optionTable">
@@ -149,17 +148,25 @@ if(isset($_GET['load'])){ //user is modifying quiz, load from database
                   <th align="left">&nbsp;</th>
                   <?php } ?>
                   <td width="150" align="center"> <?php echo $results[$result_count][1]; ?> </td>  
-         <?php echo $question; echo $option_countForResult; echo $result_count; //DEBUG PURPOSE - LIEN?>
-         <?php echo $results[$result_count][0]; echo "HELLO"; echo $row_getOption['fk_result_id']; // DEBUG PURPOSE - LIEN?>
+                  <input type="hidden" name="q<?php echo $question; ?>o<?php echo $option_countForResult; ?>r<?php echo $result_count; ?>" id="q<?php echo $question; ?>o<?php echo $option_countForResult; ?>r<?php echo $option_countForResult; ?>" value="<?php echo $results[$result_count][0]; ?>" />
          
                   <td width="100"  align = "center"><select name="q<?php echo $question; ?>o<?php echo $option_countForResult; ?>w<?php echo $result_count;?>" id="q<?php echo $question; ?>o<?php echo $option_countForResult; ?>w<?php echo $result_count;?>">
     
-                      <option value="1" <?php if(1 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>1</option> 
-                      <option value="2" <?php if(2 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>2</option>
-                      <option value="3" <?php if(3 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>3</option>  
-               
-                  
+                      <option value="1" <?php if(1 == $row_getOption['option_weightage']){ echo ' selected = "selected"'; }; ?>>1</option> 
+                      <option value="2" <?php if(2 == $row_getOption['option_weightage']){ echo ' selected = "selected"'; }; ?>>2</option>
+                      <option value="3" <?php if(3 == $row_getOption['option_weightage']){ echo ' selected = "selected"'; }; ?>>3</option>  
                   </select></td>
+                  
+                  <td>
+                  <label>q<?php echo $question; ?>o<?php echo $option_countForResult; ?>w<?php echo $result_count;?></label>
+                  </td>
+                  <td>
+                  <label>q<?php echo $question; ?>o<?php echo $option_countForResult; ?>r<?php echo $result_count; ?></label>
+                  </td>
+                  <td>
+         <?php echo $results[$result_count][0]; echo "HELLO"; echo $row_getOption['fk_result_id']; // DEBUG PURPOSE - LIEN?>
+                  </td>
+                  
                    <!-- Modified by Hien on 12 Oct for formatting the table-->
           		  <?php if ($result_count > 0) { ?>        
                  </tr> <!-- end tr class = "optionTable"-->
