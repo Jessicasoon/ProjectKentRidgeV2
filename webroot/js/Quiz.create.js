@@ -93,8 +93,8 @@ var QuizResultTest = {
 		
 	},
 	
-
-	slider: function() {
+/*
+	slider: function() { // slider that works, with 2 handles
 		$(".slider").each(function() {
 			// $this is a reference to .slider in current iteration of each
 			$this = $(this);
@@ -110,7 +110,7 @@ var QuizResultTest = {
 				   $(this).parent().find(".amount").html( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "% " );
 				  
 				}
-				
+	*/			
 				/*  
 				//might help in getting value for next result starting % - LIEN
 				//rmb to put comma above if using these functions
@@ -123,15 +123,37 @@ var QuizResultTest = {
 					$("#delta").text(ui.value > start ? "increasing" : "decreasing");
 				}
 				*/ // end of might-help
-		
+	/*	
 			});
 			$(".amount").html( $(".slider-range").slider("values", 0 ) + "% - " + $(".slider-range").slider("values", 1 ) + "% " );
 	});
-	
-	
-	
-	
+}, */
+
+
+	slider: function() { // slider that works, with 1 handle.
+		$(".slider").each(function() {
+			// $this is a reference to .slider in current iteration of each
+			$this = $(this);
+			//alert( $("#resultCount").val() );
+			 $lower = $(this).parent().find(".lowerbound").val();
+			// find any .slider-range element WITHIN scope of $this
+			$(".slider-range", $this).slider({
+				range: "max",
+				min: 0,
+				max: 100,
+				values: 75,
+				slide: function( event, ui ) {
+				   // find any element with class .amount WITHIN scope of $this
+				   $(this).parent().find(".amount").html( ui.value + "% ");
+				  
+				}
+			});
+			$(".amount"+ $("#resultCount").val()).html( $(".slider-range").slider("values", 0 ) + "% " );
+	});
 }, 
+
+
+
 	/*slider: function() { //http://jqueryui.com/demos/slider/#range --using this logic for above - LIEN
 		$( "#slider-range").slider({
 			range: true,
