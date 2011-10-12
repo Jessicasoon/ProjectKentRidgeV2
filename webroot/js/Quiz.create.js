@@ -144,8 +144,9 @@ var QuizResultTest = {
 				values: 75,
 				slide: function( event, ui ) {
 				   // find any element with class .amount WITHIN scope of $this
-				   $(this).parent().find(".amount" ).html( ui.value + "% ");
-				  
+
+				   $(this).parent().find(".amount").html( ui.value + "% ");
+
 				}
 			});
 			$(".amount"+ $("#resultCount").val()).html( $(".slider-range").slider("values", 0 ) + "% " );
@@ -207,8 +208,7 @@ var QuizResultTest = {
 		// update the count
 		this.updateCount();
 		// Modify by Hien on 14 Sep for getting value from the input text area
-		var test =  document.getElementById('amount-'+this.resultCount);
-		alert(test.value);
+		alert("hien");
 		// end modification
 		return this.resultCount;
 	},

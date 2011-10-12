@@ -813,7 +813,7 @@ class Quiz{
 			$questionState = false;
 			$optionState = false;
 		}
-		// run through the checks, return false if failed
+		//run through the checks, return false if failed
 		if($numResults < $VAR_QUIZ_MIN_RESULT || $numQuestions < $VAR_QUIZ_MIN_QUESTIONS || !$optionState){
 			return false;
 		}else{
@@ -1494,7 +1494,7 @@ class Quiz{
 		require('quizrooDB.php');
 		
 		// insert into the quiz table (protect each insert from HTML Injection)
-		$insertSQL = sprintf("INSERT INTO q_quizzes(`quiz_name`, `quiz_description`, `fk_quiz_cat`, `quiz_picture`, `fk_member_id`, `quiz_key`, `isPublished`, `display_mode`, `fk_quiz_type` ) VALUES (%s, %s, %d, %s, %d, %s, 1, %s, %d)",
+		$insertSQL = sprintf("INSERT INTO q_quizzes(`quiz_name`, `quiz_description`, `fk_quiz_cat`, `quiz_picture`, `fk_member_id`, `quiz_key`, `display_mode`, `fk_quiz_type` ) VALUES (%s, %s, %d, %s, %d, %s, %s, %d)",
 						   htmlentities(GetSQLValueString($title, "text")),
 						   htmlentities(GetSQLValueString($description, "text")),
 						   GetSQLValueString($cat, "int"),
