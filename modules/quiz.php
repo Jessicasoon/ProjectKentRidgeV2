@@ -898,7 +898,7 @@ class Quiz{
 		require('variables.php');
 
 		//***********************************************ADD BY LIEN************************************************//
-		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $this->$quiz_id);
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $this->quiz_id);
 		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
 		$row_resultMode = mysql_fetch_assoc($resultMode);
 		$resultforMode = array();
