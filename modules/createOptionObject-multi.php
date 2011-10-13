@@ -7,6 +7,12 @@ if(isset($_GET['delete'])){
 	// also pass in the member id for security check
 	$quiz = new Quiz($_GET['id']);
 	$member = new Member();
+	$option_id = $_GET['option'];
+	
+	$querySQL = sprintf("SELECT result_id, result_title FROM q_options_multi WHERE fk_quiz_id = %d AND option_id  = %d", GetSQLValueString($quiz, "int"), GETSQLValueString($option_id, "int") );
+	$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
+	$row_resultID = mysql_fetch_assoc($resultID);
+
 	if(!$quiz->removeOptionMulti($_GET['option'], $member->id)){
 		echo "Delete not authorized";
 	}
