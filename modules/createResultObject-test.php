@@ -36,7 +36,9 @@ if(isset($_GET['load'])){
   <th width="120" valign="top" scope="row"><label>Range</label></th> 
   <script>QuizResultTest.slider();</script>
 <div class="slider">
-	<span class="amount<?php echo $result; ?>"></span>
+
+	<span class="amount"></span> 
+
       
       <!-- // might help in getting value for next result starting % - LIEN
       <span>Start:

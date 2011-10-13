@@ -61,7 +61,7 @@ $(document).ready(function() {
 	
 	// update the progress of the quiz
 	function updateProgress(){
-		if(typeof($active) != 'undefined'){
+	/*	if(typeof($active) != 'undefined'){
 			// check if question is answered
 			if($("#takeQuiz input[name='q"+$active.attr("rel")+"']:checked").val() != undefined){
 				if(!$active.hasClass('completed')){
@@ -71,7 +71,41 @@ $(document).ready(function() {
 				}
 			}
 		}
-		
+		*/
+				var count = 0;
+		var limit = 0;
+		var inc = 0;
+
+		for (var i = 1; i<numQuestions+1; i++) {
+			var node_list = document.getElementsByTagName('input');
+			for (var j =0; j<node_list.length; j++){
+				var node = node_list[j];
+				if ( (node.getAttribute('name') == 'q'+i) && (node.getAttribute('type') == 'radio') ) {
+					if (node.checked) {
+						questionArray[i-1] = 1;	//questions that are answered
+						// setting limit for for loop
+						if ( Math.ceil(i/5) == numPages ) 
+							limit = numQuestions%5;
+						else limit = 5;
+						for (var w = 0; w<limit; w++) {
+							if (questionArray[(Math.floor(i/5))*5+w] == 1){
+								count++;
+								
+								if(count == limit )
+								{	
+									if (!$active.hasClass('completed'))
+										$active.addClass('completed');
+									count = 0;
+									break;
+								}
+							}
+							else break; //one of qns on page not answered
+						} count = 0;
+						
+					}
+				}
+			}
+		}
 		// update the state of the submit button
 		if(submitCheck()){
 			$("#finishQuiz").removeClass("btnDisabled");
