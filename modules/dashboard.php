@@ -1,5 +1,6 @@
 <?php require('../modules/quizrooDB.php'); ?>
 <?php require('../modules/variables.php');
+require('../modules/quiz.php');
 
 //---------ADDED BY YL on 2 sep for paging and query to retrieve total number of quizzes------------------
 //---------ADDED BY YL on 14 sep for tabbing --------------------------------
@@ -109,7 +110,8 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
       <?php if($totalRows_quizzes1 != 0){ do { ?>
         <div class="quiz_box clear">
           <h3>
-          <a href="previewQuiz.php?id=<?php echo $row_quizzes1['quiz_id']; ?>"><?php echo $row_quizzes1['quiz_name']; ?></a>
+          <!-- Modified on 13 Oct for greying out the taken quiz-->
+          <a href="previewQuiz.php?id=<?php echo $row_quizzes1['quiz_id']; ?>" <?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes1['quiz_name']; ?></a>
           <!-- Modify on 6 Sep by Hien, to add the star for recommended quizzes-->
         <?php if ($row_quizzes1['isRecommended'] == 1){ ?>
         <img src="../webroot/img/5star.png" width="22" height="24" align="right"/>
@@ -119,8 +121,8 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
           <div class="thumb_box">
             <a href="previewQuiz.php?id=<?php echo $row_quizzes1['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_quizzes1['quiz_picture']; ?>" alt="<?php echo $row_quizzes1['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_quizzes1['quiz_description']; ?>" /></a></div>
           <div class="quiz_details">
-            <p class="description"><?php echo substr($row_quizzes1['quiz_description'], 0, 110).((strlen($row_quizzes1['quiz_description']) < 110)? "" : "..."); ?></p>
-            <p class="source">from <a href="topics.php?topic=<?php echo $row_quizzes1['fk_quiz_cat']; ?>"><?php echo $row_quizzes1['cat_name']; ?></a>  by <a href="viewMember.php?id=<?php echo $row_quizzes1['fk_member_id']; ?>"><?php echo $row_quizzes1['member_name']; ?></a></p>
+            <p class="description" <?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo substr($row_quizzes1['quiz_description'], 0, 110).((strlen($row_quizzes1['quiz_description']) < 110)? "" : "..."); ?></p>
+            <p class="source">from <a href="topics.php?topic=<?php echo $row_quizzes1['fk_quiz_cat']; ?>"<?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes1['cat_name']; ?></a>  by <a href="viewMember.php?id=<?php echo $row_quizzes1['fk_member_id']; ?>"<?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes1['member_name']; ?></a></p>
 			<?php if(!$GAME_ALLOW_DISLIKES){ if($row_quizzes1['likes'] > 0){ ?>
             <p class="rating"><span class="like"><?php echo $row_quizzes1['likes']; ?></span> <?php echo ($row_quizzes1['likes'] > 1) ? "people like" : "person likes"; ?> this</p>
 			<?php }}else{ ?><p class="rating"><span class="like"><?php echo $row_quizzes1['likes']; ?></span> likes, <span class="dislike"><?php echo $row_quizzes1['dislikes']; ?></span> dislikes</p><?php } ?>
@@ -136,8 +138,8 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
       <div class="repeat-container">
       <?php if($totalRows_quizzes2 !=0 ){ do { ?>
         <div class="quiz_box clear">
-        <h3>
-        <a href="previewQuiz.php?id=<?php echo $row_quizzes2['quiz_id']; ?>"><?php echo $row_quizzes2['quiz_name']; ?></a>
+          <h3>
+        <a href="previewQuiz.php?id=<?php echo $row_quizzes2['quiz_id']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes2['quiz_name']; ?></a>
         <!-- Modify on 6 Sep by Hien, to add the star for recommended quizzes-->
         <?php if ($row_quizzes2['isRecommended'] == 1){ ?>
         <img src="../webroot/img/5star.png" width="24" height="22" align="right"/>
@@ -147,8 +149,8 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
           <div class="thumb_box">
             <a href="previewQuiz.php?id=<?php echo $row_quizzes2['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_quizzes2['quiz_picture']; ?>" alt="<?php echo $row_quizzes2['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_quizzes2['quiz_description']; ?>" /></a></div>
           <div class="quiz_details">
-            <p class="description"><?php echo substr($row_quizzes2['quiz_description'], 0, 120).((strlen($row_quizzes2['quiz_description']) < 120)? "" : "..."); ?></p>
-            <p class="source">from <a href="topics.php?topic=<?php echo $row_quizzes2['fk_quiz_cat']; ?>"><?php echo $row_quizzes2['cat_name']; ?></a> by <a href="viewMember.php?id=<?php echo $row_quizzes2['fk_member_id']; ?>"><?php echo $row_quizzes2['member_name']; ?></a>
+            <p class="description"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo substr($row_quizzes2['quiz_description'], 0, 120).((strlen($row_quizzes2['quiz_description']) < 120)? "" : "..."); ?></p>
+            <p class="source">from <a href="topics.php?topic=<?php echo $row_quizzes2['fk_quiz_cat']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes2['cat_name']; ?></a> by <a href="viewMember.php?id=<?php echo $row_quizzes2['fk_member_id']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes2['member_name']; ?></a>
 			<?php if(!$GAME_ALLOW_DISLIKES){ if($row_quizzes2['likes'] > 0){ ?>
             <p class="rating"><span class="like"><?php echo $row_quizzes2['likes']; ?></span> <?php echo ($row_quizzes2['likes'] > 1) ? "people like" : "person likes"; ?> this</p>
 			<?php }}else{ ?><p class="rating"><span class="like"><?php echo $row_quizzes2['likes']; ?></span> likes, <span class="dislike"><?php echo $row_quizzes2['dislikes']; ?></span> dislikes</p><?php } ?>
