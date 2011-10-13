@@ -81,9 +81,15 @@ do{
     <span class="textfieldRequiredMsg">Enter a value for this option!</span></span></td>
 
 		<?php $result_count = 0; //ADD BY LIEN, TO BE USED BELOW ?>		
-		
+		 
 	<?php foreach($results as $item){ //CHANGE CSS ?>
-
+    <!-- Modified by Hien on 13 Oct for formatting the table-->
+            <?php if ($result_count > 0){ ?>
+            <tr class = "optionTable">
+                      <th width="25">&nbsp;</th>
+                      <th width="80">&nbsp;</th>
+                      <th align="left">&nbsp;</th>
+            <?php } ?>
 		<input type="hidden" name="q<?php echo $question; ?>o<?php echo $option; ?>r<?php echo $result_count; ?>" id="q<?php echo $question; ?>o<?php echo $option; ?>r<?php echo $result_count; ?>" value="<?php echo $item[0]; ?>" />
 		<td width="150" align="center"><?php echo $item[1]; ?></td>
       <td width="100"><select name="q<?php echo $question; ?>o<?php echo $option; ?>w<?php echo $result_count; ?>" id="q<?php echo $question; ?>o<?php echo $option; ?>w<?php echo $result_count; ?>">
@@ -93,7 +99,13 @@ do{
           <option value="3">&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</option>
 		  <option value="4">&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</option>
 		  <option value="5">&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</option>
-      </select></td><tr></tr>
+      </select></td>
+      <!-- Modified by Hien on 13 Oct for formatting the table-->
+		<?php if ($result_count > 0){ ?>
+        </tr>
+        <?php } ?>
+      
+      <tr></tr>
 
                   <?php $result_count++; ?>
     <?php } //end  foreach results as item?>
