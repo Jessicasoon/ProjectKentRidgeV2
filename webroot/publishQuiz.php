@@ -23,14 +23,14 @@ if(isset($_GET['id'])){
 			
 			// set the quiz as published
 			$level = $quiz->publish($member->id);
-			
+
 			if($level == false){
 				// authentication error
 				$quiz_exist = false;
 			}else if($level == -2){
 				// publish failed, redirect user
-				header("Location: modifyQuiz.php?step=4&id=".$quiz->quiz_id);
-			}else{
+				header("Location: modifyQuiz.php?step=4&id=".$quiz->quiz_id);			
+				}else{
 				if($level != -1){
 					$achievement_array[] = $level;	// provide the ID of the level acheievement
 				}

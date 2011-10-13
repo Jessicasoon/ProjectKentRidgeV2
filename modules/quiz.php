@@ -896,6 +896,26 @@ class Quiz{
 	function publish($memberID){
 		require('quizrooDB.php');
 		require('variables.php');
+
+		//***********************************************ADD BY LIEN************************************************//
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $this->$quiz_id);
+		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
+		$row_resultMode = mysql_fetch_assoc($resultMode);
+		$resultforMode = array();
+		$mode = "";
+		do{
+			$resultforMode[] = array($row_resultMode['display_mode']);
+			if ($row_resultMode['display_mode'] == "multi_simple")
+				$mode = "simple";
+			if ($row_resultMode['display_mode'] == "multi_accurate")
+				$mode = "accurate";
+			if ($row_resultMode['display_mode'] == "test_simple")
+				$mode = "test_simple";	
+			if ($row_resultMode['display_mode'] == "test_custom")
+				$mode = "test_custom";				
+		}while($row_resultMode = mysql_fetch_assoc($resultMode));
+
+		//***********************************************END OF ADD BY LIEN************************************************//
 		
 		// check ig quiz belongs to member
 		if($this->isOwner($memberID)){
