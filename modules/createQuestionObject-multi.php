@@ -150,7 +150,7 @@ if(isset($_GET['load'])){
 	if($totalRows_getOption > 0){
 		do{
 	?>
-    <?php if ($result_count_p % $total_results == 0 && result_count_p != 0) { $result_count_p = 0; } //lienn?>
+    <?php if ($result_count_p % $total_results == 0 && $result_count_p != 0) { $result_count_p = 0; } //lienn?>
     <div id="cq<?php echo $question; ?>o<?php echo $option; ?>">
     <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
@@ -169,7 +169,15 @@ if(isset($_GET['load'])){
 		
 	<?php // foreach($results as $item){ //CHANGE CSS //lienn?>
 
+        <!-- Modified by Hien on 13 Oct for formatting the table-->
+                <?php if ($result_count_p > 0){ ?>
+                <tr class = "optionTable">
+                          <th width="25">&nbsp;</th>
+                          <th width="80">&nbsp;</th>
+                          <th align="left">&nbsp;</th>
+                <?php } ?>
 		<input type="hidden" name="q<?php echo $question; ?>o<?php echo $option; ?>r<?php echo $result_count_p; ?>" id="q<?php echo $question; ?>o<?php echo $option; ?>r<?php echo $result_count_p; ?>" value="<?php echo $results[$result_count_p][0]; ?>" />
+  
 		<td width="150" align="center"><?php echo $results[$result_count_p][1]; ?></td>
       <td width="100"><select name="q<?php echo $question; ?>o<?php echo $option; ?>w<?php echo $result_count_p; ?>" id="q<?php echo $question; ?>o<?php echo $option; ?>w<?php echo $result_count_p; ?>">
           <option value="0"<?php if(0 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;</option>
@@ -178,7 +186,12 @@ if(isset($_GET['load'])){
           <option value="3"<?php if(3 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</option>
 		  <option value="4"<?php if(4 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</option>
 		  <option value="5"<?php if(5 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</option>
-      </select></td><tr></tr>
+      </select></td>
+      <!-- Modified by Hien on 13 Oct for formatting the table-->
+		<?php if ($result_count_p > 0){ ?>
+        </tr>
+        <?php } ?>
+      <tr></tr>
 
                   <?php $result_count++; ?>
     <?php //} //end  foreach results as item?>
@@ -319,7 +332,13 @@ $quiz = $_GET['id'];
 		<?php $result_count = 0; //ADD BY LIEN, TO BE USED BELOW ?>		
 		
 	<?php foreach($results as $item){ //CHANGE CSS ?>
-
+        <!-- Modified by Hien on 13 Oct for formatting the table-->
+		<?php if ($result_count > 0){ ?>
+        <tr class = "optionTable">
+                  <th width="25">&nbsp;</th>
+                  <th width="80">&nbsp;</th>
+                  <th align="left">&nbsp;</th>
+        <?php } ?>
 		<input type="hidden" name="q<?php echo $question; ?>o0r<?php echo $result_count; ?>" id="q<?php echo $question; ?>o0r<?php echo $result_count; ?>" value="<?php echo $item[0]; ?>" />
 		<td width="150" align="center"><?php echo $item[1]; ?></td>
       <td width="100"><select name="q<?php echo $question; ?>o0w<?php echo $result_count; ?>" id="q<?php echo $question; ?>o0w<?php echo $result_count; ?>">
@@ -329,7 +348,12 @@ $quiz = $_GET['id'];
           <option value="3">&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</option>
 		  <option value="4">&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</option>
 		  <option value="5">&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</option>
-      </select></td><tr></tr>
+      </select></td>
+       <!-- Modified by Hien on 13 Oct for formatting the table-->
+		<?php if ($result_count > 0){ ?>
+        </tr>
+        <?php } ?>
+      <tr></tr>
 
                   <?php $result_count++; ?>
     <?php } //end  foreach results as item?>
@@ -347,7 +371,13 @@ $quiz = $_GET['id'];
 		<?php $result_count = 0; //ADD BY LIEN, TO BE USED BELOW ?>		
 		
 	<?php foreach($results as $item){ //CHANGE CSS ?>
-
+ <!-- Modified by Hien on 13 Oct for formatting the table-->
+		<?php if ($result_count > 0){ ?>
+        <tr class = "optionTable">
+                  <th width="25">&nbsp;</th>
+                  <th width="80">&nbsp;</th>
+                  <th align="left">&nbsp;</th>
+        <?php } ?>
 		<input type="hidden" name="q<?php echo $question; ?>o1r<?php echo $result_count; ?>" id="q<?php echo $question; ?>o1r<?php echo $result_count; ?>" value="<?php echo $item[0]; ?>" />
 		<td width="150" align="center"><?php echo $item[1]; ?></td>
       <td width="100"><select name="q<?php echo $question; ?>o1w<?php echo $result_count; ?>" id="q<?php echo $question; ?>o1w<?php echo $result_count; ?>">
@@ -357,7 +387,12 @@ $quiz = $_GET['id'];
           <option value="3">&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</option>
 		  <option value="4">&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</option>
 		  <option value="5">&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</option>
-      </select></td><tr></tr>
+      </select></td>
+      <!-- Modified by Hien on 13 Oct for formatting the table-->
+		<?php if ($result_count > 0){ ?>
+        </tr>
+        <?php } ?>
+      <tr></tr>
 
                   <?php $result_count++; ?>
     <?php } //end  foreach results as item?>
