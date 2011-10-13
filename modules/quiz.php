@@ -902,7 +902,7 @@ class Quiz{
 		require('variables.php');
 
 		//***********************************************ADD BY LIEN************************************************//
-		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $this->$quiz_id);
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $this->quiz_id);
 		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
 		$row_resultMode = mysql_fetch_assoc($resultMode);
 		$resultforMode = array();
@@ -924,7 +924,7 @@ class Quiz{
 		// check ig quiz belongs to member
 		if($this->isOwner($memberID)){
 			// check if the quiz is already published
-			if(!$this->isPublished()){
+			if(!$this->isPublished()){ 
 				// run through the checks, return false if failed
 				if($mode == "simple" || $mode == "accurate"){
 					if(!$this->checkPublishMulti()){

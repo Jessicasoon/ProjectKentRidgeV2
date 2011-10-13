@@ -3,7 +3,7 @@ include("inc/header-php.php");
 include('../modules/quiz.php');
 
 // check if the quiz exists
-if(isset($_GET['id'])){
+if(isset($_GET['id'])){	
 	$quiz = new Quiz($_GET['id']);
 	// check if the quiz exists
 	if($quiz->exists()){
@@ -14,10 +14,10 @@ if(isset($_GET['id'])){
 			if(!$state){
 				$quiz_exist = false;
 			}
-		}else{
+		}else{ 
 			// Publish the quiz
 			require('../modules/checkAchievements.php');
-			
+
 			// prepare the achievement array for possible multiple achievements
 			$achievement_array = array();
 			

@@ -61,7 +61,8 @@ $(document).ready(function() {
 	
 	// update the progress of the quiz
 	function updateProgress(){
-	/*	if(typeof($active) != 'undefined'){
+	/*	//if 1 question in a page, uncomment this
+		if(typeof($active) != 'undefined'){
 			// check if question is answered
 			if($("#takeQuiz input[name='q"+$active.attr("rel")+"']:checked").val() != undefined){
 				if(!$active.hasClass('completed')){
@@ -71,8 +72,9 @@ $(document).ready(function() {
 				}
 			}
 		}
-		*/
-				var count = 0;
+	*/
+	/*** block for 5 questions in a page ***/
+		var count = 0;
 		var limit = 0;
 		var inc = 0;
 
@@ -106,6 +108,8 @@ $(document).ready(function() {
 				}
 			}
 		}
+		/*** end of block for 5 questions in a page ***/
+		
 		// update the state of the submit button
 		if(submitCheck()){
 			$("#finishQuiz").removeClass("btnDisabled");
