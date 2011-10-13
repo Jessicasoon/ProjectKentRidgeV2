@@ -40,7 +40,32 @@ var QuizValidate = {
 			remover = new Spry.Widget.Utils.destroyWidgets("sprytextarea-"+id);
 			return true;
 		}
-	}
+	},
+	
+	checkTest: function(question, totalOption) {
+		var notCorrect = 0;
+		var optionArray = totalOption.split("_");
+		for (var i = 0; i<question; i++)
+		{
+			notCorrect = 0;
+			for (var x = 0; x<optionArray[i]; x++)
+			{
+				var node_list = document.getElementsByTagName('input');
+				for (var j =0; j<node_list.length; j++){
+					var node = node_list[j];
+					if ( (node.getAttribute('name') == 'q'+i+'r'+x) && (node.getAttribute('type') == 'checkbox') ) {
+						if (!(node.checked)) {
+							notCorrect++ ;
+						}		
+					} 
+				} 
+			if (notCorrect == (optionArray[i])) { alert("Please tick at least one option for all questions"); return false; }
+			} 
+		} 
+		return true;	
+	 }//end checkTest function
+	
+	
 }
 
 // Quiz Information class
@@ -1022,6 +1047,11 @@ var QuizQuestion_NOTUSED = {
 
 function submitCheckTest(value){
 	// check if upload complete
+	
+	if (!QuizValidate.checkTest($('#questionCount').val(),$("#optionCounts").val() )) // check that all questions have at least 1 ticked option
+	{
+		return false;
+	}
 	if(value && !checkIfUploading()){
 		$('#submitBtn').attr("disabled", "disabled");
 		$('#resultCount').val(QuizResultTest.resultCount);
