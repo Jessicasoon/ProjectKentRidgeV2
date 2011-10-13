@@ -341,16 +341,18 @@ class Quiz{
 	}
 
 	// create a new result HAVE TO CHANGE YL
-	function addResultTest($result_title, $result_description, $result_picture, $memberID){
+	function addResultTest($result_title, $result_description, $result_picture, $result_max, $result_min, $memberID){
 		require('quizrooDB.php');
 		
 		// check if is member
 		if($this->isOwner($memberID)){
 			// Insert the result
-			$insertSQL = sprintf("INSERT INTO q_results_test(`result_title`, `result_description`, `result_picture`, `fk_quiz_id`) VALUES (%s, %s, %s, %d)",
+			$insertSQL = sprintf("INSERT INTO q_results_test(`result_title`, `result_description`, `result_picture`, `range_max`, `range_min`, `fk_quiz_id`) VALUES (%s, %s, %s, %d, %d, %d)",
 							   htmlentities(GetSQLValueString($result_title, "text")),
 							   htmlentities(GetSQLValueString($result_description, "text")),
 							   GetSQLValueString($result_picture, "text"),
+							   GetSQLValueString($result_max, "int"),
+							   GetSQLValueString($result_min, "int"),
 							   GetSQLValueString($this->quiz_id, "int"));
 			mysql_query($insertSQL, $quizroo) or die(mysql_error());
 			
@@ -411,16 +413,18 @@ class Quiz{
 		}
 	}
 	// create a new result HAVE TO CHANGE YL
-	function updateResultTest($result_title, $result_description, $result_picture, $result_id, $memberID){
+	function updateResultTest($result_title, $result_description, $result_picture, $result_id, $result_max, $result_min, $memberID){
 		require('quizrooDB.php');
 		
 		// check if is member
 		if($this->isOwner($memberID)){
 			// Insert the result
-			$insertSQL = sprintf("UPDATE q_results_test SET `result_title` = %s, `result_description` = %s, `result_picture` = %s WHERE `result_id` = %d",
+			$insertSQL = sprintf("UPDATE q_results_test SET `result_title` = %s, `result_description` = %s, `result_picture` = %s, `range_max` = %d, `range_min` = %d WHERE `result_id` = %d",
 							   htmlentities(GetSQLValueString($result_title, "text")),
 							   htmlentities(GetSQLValueString($result_description, "text")),
 							   GetSQLValueString($result_picture, "text"),
+							   GetSQLValueString($result_max, "int"),
+							   GetSQLValueString($result_min, "int"),
 							   GetSQLValueString($result_id, "int"));
 			mysql_query($insertSQL, $quizroo) or die(mysql_error());
 			

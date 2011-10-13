@@ -92,18 +92,53 @@ if(isset($_GET['step'])){
 			}
 		}
 		else{
+			//Modified by Hien on 13 Oct for storing range of results
+			//create an array for storing range
+			if($mode == "test_custom"){
+				$array = array();
+				for($i = 0; $i < $_POST['resultCount']; $i++){
+					if($_POST['result_minimum_'.$i] != "select"){
+						$array[$i] = $_POST['result_minimum_'.$i];
+					}
+				}
+				sort($array);
+			}
+			
 			for($i = 0; $i < $_POST['resultCount']; $i++){
 				if(isset($_POST['result_title_'.$i]) && isset($_POST['result_description_'.$i]) && isset($_POST['result_picture_'.$i])){
+					if($mode == "test_custom"){
+						// if the value is the smallest in the array, min value = 0
+						for ($j = 0; $j < count($array); $j ++){
+							if($_POST['result_minimum_'.$i] == $array[$j]){
+								if($j == 0){
+									$result_min = 0;
+								}
+								else{
+									$result_min = $_POST['result_minimum_'.$i];
+								}
+								if($j == count($array)-1){
+									$result_max = 100;
+								}
+								else{
+									$result_max = $array[$j + 1]-1;
+								}
+							}
+						}
+					}
+					else{ // if in simple mode, just default by 0
+						$result_min = 0;
+						$result_max = 0;
+					}
 					$result_title = $_POST['result_title_'.$i];
 					$result_description = $_POST['result_description_'.$i];
 					$result_picture = ($_POST['result_picture_'.$i] != "") ? $_POST['result_picture_'.$i] : "none.gif";
 					if(isset($_POST['ur'.$i])){
-						$quiz->updateResultTest($result_title, $result_description, $result_picture, $_POST['ur'.$i], $member->id);
+						$quiz->updateResultTest($result_title, $result_description, $result_picture, $_POST['ur'.$i], $result_max, $result_min, $member->id);
 					}else{
-						$quiz->addResultTest($result_title, $result_description, $result_picture, $member->id);
+						$quiz->addResultTest($result_title, $result_description, $result_picture, $result_max, $result_min, $member->id);
 					}
 				}
-			}		
+			} // end for loop		
 		}
 		
 		// check the direction to go
