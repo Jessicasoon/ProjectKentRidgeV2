@@ -3,7 +3,7 @@ if(isset($_GET['load'])){
 	$unikey = $_GET['unikey'];
 	require('quizrooDB.php');
 	
-	$query = sprintf("SELECT result_id, result_title, result_description, result_picture FROM q_results_test WHERE fk_quiz_id = %d", GetSQLValueString($_GET['id'], "int"));
+	$query = sprintf("SELECT result_id, result_title, result_description, result_picture, range_max, range_min FROM q_results_test WHERE fk_quiz_id = %d", GetSQLValueString($_GET['id'], "int"));
 	$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
 	$row_getQuery = mysql_fetch_assoc($getQuery);
 	$totalRows_getQuery = mysql_num_rows($getQuery);
@@ -33,8 +33,25 @@ if(isset($_GET['load'])){
   </tr>
   
   <tr> <!--result range-->
-  <th width="120" valign="top" scope="row"><label>Range</label></th> 
-  <script>QuizResultTest.slider();</script>
+  <th width="120" valign="top" scope="row"><label>Range</label></th>
+  <td><select name="result_minimum_<?php echo $result; ?>" id="result_minimum_<?php echo $result; ?>">
+          <option value="select">Select</option>
+		  <option value="0"<?php if(0 == $row_getQuery['range_min']){ echo ' selected = "selected"'; } ?>>&nbsp;&nbsp;&nbsp;0%&nbsp;&nbsp;&nbsp;</option>
+          <option value="10"<?php if(10 == $row_getQuery['range_min']){ echo ' selected = "selected"'; } ?>>&nbsp;&nbsp;&nbsp;10%&nbsp;&nbsp;&nbsp;</option>
+          <option value="20"<?php if(20 == $row_getQuery['range_min']){ echo ' selected = "selected"'; } ?>>&nbsp;&nbsp;&nbsp;20%&nbsp;&nbsp;&nbsp;</option>
+		  <option value="30"<?php if(30 == $row_getQuery['range_min']){ echo ' selected = "selected"'; } ?>>&nbsp;&nbsp;&nbsp;30%&nbsp;&nbsp;&nbsp;</option>
+		  <option value="40"<?php if(40 == $row_getQuery['range_min']){ echo ' selected = "selected"'; } ?>>&nbsp;&nbsp;&nbsp;40%&nbsp;&nbsp;&nbsp;</option>
+          <option value="50"<?php if(50 == $row_getQuery['range_min']){ echo ' selected = "selected"'; }?>>&nbsp;&nbsp;&nbsp;50%&nbsp;&nbsp;&nbsp;</option>
+          <option value="60"<?php if(60 == $row_getQuery['range_min']){ echo ' selected = "selected"'; }?>>&nbsp;&nbsp;&nbsp;60%&nbsp;&nbsp;&nbsp;</option>
+          <option value="70"<?php if(70 == $row_getQuery['range_min']){ echo ' selected = "selected"'; } ?>>&nbsp;&nbsp;&nbsp;70%&nbsp;&nbsp;&nbsp;</option>
+          <option value="80"<?php if(80 == $row_getQuery['range_min']){ echo ' selected = "selected"'; } ?>>&nbsp;&nbsp;&nbsp;80%&nbsp;&nbsp;&nbsp;</option>
+          <option value="90"<?php if(90 == $row_getQuery['range_min']){ echo ' selected = "selected"'; } ?>>&nbsp;&nbsp;&nbsp;90%&nbsp;&nbsp;&nbsp;</option>
+          <option value="100"<?php if(100 == $row_getQuery['range_min']){ echo ' selected = "selected"'; } ?>>&nbsp;&nbsp;&nbsp;100%&nbsp;&nbsp;</option>
+      </select><span class="textareaRequiredMsg">Please select a value for this result range!</span></span>
+    <span class="desc">Select the MINIMUM percentage range of correct answers you want the users to get to achieve this result</span></td>
+  <!-- Modify on 13 Oct for change slider to select box-->
+  <!--<script>QuizResultTest.slider();</script>
+  
 <div class="slider">
 
 	<span class="amount"></span> 
@@ -47,14 +64,14 @@ if(isset($_GET['load'])){
     <span>
         <span id="delta"></span>
     </span>
-     //end of might-help -->
+     //end of might-help
     
       <div class="slider-range"></div> 
-      <?php $what = 21  ;// testing purpose,along with next line - LIEN ?>
-      <input class="lowerbound" type="hidden" name="lowerbound" value="<?php echo $what ?>" />
+      <?php //$what = 21  ;// testing purpose,along with next line - LIEN ?>
+      <input class="lowerbound" type="hidden" name="lowerbound" value="<?php //echo $what ?>" />
  </div>
  <span class="desc">Select the percentage range of correct answers you want the users to get to achieve this result.</span>
- <tr></tr>
+ <tr></tr>-->
  </tr> 
   
   <tr>
@@ -132,8 +149,24 @@ $count = 1;
 
 	
 	   <tr> <!--result range-->
-  <th width="120" valign="top" scope="row"><label>Range</label></th> 
-  <script>QuizResultTest.slider();</script>
+  <th width="120" valign="top" scope="row"><label>Range</label></th>
+  <!-- Modifies on 13 Oct for changing slider to range-->
+  <td><select name="result_minimum_<?php echo $result; ?>" id="result_minimum_<?php echo $result; ?>">
+          <option value="select">Select</option>
+		  <option value="0">&nbsp;&nbsp;&nbsp;0%&nbsp;&nbsp;&nbsp;</option>
+          <option value="10">&nbsp;&nbsp;&nbsp;10%&nbsp;&nbsp;&nbsp;</option>
+          <option value="20">&nbsp;&nbsp;&nbsp;20%&nbsp;&nbsp;&nbsp;</option>
+		  <option value="30">&nbsp;&nbsp;&nbsp;30%&nbsp;&nbsp;&nbsp;</option>
+		  <option value="40">&nbsp;&nbsp;&nbsp;40%&nbsp;&nbsp;&nbsp;</option>
+          <option value="50">&nbsp;&nbsp;&nbsp;50%&nbsp;&nbsp;&nbsp;</option>
+          <option value="60">&nbsp;&nbsp;&nbsp;60%&nbsp;&nbsp;&nbsp;</option>
+          <option value="70">&nbsp;&nbsp;&nbsp;70%&nbsp;&nbsp;&nbsp;</option>
+          <option value="80">&nbsp;&nbsp;&nbsp;80%&nbsp;&nbsp;&nbsp;</option>
+          <option value="90">&nbsp;&nbsp;&nbsp;90%&nbsp;&nbsp;&nbsp;</option>
+          <option value="100">&nbsp;&nbsp;&nbsp;100%&nbsp;&nbsp;</option>
+      </select><span class="textareaRequiredMsg">Please select a value for this result range!</span></span>
+    <span class="desc">Select the MINIMUM percentage range of correct answers you want the users to get to achieve this result</span></td> 
+  <!--<script>QuizResultTest.slider();</script>
 <div class="slider">
 	<span class="amount"></span>
       
@@ -144,13 +177,13 @@ $count = 1;
     <span>
         <span id="delta"></span>
     </span>
-     //end of might-help -->
+     //end of might-help 
     
       <div class="slider-range"></div> 
-      <?php $what = 21  ;// testing purpose,along with next line - LIEN ?>
-      <input class="lowerbound" type="hidden" name="lowerbound" value="<?php echo $what ?>" />
+      <?php //$what = 21  ;// testing purpose,along with next line - LIEN ?>
+      <input class="lowerbound" type="hidden" name="lowerbound" value="<?php //echo $what ?>" />
  </div>
- <span class="desc">Select the percentage range of correct answers you want the users to get to achieve this result.</span>
+ <span class="desc">Select the percentage range of correct answers you want the users to get to achieve this result.</span>-->
  <tr></tr>
  </tr>
 

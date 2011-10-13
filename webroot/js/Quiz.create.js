@@ -232,9 +232,6 @@ var QuizResultTest = {
 		}
 		// update the count
 		this.updateCount();
-		// Modify by Hien on 14 Sep for getting value from the input text area
-		alert("hien");
-		// end modification
 		return this.resultCount;
 	},
 	
