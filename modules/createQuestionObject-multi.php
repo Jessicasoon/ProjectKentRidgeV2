@@ -224,7 +224,7 @@ if(isset($_GET['load'])){
 	// also pass in the member id for security check
 	$quiz = new Quiz($_GET['id']);
 	$member = new Member();
-	if(!$quiz->removeQuestion($_GET['question'], $member->id)){
+	if(!$quiz->removeQuestionMulti($_GET['question'], $member->id)){
 		echo "Delete not authorized";
 	}
 }else{

@@ -8,14 +8,35 @@ if(isset($_GET['delete'])){
 	$quiz = new Quiz($_GET['id']);
 	$member = new Member();
 	$option_id = $_GET['option'];
+	$question_id = $_GET['questionNumber'];
 	
-	$querySQL = sprintf("SELECT result_id, result_title FROM q_options_multi WHERE fk_quiz_id = %d AND option_id  = %d", GetSQLValueString($quiz, "int"), GETSQLValueString($option_id, "int") );
-	$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
-	$row_resultID = mysql_fetch_assoc($resultID);
+	//prepare option
+	$singleOptionSQL = sprintf("SELECT `option` FROM q_options_multi WHERE `option_id` = %d AND `fk_question_id` = %d LIMIT 1", $option_id, $question_id);
+	$singleOptionID = mysql_query($singleOptionSQL, $quizroo) or die(mysql_error());
+	$row_singleOptionID = mysql_fetch_assoc($singleOptionID);
 
-	if(!$quiz->removeOptionMulti($_GET['option'], $member->id)){
+	do{
+		$singleOptionString = $row_singleOptionID['option'];	
+		echo $row_singleOptionID['option'];
+		echo "HELLLLLLLLLLLLLLOOOOOOOOO";
+		if ($row_singleOptionID['option'] == " ") { echo "NOTHING IN HERE" ; } else { echo "SOMEINHERE"; echo $row_singleOptionID[`option`]; } 
+	}while($row_singleOptionID = mysql_fetch_assoc($singleOptionID));
+	
+	
+	//prepare option
+	$optionSQL = sprintf("SELECT `option`, `option_id` FROM q_options_multi WHERE `fk_question_id` = %d AND `option` = %s", GetSQLValueString($question_id, "int"), 	$singleOptionString);
+	$optionID = mysql_query($optionSQL, $quizroo) or die(mysql_error());
+	$row_optionID = mysql_fetch_assoc($optionID);
+
+	
+	
+	do{
+			if(!$quiz->removeOptionMulti($row_optionID['option_id'], $member->id)){
 		echo "Delete not authorized";
 	}
+	}while($row_optionID = mysql_fetch_assoc($optionID));
+
+
 }else{
 // get result number
 $question = $_GET['questionNumber'];
