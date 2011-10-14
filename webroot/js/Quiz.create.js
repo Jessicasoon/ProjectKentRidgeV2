@@ -42,6 +42,20 @@ var QuizValidate = {
 		}
 	},
 	
+		/****************************************************
+	 * Modify on 14 Oct for checking test result range
+	 ****************************************************/
+	 checkRange: function(numOfRanges) {
+		 alert("Please select values for all the result ranges");
+		for(var i = 0; i < numOfRanges; i++){
+			var range = document.getElementById('result_minimum_'+numOfRanges);
+			if(range.value == "Select"){
+				
+			}
+		}
+		return true;
+	 }, // end checkTestResultRange function
+	 
 	checkTest: function(question, totalOption) {
 		var notCorrect = 0;
 		var optionArray = totalOption.split("_");
