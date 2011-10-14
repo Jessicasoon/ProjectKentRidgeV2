@@ -110,17 +110,20 @@ if(isset($_GET['step'])){
 						// if the value is the smallest in the array, min value = 0
 						for ($j = 0; $j < count($array); $j ++){
 							if($_POST['result_minimum_'.$i] == $array[$j]){
+								// for range_min
 								if($j == 0){
 									$result_min = 0;
 								}
 								else{
 									$result_min = $_POST['result_minimum_'.$i];
 								}
-								if($j == count($array)-1){
-									$result_max = 100;
-								}
-								else{
-									$result_max = $array[$j + 1]-1;
+								// for range_max
+								$result_max = 100; // if cant find the next bigger value, return 100 as range_max
+								// loop through the rest of the array to find next bigger value
+								for($k = $j+1; $k < count($array); $k ++){
+										if($array[$k] > $_POST['result_minimum_'.$i]){
+											$result_max = $array[$k]-1;
+										}
 								}
 							}
 						}
