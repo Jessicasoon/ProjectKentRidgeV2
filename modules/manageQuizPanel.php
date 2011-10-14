@@ -71,6 +71,27 @@ $queryString_listQuiz = sprintf("&totalRows_listQuiz=%d%s", $totalRows_listQuiz,
           <td width="80" align="center"><img src="../quiz_images/imgcrop.php?w=70&amp;h=52&amp;f=<?php echo $quizloop->quiz_picture; ?>" alt="<?php echo $quizloop->quiz_picture; ?>" width="70" height="52" border="0" title="<?php echo $quizloop->quiz_name; ?>" /></td>
           <td><p class="name"><?php echo (strlen($quizloop->quiz_name) > 90) ? substr($quizloop->quiz_name, 0, 90)."..." : $quizloop->quiz_name ; ?></p>
             <p class="status"><?php echo $status; ?></p>
+			<p class="details"><?php //------------------type of quiz added by YL on 15oct------------------------
+//***********************************************ADD BY LIEN************************************************//
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quizloop->quiz_id);
+		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
+		$row_resultMode = mysql_fetch_assoc($resultMode);
+		$resultforMode = array();
+		$mode = "";
+		do{
+			$resultforMode[] = array($row_resultMode['display_mode']);
+			if ($row_resultMode['display_mode'] == "multi_simple")
+				$mode = "Personality Simple";
+			if ($row_resultMode['display_mode'] == "multi_accurate")
+				$mode = "Personality Accurate";
+			if ($row_resultMode['display_mode'] == "test_simple")
+				$mode = "Test Simple";	
+			if ($row_resultMode['display_mode'] == "test_custom")
+				$mode = "Test Custom";				
+		}while($row_resultMode = mysql_fetch_assoc($resultMode));
+
+		//***********************************************END OF ADD BY LIEN************************************************//
+			if($mode == "Personality Simple" || $mode == "Personality Accurate" || $mode == "Test Simple" || $mode == "Test Custom") {echo "Type: "; echo $mode;} ?></p>
           <p class="details"><img src="../webroot/img/chart.png" alt="View Details" width="16" height="16" border="0" align="absmiddle" /> <a href="viewQuizDetails.php?id=<?php echo $quizloop->quiz_id; ?>">View detailed statistics for this quiz</a></p></td>
           <td width="100" align="center"><?php echo $quizloop->quiz_score; ?> (<?php echo $quizloop->likes; ?>)</td>
           <td width="120" align="center"><?php echo date("F j, Y g:ia", strtotime($quizloop->creation_date)); ?></td>
