@@ -254,8 +254,7 @@ $quiz = $_GET['id'];
       <!--<th width="100" align="center">Weightage</th>-->
     </tr>
     <tr>
-      <!--<th width="25" scope="row">&nbsp;</th>-->
-    <th width="25" scope="row"><a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>  
+      <th width="25" scope="row">&nbsp;</th>
       <th width="80" scope="row"><label for="q<?php echo $question; ?>o0" class="optionWidget-<?php echo $question; ?>">Option</label></th>
       <td><span id="sprytextfield-q<?php echo $question; ?>o0" class="sprytextfield">
         <input name="q<?php echo $question; ?>o0" type="text" class="optionField" id="q<?php echo $question; ?>o0" />
@@ -272,8 +271,7 @@ $quiz = $_GET['id'];
       </select></td>-->
     </tr>
     <tr>
-    <!--  <th width="25" scope="row">&nbsp;</th>-->
-    <th width="25" scope="row"><a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>	  
+    <th width="25" scope="row">&nbsp;</th>
       <th width="80" scope="row"><label for="q<?php echo $question; ?>o1" class="optionWidget-<?php echo $question; ?>">Option</label></th>
       <td><span id="sprytextfield-q<?php echo $question; ?>o1" class="sprytextfield">
         <input name="q<?php echo $question; ?>o1" type="text" class="optionField" id="q<?php echo $question; ?>o1" />
@@ -322,8 +320,7 @@ $quiz = $_GET['id'];
       <th width="100" align="left">Weightage</th>
     </tr>
     <tr>
-      <!--<th width="25" scope="row">&nbsp;</th>-->
-    <th width="25" scope="row"><a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>	  
+    <th width="25" scope="row">&nbsp;</th>
       <th width="80" scope="row"><label for="q<?php echo $question; ?>o0" class="optionWidget-<?php echo $question; ?>">Option</label></th>
       <td><span id="sprytextfield-q<?php echo $question; ?>o0" class="sprytextfield">
         <input name="q<?php echo $question; ?>o0" type="text" class="optionField" id="q<?php echo $question; ?>o0"/>
@@ -360,8 +357,7 @@ $quiz = $_GET['id'];
 	  
 	  </tr>
     <tr>
-      <!--<th width="25" scope="row">&nbsp;</th>-->
-	      <th width="25" scope="row"><a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
+      <th width="25" scope="row">&nbsp;</th>
       <th width="80" scope="row"><label for="q<?php echo $question; ?>o1" class="optionWidget-<?php echo $question; ?>">Option</label></th>
       <td><span id="sprytextfield-q<?php echo $question; ?>o1" class="sprytextfield">
         <input name="q<?php echo $question; ?>o1" type="text" class="optionField" id="q<?php echo $question; ?>o1" />
