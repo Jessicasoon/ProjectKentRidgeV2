@@ -145,15 +145,15 @@ how you want it to be displayed.</p>
 					</tr>
 					<tr>
                     <?php if ($row_resultType['display_mode'] == "test_custom") {?>
-						<td><input type="radio" value="test_custom" name="mode1" checked="checked" id="test_custom" disabled="disable"/>Yes</td>
-					</tr>
-					<tr>
 						<td><input type="radio" value="test_simple" name="mode1" id="test_simple" disabled="disabled"/>No</td>
-                    <?php } else { ?>
-                    <td><input type="radio" value="test_custom" name="mode1" id="test_custom" disabled="disabled"/>Yes</td>
 					</tr>
 					<tr>
+						<td><input type="radio" value="test_custom" name="mode1" checked="checked" id="test_custom" disabled="disable"/>Yes</td>
+                    <?php } else { ?>
 						<td><input type="radio" value="test_simple" name="mode1"  checked="checked" id="test_simple" disabled="disabled"/>No</td>
+					</tr>
+					<tr>
+						<td><input type="radio" value="test_custom" name="mode1" id="test_custom" disabled="disabled"/>Yes</td>
                     <?php } ?>
 					</tr>
 				</table>
@@ -238,15 +238,15 @@ England</td>
 					</tr>
 					<tr>
                     <?php if ($row_resultType['display_mode'] == "multi_accurate") {?>
-						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" id="multi_accurate" disabled="disabled"/>Yes</td>
-					</tr>
-					<tr>
 						<td><input type="radio" value="multi_simple" name="mode2" id="multi_simple" disabled="disabled"/>No</td>
-                    <?php } else { ?>
-                    	<td><input type="radio" value="multi_accurate" name="mode2" id="multi_accurate" disabled="disabled"/>Yes</td>
 					</tr>
 					<tr>
+						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" id="multi_accurate" disabled="disabled"/>Yes</td>
+						<?php } else { ?>
 						<td><input type="radio" value="multi_simple" name="mode2" checked="checked" id="multi_simple" disabled="disabled"/>No</td>
+					</tr>
+					<tr>
+                    	<td><input type="radio" value="multi_accurate" name="mode2" id="multi_accurate" disabled="disabled"/>Yes</td>
                     <?php } ?>
 					</tr>
 				</table>
@@ -848,11 +848,11 @@ how you want it to be displayed.</p>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_custom" name="mode1" checked="checked" id="test_custom"/>Yes</td>
+						<td><input type="radio" value="test_simple" name="mode1" checked="checked" id="test_simple" />No</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="test_simple" name="mode1" id="test_simple" />
-						No</td>
+						<td><input type="radio" value="test_custom" name="mode1" id="test_custom"/>Yes</td>					
+
 					</tr>
 				</table>
                 </div>		
@@ -927,10 +927,10 @@ England</td>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_accurate" name="mode2" checked="checked" id="multi_accurate"/>Yes</td>
+						<td><input type="radio" value="multi_simple" name="mode2"  checked="checked" id="multi_simple"/>No</td>
 					</tr>
 					<tr>
-						<td><input type="radio" value="multi_simple" name="mode2" id="multi_simple"/>No</td>
+						<td><input type="radio" value="multi_accurate" name="mode2" id="multi_accurate"/>Yes</td>
 					</tr>
 				</table>
                 </div>				
