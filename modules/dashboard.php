@@ -80,6 +80,7 @@ $quizzes2 = mysql_query($query_quizzes2, $quizroo) or die(mysql_error());
 $row_quizzes2 = mysql_fetch_assoc($quizzes2);
 $totalRows_quizzes2 = mysql_num_rows($quizzes2);
 }
+
 ?>
 
 <div id="dashboard-container">
@@ -123,6 +124,23 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
           <div class="quiz_details">
             <p class="description" <?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo substr($row_quizzes1['quiz_description'], 0, 110).((strlen($row_quizzes1['quiz_description']) < 110)? "" : "..."); ?></p>
             <p class="source">from <a href="topics.php?topic=<?php echo $row_quizzes1['fk_quiz_cat']; ?>"<?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes1['cat_name']; ?></a>  by <a href="viewMember.php?id=<?php echo $row_quizzes1['fk_member_id']; ?>"<?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes1['member_name']; ?></a></p>
+			<p class="source"><?php //------------------type of quiz added by YL on 15oct------------------------
+//***********************************************ADD BY LIEN************************************************//
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
+		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
+		$row_resultMode = mysql_fetch_assoc($resultMode);
+		$resultforMode = array();
+		$mode = "";
+		do{
+			$resultforMode[] = array($row_resultMode['display_mode']);
+			if ($row_resultMode['display_mode'] == "multi_simple" || $row_resultMode['display_mode'] == "multi_accurate")
+				$mode = "Personality";
+			if ($row_resultMode['display_mode'] == "test_simple" || $row_resultMode['display_mode'] == "test_custom")
+				$mode = "Test";					
+		}while($row_resultMode = mysql_fetch_assoc($resultMode));
+
+		//***********************************************END OF ADD BY LIEN************************************************//
+			if($mode == "Personality" || $mode == "Test") {echo "Type: "; echo $mode;} ?></p>
 			<?php if(!$GAME_ALLOW_DISLIKES){ if($row_quizzes1['likes'] > 0){ ?>
             <p class="rating"><span class="like"><?php echo $row_quizzes1['likes']; ?></span> <?php echo ($row_quizzes1['likes'] > 1) ? "people like" : "person likes"; ?> this</p>
 			<?php }}else{ ?><p class="rating"><span class="like"><?php echo $row_quizzes1['likes']; ?></span> likes, <span class="dislike"><?php echo $row_quizzes1['dislikes']; ?></span> dislikes</p><?php } ?>
@@ -150,7 +168,24 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
             <a href="previewQuiz.php?id=<?php echo $row_quizzes2['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_quizzes2['quiz_picture']; ?>" alt="<?php echo $row_quizzes2['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_quizzes2['quiz_description']; ?>" /></a></div>
           <div class="quiz_details">
             <p class="description"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo substr($row_quizzes2['quiz_description'], 0, 120).((strlen($row_quizzes2['quiz_description']) < 120)? "" : "..."); ?></p>
-            <p class="source">from <a href="topics.php?topic=<?php echo $row_quizzes2['fk_quiz_cat']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes2['cat_name']; ?></a> by <a href="viewMember.php?id=<?php echo $row_quizzes2['fk_member_id']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes2['member_name']; ?></a>
+            <p class="source">from <a href="topics.php?topic=<?php echo $row_quizzes2['fk_quiz_cat']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes2['cat_name']; ?></a> by <a href="viewMember.php?id=<?php echo $row_quizzes2['fk_member_id']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes2['member_name']; ?></a></p>
+			<p class="source"><?php
+//***********************************************ADD BY LIEN************************************************//
+		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
+		$resultMode =  mysql_query($queryMode, $quizroo) or die(mysql_error());
+		$row_resultMode = mysql_fetch_assoc($resultMode);
+		$resultforMode = array();
+		$mode = "";
+		do{
+			$resultforMode[] = array($row_resultMode['display_mode']);
+			if ($row_resultMode['display_mode'] == "multi_simple" || $row_resultMode['display_mode'] == "multi_accurate")
+				$mode = "Personality";
+			if ($row_resultMode['display_mode'] == "test_simple" || $row_resultMode['display_mode'] == "test_custom")
+				$mode = "Test";					
+		}while($row_resultMode = mysql_fetch_assoc($resultMode));
+
+		//***********************************************END OF ADD BY LIEN************************************************//
+			if($mode == "Personality" || $mode == "Test") {echo "Type: "; echo $mode;} ?></p>			
 			<?php if(!$GAME_ALLOW_DISLIKES){ if($row_quizzes2['likes'] > 0){ ?>
             <p class="rating"><span class="like"><?php echo $row_quizzes2['likes']; ?></span> <?php echo ($row_quizzes2['likes'] > 1) ? "people like" : "person likes"; ?> this</p>
 			<?php }}else{ ?><p class="rating"><span class="like"><?php echo $row_quizzes2['likes']; ?></span> likes, <span class="dislike"><?php echo $row_quizzes2['dislikes']; ?></span> dislikes</p><?php } ?>
