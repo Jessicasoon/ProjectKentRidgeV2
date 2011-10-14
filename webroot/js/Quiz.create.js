@@ -45,15 +45,19 @@ var QuizValidate = {
 		/****************************************************
 	 * Modify on 14 Oct for checking test result range
 	 ****************************************************/
-	 checkRange: function(numOfRanges) {
-		 alert("Please select values for all the result ranges");
-		for(var i = 0; i < numOfRanges; i++){
-			var range = document.getElementById('result_minimum_'+numOfRanges);
-			if(range.value == "Select"){
-				
+	 checkRange: function() {
+		try{
+			var results = document.getElementById('resultCount');
+			for(var i = 0; i < results.value; i++){
+				var range = document.getElementById('result_minimum_'+i);
+				if(range.value == "select"){
+					return false;
+				}
 			}
+			return true;
+		} catch(err){ // for step 3, var results = document.getElementById('resultCount') does not work. This will help to prevent the exception
+			return true;
 		}
-		return true;
 	 }, // end checkTestResultRange function
 	 
 	checkTest: function(question, totalOption) {
@@ -69,11 +73,11 @@ var QuizValidate = {
 					var node = node_list[j];
 					if ( (node.getAttribute('name') == 'q'+i+'r'+x) && (node.getAttribute('type') == 'checkbox') ) {
 						if (!(node.checked)) {
-							notCorrect++ ;
+							notCorrect++;
 						}		
 					} 
 				} 
-			if (notCorrect == (optionArray[i])) { alert("Please tick at least one option for all questions"); return false; }
+			if (notCorrect == (optionArray[i])) {  return false; }
 			} 
 		} 
 		return true;	
@@ -1058,10 +1062,14 @@ var QuizQuestion_NOTUSED = {
 
 function submitCheckTest(value){
 	// check if upload complete
-	
+	if(!QuizValidate.checkRange()){
+			alert("Please choose values for result range");
+			return false;
+	}
 	if (!QuizValidate.checkTest($('#questionCount').val(),$("#optionCounts").val() )) // check that all questions have at least 1 ticked option
-	{
-		return false;
+		{
+			alert("Please tick at least one option for all questions");
+			return false;
 	}
 	if(value && !checkIfUploading()){
 		$('#submitBtn').attr("disabled", "disabled");
@@ -1078,6 +1086,7 @@ function submitCheckTest(value){
 		}
 		return false;
 	}
+	
 }
 
 function submitCheckMulti(value){
