@@ -78,8 +78,8 @@ do{
 <div id="cq<?php echo $question; ?>o<?php echo $option; ?>">
 <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
   <tr>
-    <th width="25" scope="row"><a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
-    <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $option; ?>">Option</label></th>
+    <th width="25" scope="row"><a href="javascript:;" onclick="QuizQuestionMulti.removeOptionNew(<?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
+    <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $option; ?>"><?php echo $question_id; ?>Option</label></th>
     <td><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $option; ?>" class="sprytextfield">
       <input name="q<?php echo $question; ?>o<?php echo $option; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $option; ?>" />
     <span class="textfieldRequiredMsg">Enter a value for this option!</span></span></td>
@@ -100,7 +100,7 @@ do{
 <div id="cq<?php echo $question; ?>o<?php echo $option; ?>">
 <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
   <tr>
-    <th width="25" scope="row"><a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
+    <th width="25" scope="row"><a href="javascript:;" onclick="QuizQuestionMulti.removeOptionNew(<?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
     <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $option; ?>">Option</label></th>
     <td><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $option; ?>" class="sprytextfield">
       <input name="q<?php echo $question; ?>o<?php echo $option; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $option; ?>" />
