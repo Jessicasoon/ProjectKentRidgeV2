@@ -5,6 +5,8 @@
 		 event.preventDefault();
 		 $("#blk-1").hide("fast");
 		 $("#blk-2").show("fast");
+		 $("#next_alert").hide("");
+		 $("#next_step1").show("");
    	 });
 	 $("#test").change(function(event){
 		 event.preventDefault();
@@ -517,13 +519,13 @@ button to add a result entry!</p>
 
 <?php if($mode == "simple" || $mode == "accurate"){?>
 <div class="add_container">
-<input type="submit" name="save" id="prev" value="Previous Step" /> 
+<input type="submit" name="save" id="prev" value="Previous Step" />  &nbsp;
 <input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultMulti.add()" /> &nbsp;
 <input type="submit" name="save" id="next" value="Next Step!" />
 </div>
 <?php }else{ ?>
 <div class="add_container">
-<input type="submit" name="save" id="prev" value="Previous Step" />
+<input type="submit" name="save" id="prev" value="Previous Step" /> &nbsp;
 <input type="button" name="addResultBtn" id="addResultBtn" value="Add new result" onClick="QuizResultTest.add()" /> &nbsp;
 <input type="submit" name="save" id="next" value="Next Step!" />
 </div>
@@ -1074,8 +1076,8 @@ Don't care about
           <th valign="top" scope="row">&nbsp;</th>
           <td align="right" class="desc">
           <input type="button" value='Previous Step' id="step1">&nbsp; 
-          <input type="submit" name="next" id="next_step1" value="Next Step!" onClick="javascript: if(!confirm('Please note that once you pass this step, quiz type and display mode cannot be modify. You still can modify quiz information. If you want to modify step 1, delete the quiz and create an entirely new quiz.')) return false;"/>
-          <input type="submit" name="next" id="next_alert" value="Next Step!" style="display:none" onClick="javascript: if(!confirm('Please note that once you pass this step, quiz type and display mode cannot be modify. You still can modify quiz information. If you want to modify step 1, delete the quiz and create an entirely new quiz.\n\nFor your information, since TEST type with SIMPLE mode were chosen, step 3 will be skipped. It will take a while until the next step is loaded.')) return false;"/>
+          <input type="submit" name="next" id="next_step1" value="Next Step!"  style="display:none" onClick="javascript: if(!confirm('Please note that once you pass this step, quiz type and display mode cannot be modify. You still can modify quiz information. If you want to modify step 1, delete the quiz and create an entirely new quiz.')) return false;"/>
+          <input type="submit" name="next" id="next_alert" value="Next Step!" onClick="javascript: if(!confirm('Please note that once you pass this step, quiz type and display mode cannot be modify. You still can modify quiz information. If you want to modify step 1, delete the quiz and create an entirely new quiz.\n\nFor your information, since TEST type with SIMPLE mode were chosen, step 3 will be skipped. It will take a while until the next step is loaded.')) return false;"/>
           </td>
         </tr>
       </table>

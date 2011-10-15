@@ -142,44 +142,38 @@ if(isset($_GET['load'])){
 	$queryOption = sprintf("SELECT `option_id`, `option`, `fk_result_id`, `option_weightage` FROM q_options_multi WHERE fk_question_id = %d ORDER BY option_id", GetSQLValueString($row_getQuery['question_id'], "int"));
 	$getOption = mysql_query($queryOption, $quizroo) or die(mysql_error());
 	$row_getOption = mysql_fetch_assoc($getOption);
-	$totalRows_getOption = mysql_num_rows($getOption);
-	
-	$option = 0;
-	$result_count_p = 0; //lienn
-	
+	$totalRows_getOption = mysql_num_rows($getOption); // get the number of records return from query
+ 
 	if($totalRows_getOption > 0){
-		do{
-	?>
-    <?php if ($result_count_p % $total_results == 0 && $result_count_p != 0) { $result_count_p = 0; } //lienn?>
-    <div id="cq<?php echo $question; ?>o<?php echo $option; ?>">
-    <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
-    <tr>
-    
-    	<?php if ($result_count_p % $total_results == 0) { //lienn?>
-      <th width="25" scope="row"><input type="hidden" name="uq<?php echo $question; ?>o<?php echo $option; ?>" id="uq<?php echo $question; ?>o<?php echo $option; ?>" value="<?php echo $row_getOption['option_id']; ?>" /><a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
-      <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $option; ?>" class="optionWidget-<?php echo $question; ?>">Option</label></th>
-      <td><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $option; ?>" class="sprytextfield">  
-        <input name="q<?php echo $question; ?>o<?php echo $option; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $option; ?>" value="<?php echo $row_getOption['option']; ?>" />
-        <?php } ?>
+		$numOfOption = $totalRows_getOption / $total_results;
+		for($i = 0; $i<$numOfOption; $i++){
+		?>
+		<div id="cq<?php echo $question; ?>o<?php echo $i; ?>">
         
-        
+                <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
+                <tr>
+      <th width="25" scope="row"><input type="hidden" name="uq<?php echo $question; ?>o<?php echo $i; ?>" id="uq<?php echo $question; ?>o<?php echo $i; ?>" value="<?php echo $row_getOption['option_id']; ?>" />
+      <!-- Modified on 15 Oct, for checking if the option is the 1st and 2nd, cant delete-->
+      <?php if($i >= 2){ ?>
+      <a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $question; ?>, <?php echo $i; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a><?php } ?></th>
+      <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $i; ?>" class="optionWidget-<?php echo $question; ?>">Option</label></th>
+      <td><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $i; ?>" class="sprytextfield">  
+        <input name="q<?php echo $question; ?>o<?php echo $i; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $i; ?>" value="<?php echo $row_getOption['option']; ?>" />
         <span class="textfieldRequiredMsg">Enter a value for this option!</span></span></td>
-
-		<?php $result_count = 0; //ADD BY LIEN, TO BE USED BELOW ?>		
-		
-	<?php // foreach($results as $item){ //CHANGE CSS //lienn?>
-
+        <?php
+			for($j = 0; $j< $total_results; $j++){
+		?>
         <!-- Modified by Hien on 13 Oct for formatting the table-->
-                <?php if ($result_count_p > 0){ ?>
+                <?php if ($j > 0){ ?>
                 <tr class = "optionTable">
                           <th width="25">&nbsp;</th>
                           <th width="80">&nbsp;</th>
                           <th align="left">&nbsp;</th>
                 <?php } ?>
-		<input type="hidden" name="q<?php echo $question; ?>o<?php echo $option; ?>r<?php echo $result_count_p; ?>" id="q<?php echo $question; ?>o<?php echo $option; ?>r<?php echo $result_count_p; ?>" value="<?php echo $results[$result_count_p][0]; ?>" />
+		<input type="text" name="q<?php echo $question; ?>o<?php echo $i; ?>r<?php echo $j; ?>" id="q<?php echo $question; ?>o<?php echo $i; ?>r<?php echo $j; ?>" value="<?php echo $results[$j][0]; ?>" /><label>q<?php echo $question; ?>o<?php echo $i; ?>r<?php echo $j; ?></label>
   
-		<td width="150" align="center"><?php echo $results[$result_count_p][1]; ?></td>
-      <td width="100"><select name="q<?php echo $question; ?>o<?php echo $option; ?>w<?php echo $result_count_p; ?>" id="q<?php echo $question; ?>o<?php echo $option; ?>w<?php echo $result_count_p; ?>">
+		<td width="150" align="center"><?php echo $results[$j][1]; ?></td>
+      <td width="100"><select name="q<?php echo $question; ?>o<?php echo $i; ?>w<?php echo $j; ?>" id="q<?php echo $question; ?>o<?php echo $i; ?>w<?php echo $j; ?>">
           <option value="0"<?php if(0 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;</option>
 		  <option value="1"<?php if(1 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</option>
           <option value="2"<?php if(2 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</option>
@@ -188,19 +182,17 @@ if(isset($_GET['load'])){
 		  <option value="5"<?php if(5 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</option>
       </select></td>
       <!-- Modified by Hien on 13 Oct for formatting the table-->
-		<?php if ($result_count_p > 0){ ?>
+		<?php if ($j > 0){ ?>
         </tr>
-        <?php } ?>
+        <?php }
+		$row_getOption = mysql_fetch_assoc($getOption);
+		} // end inner for ?>
       <tr></tr>
-
-                  <?php $result_count++; ?>
-    <?php //} //end  foreach results as item?>
-	  
-      <?php $result_count_p++; //lienn ?>
 	  </tr>
     </table>
+    <?php } ?>
     </div>
-    <?php $option++; }while($row_getOption = mysql_fetch_assoc($getOption)); }?>
+    <?php } ?>
 </div>
   <table border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
@@ -215,7 +207,7 @@ if(isset($_GET['load'])){
 		}while($row_getQuery = mysql_fetch_assoc($getQuery));
 	}
 	}
-
+	
 }elseif(isset($_GET['delete'])){
 	// delete the question
 	require('member.php');
