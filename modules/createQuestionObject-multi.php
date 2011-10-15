@@ -139,60 +139,89 @@ if(isset($_GET['load'])){
     </tr>
   </table>
     <?php 
-	$queryOption = sprintf("SELECT `option_id`, `option`, `fk_result_id`, `option_weightage` FROM q_options_multi WHERE fk_question_id = %d ORDER BY option_id", GetSQLValueString($row_getQuery['question_id'], "int"));
+	$queryOption = sprintf("SELECT `option_id`, `option`, `fk_result_id`, `option_weightage`, `result_title` FROM q_options_multi, q_results_multi WHERE fk_question_id = %d and result_id = fk_result_id", GetSQLValueString($row_getQuery['question_id'], "int"));
 	$getOption = mysql_query($queryOption, $quizroo) or die(mysql_error());
 	$row_getOption = mysql_fetch_assoc($getOption);
 	$totalRows_getOption = mysql_num_rows($getOption); // get the number of records return from query
- 
-	if($totalRows_getOption > 0){
-		$numOfOption = $totalRows_getOption / $total_results;
-		for($i = 0; $i<$numOfOption; $i++){
+	
+	/* loop options */
+	// get list of unique options
+	$queryOptions = sprintf("SELECT DISTINCT `option` FROM q_options_multi WHERE fk_question_id = %d", GetSQLValueString($row_getQuery['question_id'], "int"));
+	// execute query options
+	$resultOptions = mysql_query($queryOptions, $quizroo) or die(mysql_error());
+	// define cursor to loop throught options
+	$rowOptions = mysql_fetch_assoc($resultOptions);
+	// count total rows
+	$totalRowOptions = mysql_num_rows($resultOptions);
+	
+	// loop through the options
+	for ($i = 0; $i < $totalRowOptions; $i++)
+	{
 		?>
+        <!--print the options to the screen-->
 		<div id="cq<?php echo $question; ?>o<?php echo $i; ?>">
         
                 <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
                 <tr>
-      <th width="25" scope="row"><input type="hidden" name="uq<?php echo $question; ?>o<?php echo $i; ?>" id="uq<?php echo $question; ?>o<?php echo $i; ?>" value="<?php echo $row_getOption['option_id']; ?>" />
       <!-- Modified on 15 Oct, for checking if the option is the 1st and 2nd, cant delete-->
-      <?php if($i >= 2){ ?>
-      <a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $question; ?>, <?php echo $i; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a><?php } ?></th>
+      <th width="25" scope="row">
+	  <?php if($i >= 2){ ?>
+       <a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $question; ?>, <?php echo $i; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a><?php } ?></th>
       <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $i; ?>" class="optionWidget-<?php echo $question; ?>">Option</label></th>
       <td><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $i; ?>" class="sprytextfield">  
-        <input name="q<?php echo $question; ?>o<?php echo $i; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $i; ?>" value="<?php echo $row_getOption['option']; ?>" />
+        <input name="q<?php echo $question; ?>o<?php echo $i; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $i; ?>" value="<?php echo $rowOptions['option']; ?>" />
         <span class="textfieldRequiredMsg">Enter a value for this option!</span></span></td>
+        
         <?php
-			for($j = 0; $j< $total_results; $j++){
-		?>
-        <!-- Modified by Hien on 13 Oct for formatting the table-->
-                <?php if ($j > 0){ ?>
-                <tr class = "optionTable">
-                          <th width="25">&nbsp;</th>
-                          <th width="80">&nbsp;</th>
-                          <th align="left">&nbsp;</th>
-                <?php } ?>
-		<input type="text" name="q<?php echo $question; ?>o<?php echo $i; ?>r<?php echo $j; ?>" id="q<?php echo $question; ?>o<?php echo $i; ?>r<?php echo $j; ?>" value="<?php echo $results[$j][0]; ?>" /><label>q<?php echo $question; ?>o<?php echo $i; ?>r<?php echo $j; ?></label>
-  
-		<td width="150" align="center"><?php echo $results[$j][1]; ?></td>
-      <td width="100"><select name="q<?php echo $question; ?>o<?php echo $i; ?>w<?php echo $j; ?>" id="q<?php echo $question; ?>o<?php echo $i; ?>w<?php echo $j; ?>">
-          <option value="0"<?php if(0 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;</option>
-		  <option value="1"<?php if(1 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</option>
-          <option value="2"<?php if(2 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</option>
-          <option value="3"<?php if(3 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</option>
-		  <option value="4"<?php if(4 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</option>
-		  <option value="5"<?php if(5 == $row_getOption['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</option>
-      </select></td>
-      <!-- Modified by Hien on 13 Oct for formatting the table-->
-		<?php if ($j > 0){ ?>
-        </tr>
-        <?php }
-		$row_getOption = mysql_fetch_assoc($getOption);
-		} // end inner for ?>
-      <tr></tr>
+		/* loop results */
+		// get list of unique results
+		$queryResults = sprintf("SELECT DISTINCT `fk_result_id`, `result_title`, `option_weightage` FROM q_options_multi, q_results_multi WHERE fk_question_id = %d AND `option` = '%s' AND fk_result_id = result_id", GetSQLValueString($row_getQuery['question_id'], "int"), $rowOptions['option']);
+		// execute query options
+		$resultResults = mysql_query($queryResults, $quizroo) or die(mysql_error());
+		// define cursor to loop throught options
+		$rowResults = mysql_fetch_assoc($resultResults);
+		// count total rows
+		$totalRowResults = mysql_num_rows($resultResults);
+		
+       	// loop through the results of each option
+		for ($j = 0; $j < $totalRowResults; $j++)
+		{
+			?>
+            <!-- Modified by Hien on 13 Oct for formatting the table-->
+                    <?php if ($j > 0){ ?>
+                    <tr class = "optionTable">
+                              <th width="25">&nbsp;</th>
+                              <th width="80">&nbsp;</th>
+                              <th align="left">&nbsp;</th>
+                    <?php } ?>
+            <input type="hidden" name="q<?php echo $question; ?>o<?php echo $i; ?>r<?php echo $j; ?>" id="q<?php echo $question; ?>o<?php echo $i; ?>r<?php echo $j; ?>" value="<?php echo $rowResults['fk_result_id']; ?>" />
+      
+            <td width="150" align="center"><?php echo $rowResults['result_title']; ?></td>
+          <td width="100"><select name="q<?php echo $question; ?>o<?php echo $i; ?>w<?php echo $j; ?>" id="q<?php echo $question; ?>o<?php echo $i; ?>w<?php echo $j; ?>">
+              <option value="0"<?php if(0 == $rowResults['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;</option>
+              <option value="1"<?php if(1 == $rowResults['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</option>
+              <option value="2"<?php if(2 == $rowResults['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</option>
+              <option value="3"<?php if(3 == $rowResults['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</option>
+              <option value="4"<?php if(4 == $rowResults['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</option>
+              <option value="5"<?php if(5 == $rowResults['option_weightage']){ echo 'selected = "selected"'; }; ?>>&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</option>
+          </select></td>
+          <!-- Modified by Hien on 13 Oct for formatting the table-->
+            <?php if ($j > 0){ ?>
+            </tr>
+            <?php }
+            
+            // next result
+			$rowResults = mysql_fetch_assoc($resultResults); 
+		} ?>
 	  </tr>
     </table>
-    <?php } ?>
+    <?php
+        
+        // next option
+		$rowOptions = mysql_fetch_assoc($resultOptions);
+	}
+	?>
     </div>
-    <?php } ?>
 </div>
   <table border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
