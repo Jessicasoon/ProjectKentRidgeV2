@@ -8,6 +8,8 @@ if(isset($_GET['delete'])){
 	$quiz = new Quiz($_GET['id']);
 	$member = new Member();
 	$option_id = $_GET['option'];
+
+//to delete multiple options rows in accurate mode. yl 15oct
 	$question_id = $_GET['questionNumber'];
 	
 	//prepare option
@@ -16,15 +18,12 @@ if(isset($_GET['delete'])){
 	$row_singleOptionID = mysql_fetch_assoc($singleOptionID);
 
 	do{
-		$singleOptionString = $row_singleOptionID['option'];	
-		echo $row_singleOptionID['option'];
-		echo "HELLLLLLLLLLLLLLOOOOOOOOO";
-		if ($row_singleOptionID['option'] == " ") { echo "NOTHING IN HERE" ; } else { echo "SOMEINHERE"; echo $row_singleOptionID[`option`]; } 
+		$singleOptionString = $row_singleOptionID['option'];
 	}while($row_singleOptionID = mysql_fetch_assoc($singleOptionID));
 	
 	
 	//prepare option
-	$optionSQL = sprintf("SELECT `option`, `option_id` FROM q_options_multi WHERE `fk_question_id` = %d AND `option` = %s", GetSQLValueString($question_id, "int"), 	$singleOptionString);
+	$optionSQL = sprintf("SELECT `option_id` FROM q_options_multi WHERE `fk_question_id` = %d AND `option` = %s", GetSQLValueString($question_id, "int"), 	htmlentities(GetSQLValueString($singleOptionString, "text")));
 	$optionID = mysql_query($optionSQL, $quizroo) or die(mysql_error());
 	$row_optionID = mysql_fetch_assoc($optionID);
 

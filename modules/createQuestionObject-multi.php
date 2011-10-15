@@ -138,8 +138,8 @@ if(isset($_GET['load'])){
       <th width="100" align="center">Weightage</th>
     </tr>
   </table>
-    <?php 
-	$queryOption = sprintf("SELECT `option_id`, `option`, `fk_result_id`, `option_weightage` FROM q_options_multi WHERE fk_question_id = %d ORDER BY option_id", GetSQLValueString($row_getQuery['question_id'], "int"));
+    <?php //add to get fk_question_id by yl 15oct
+	$queryOption = sprintf("SELECT `option_id`, `option`, `fk_result_id`, `option_weightage`, `fk_question_id` FROM q_options_multi WHERE fk_question_id = %d ORDER BY option_id", GetSQLValueString($row_getQuery['question_id'], "int"));
 	$getOption = mysql_query($queryOption, $quizroo) or die(mysql_error());
 	$row_getOption = mysql_fetch_assoc($getOption);
 	$totalRows_getOption = mysql_num_rows($getOption); // get the number of records return from query
@@ -155,7 +155,7 @@ if(isset($_GET['load'])){
       <th width="25" scope="row"><input type="hidden" name="uq<?php echo $question; ?>o<?php echo $i; ?>" id="uq<?php echo $question; ?>o<?php echo $i; ?>" value="<?php echo $row_getOption['option_id']; ?>" />
       <!-- Modified on 15 Oct, for checking if the option is the 1st and 2nd, cant delete-->
       <?php if($i >= 2){ ?>
-      <a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $question; ?>, <?php echo $i; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a><?php } ?></th>
+      <a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $row_getOption['fk_question_id']; ?>, <?php echo $question; ?>, <?php echo $i; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a><?php } ?></th>
       <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $i; ?>" class="optionWidget-<?php echo $question; ?>">Option</label></th>
       <td><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $i; ?>" class="sprytextfield">  
         <input name="q<?php echo $question; ?>o<?php echo $i; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $i; ?>" value="<?php echo $row_getOption['option']; ?>" />
