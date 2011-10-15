@@ -817,7 +817,7 @@ var QuizQuestionMulti = {
 		}
 	},
 	
-	removeOption: function(question, option, mute){
+	removeOption: function(question_id, question, option, mute){
 		if(mute){
 			ask = true;
 		}else{
@@ -833,7 +833,7 @@ var QuizQuestionMulti = {
 					type: "GET",
 					//url: "../modules/createOptionObject.php?delete",
 					url: "../modules/createOptionObject-multi.php?delete",
-					data: "option="+$('#uq'+question+'o'+option).val()+"&id="+QuizInfo.id,
+					data: "option="+$('#uq'+question+'o'+option).val()+"&id="+QuizInfo.id+"&questionNumber="+question_id,  //add to get question id by YL 15oct
 					async: false,
 					success: function(data) {
 						if(data != ""){
