@@ -214,13 +214,13 @@ if(isset($_GET['load'])){
 		} ?>
 	  </tr>
     </table>
+    </div>
     <?php
         
         // next option
 		$rowOptions = mysql_fetch_assoc($resultOptions);
 	}
 	?>
-    </div>
 </div>
   <table border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
