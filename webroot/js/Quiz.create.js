@@ -757,26 +757,7 @@ var QuizQuestionMulti = {
 		return this.question.length;
 	},
 	
-	addOption: function(question_num, question_id){
-		nextOption = this.question[question_id].length;
-		// add an option widget
-		$.ajax({
-			type: "GET",
-			//url: "../modules/createOptionObject.php",
-			url: "../modules/createOptionObject-multi.php",
-			data: "questionNumber="+question_id+"&optionNumber="+nextOption+"&id="+QuizInfo.id+"&questionID="+question_num,
-			async: false,
-			success: function(data) {
-				$("#optionContainer_"+question_id).append(data);
-			}
-		});
-		// add an option
-		this.question[question_id][nextOption] = 'q'+question_id+'o'+nextOption;
-		QuizValidate.add("textfield", 'q'+question_id+'o'+nextOption); // one option
-		return this.question[question_id].length;
-	},
-	
-	addOptionNew: function(question_id){
+	addOption: function(question_id){
 		nextOption = this.question[question_id].length;
 		// add an option widget
 		$.ajax({
@@ -793,7 +774,7 @@ var QuizQuestionMulti = {
 		this.question[question_id][nextOption] = 'q'+question_id+'o'+nextOption;
 		QuizValidate.add("textfield", 'q'+question_id+'o'+nextOption); // one option
 		return this.question[question_id].length;
-	},	
+	},
 	
 	remove: function(id){
 		if(confirm("Are you sure you want to remove this question and it's options? This action cannot be undone!")){
@@ -849,44 +830,10 @@ var QuizQuestionMulti = {
 			if($('#uq'+question+'o'+option).val() != undefined){
 				// remove from database
 				$.ajax({
-					type: "GET", 
+					type: "GET",
 					//url: "../modules/createOptionObject.php?delete",
 					url: "../modules/createOptionObject-multi.php?delete",
 					data: "option="+$('#uq'+question+'o'+option).val()+"&id="+QuizInfo.id+"&questionNumber="+question_id,  //add to get question id by YL 15oct
-					async: false,
-					success: function(data) {
-						if(data != ""){
-							alert(data);
-						}
-					}
-				});
-			}
-			// remove the option widget
-			$('#cq'+question+'o'+option).remove();
-			delete this.question[question][option];
-			return true;
-		}else{
-			return false;
-		}
-	},
-
-	removeOptionNew: function(question, option, mute){
-		if(mute){
-			ask = true;
-		}else{
-			ask = confirm("Are you sure you want to remove this option? This action cannot be undone!");
-		}
-		if(ask){
-			// unregister the validators
-			QuizValidate.remove("textfield", 'q'+question+'o'+option);
-			// is it already in the database ?
-			if($('#uq'+question+'o'+option).val() != undefined){
-				// remove from database
-				$.ajax({
-					type: "GET", 
-					//url: "../modules/createOptionObject.php?delete",
-					url: "../modules/createOptionObject-multi.php?delete",
-					data: "option="+$('#uq'+question+'o'+option).val()+"&id="+QuizInfo.id,  //add to get question id by YL 15oct
 					async: false,
 					success: function(data) {
 						if(data != ""){
