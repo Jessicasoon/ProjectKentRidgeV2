@@ -80,7 +80,7 @@ if(isset($_GET['load'])){
     <div id="cq<?php echo $question; ?>o<?php echo $option; ?>">
     <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
-      <th width="25" scope="row"><input type="hidden" name="uq<?php echo $question; ?>o<?php echo $option; ?>" id="uq<?php echo $question; ?>o<?php echo $option; ?>" value="<?php echo $row_getOption['option_id']; ?>" /><a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
+      <th width="25" scope="row"><input type="hidden" name="uq<?php echo $question; ?>o<?php echo $option; ?>" id="uq<?php echo $question; ?>o<?php echo $option; ?>" value="<?php echo $row_getOption['option_id']; ?>" /><a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $row_getQuery['question_id']; ?>, <?php echo $question; ?>, <?php echo $option; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
       <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $option; ?>" class="optionWidget-<?php echo $question; ?>">Option</label></th>
       <td><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $option; ?>" class="sprytextfield">
         <input name="q<?php echo $question; ?>o<?php echo $option; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $option; ?>" value="<?php echo $row_getOption['option']; ?>" />
@@ -102,7 +102,7 @@ if(isset($_GET['load'])){
 </div>
   <table border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
-      <th valign="top" scope="row"><input type="button" name="addOptionBtn<?php echo $question; ?>" id="addOptionBtn<?php echo $question; ?>" value="Add new option" onClick="QuizQuestionMulti.addOption(<?php echo $question; ?>)" /></th>
+      <th valign="top" scope="row"><input type="button" name="addOptionBtn<?php echo $question; ?>" id="addOptionBtn<?php echo $question; ?>" value="Add new option" onClick="QuizQuestionMulti.addOption(<?php echo $row_getQuery['question_id']; ?>, <?php echo $question; ?>)" /></th>
     </tr>
     <tr>
       <td valign="top" class="desc" scope="row">Create a new option for this question</td>
@@ -190,13 +190,13 @@ if(isset($_GET['load'])){
       <tr></tr>
 	  </tr>
     </table>
-    <?php } ?>
     </div>
+    <?php } ?>
     <?php } ?>
 </div>
   <table border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
-      <th valign="top" scope="row"><input type="button" name="addOptionBtn<?php echo $question; ?>" id="addOptionBtn<?php echo $question; ?>" value="Add new option" onClick="QuizQuestionMulti.addOption(<?php echo $question; ?>)" /></th>
+      <th valign="top" scope="row"><input type="button" name="addOptionBtn<?php echo $question; ?>" id="addOptionBtn<?php echo $question; ?>" value="Add new option" onClick="QuizQuestionMulti.addOption(<?php echo $row_getQuery['question_id']; ?>, <?php echo $question; ?>)" /></th>
     </tr>
     <tr>
       <td valign="top" class="desc" scope="row">Create a new option for this question</td>
@@ -283,7 +283,7 @@ $quiz = $_GET['id'];
 </div>
   <table border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
-      <th valign="top" scope="row"><input type="button" name="addOptionBtn<?php echo $question; ?>" id="addOptionBtn<?php echo $question; ?>" value="Add new option" onClick="QuizQuestionMulti.addOption(<?php echo $question; ?>)" /></th>
+      <th valign="top" scope="row"><input type="button" name="addOptionBtn<?php echo $question; ?>" id="addOptionBtn<?php echo $question; ?>" value="Add new option" onClick="QuizQuestionMulti.addOptionNew(<?php echo $question; ?>)" /></th>
     </tr>
     <tr>
       <td valign="top" class="desc" scope="row">Create a new option for this question</td>
@@ -390,7 +390,7 @@ $quiz = $_GET['id'];
 </div>
   <table border="0" align="center" cellpadding="5" cellspacing="0">
     <tr>
-      <th valign="top" scope="row"><input type="button" name="addOptionBtn<?php echo $question; ?>" id="addOptionBtn<?php echo $question; ?>" value="Add new option" onClick="QuizQuestionMulti.addOption(<?php echo $question; ?>)" /></th>
+      <th valign="top" scope="row"><input type="button" name="addOptionBtn<?php echo $question; ?>" id="addOptionBtn<?php echo $question; ?>" value="Add new option" onClick="QuizQuestionMulti.addOptionNew(<?php echo $question; ?>)" /></th>
     </tr>
     <tr>
       <td valign="top" class="desc" scope="row">Create a new option for this question</td>
