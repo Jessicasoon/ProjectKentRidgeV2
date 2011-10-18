@@ -119,7 +119,7 @@
 .quiz_box {
 	margin-top: 5px;
 	margin-bottom: 5px;
-	min-height: 100px;
+	min-height: 125px; /*100*/
 	border-bottom-width: 1px;
 	border-bottom-style: dotted;
 	border-bottom-color: #999;
