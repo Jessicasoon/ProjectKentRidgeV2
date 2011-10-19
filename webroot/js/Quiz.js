@@ -19,8 +19,9 @@ $(document).ready(function() {
 	var numCompleted = 0;
 	
 	// set the margin for the indicators
-	var numQuestions = $("#question_paging a").length
-	var margin = (690 - (numQuestions * 16)) / numQuestions;
+	//var numQuestions = $("#question_paging a").length;
+	var numPages = $("#question_paging a").length;
+	var margin = (690 - (numQuestions * 16)) / numPages;
 	
 	// also store the number of questions for error checking later
 	var questionArray = new Array(numQuestions);
