@@ -592,7 +592,7 @@ var QuizQuestionTest = {
 	},
 	
 	remove: function(id){
-		if(confirm("Are you sure you want to remove this question and it's options? This action cannot be undone!")){
+		if(confirm("Are you sure you want to remove this question and its options? This action cannot be undone!")){
 			// find and remove the options in it
 			for(i=0; i < this.question[id].length; i++){
 				if(this.question[id][i] != undefined){
@@ -796,11 +796,11 @@ var QuizQuestionMulti = {
 	},	
 	
 	remove: function(id){
-		if(confirm("Are you sure you want to remove this question and it's options? This action cannot be undone!")){
+		if(confirm("Are you sure you want to remove this question and its option? This action cannot be undone!")){
 			// find and remove the options in it
 			for(i=0; i < this.question[id].length; i++){
 				if(this.question[id][i] != undefined){
-					this.removeOption(id, i, true);
+					this.removeOptionNew(id,  i, true);
 				}
 			}
 			// unregister the question validator
@@ -1017,7 +1017,7 @@ var QuizQuestion_NOTUSED = {
 	},
 	
 	remove: function(id){
-		if(confirm("Are you sure you want to remove this question and it's options? This action cannot be undone!")){
+		if(confirm("Are you sure you want to remove this question and its options? This action cannot be undone!")){
 			// find and remove the options in it
 			for(i=0; i < this.question[id].length; i++){
 				if(this.question[id][i] != undefined){
