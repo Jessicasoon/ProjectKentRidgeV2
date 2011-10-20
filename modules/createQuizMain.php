@@ -846,7 +846,7 @@ how you want it to be displayed.</p>
 	color: #333;">
 					<tr>
 						<td>Do you want to customize your quiz result?<a
-							href="customnizeTestExpl.php"> What's this?</a></td>
+							href="customnizeTestExpl.php" target="_blank"> What's this?</a></td>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
@@ -925,7 +925,7 @@ England</td>
 	color: #333;">
 					<tr>
 						<td>Do you want to make your quiz more accurate? <a
-							href="customnizeMultiExpl.php">What's this?</a></td>
+							href="customnizeMultiExpl.php" target="_blank">What's this?</a></td>
 						<!-- To replace the hyperlink-->
 					</tr>
 					<tr>
