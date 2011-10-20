@@ -153,9 +153,8 @@ if(isset($_GET['load'])){
                 <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
                 <tr>
       <th width="25" scope="row"><input type="hidden" name="uq<?php echo $question; ?>o<?php echo $i; ?>" id="uq<?php echo $question; ?>o<?php echo $i; ?>" value="<?php echo $row_getOption['option_id']; ?>" />
-      <!-- Modified on 15 Oct, for checking if the option is the 1st and 2nd, cant delete-->
-      <?php if($i >= 2){ ?>
-      <a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $row_getOption['fk_question_id']; ?>, <?php echo $question; ?>, <?php echo $i; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a><?php } ?></th>
+      
+      <a href="javascript:;" onclick="QuizQuestionMulti.removeOption(<?php echo $row_getOption['fk_question_id']; ?>, <?php echo $question; ?>, <?php echo $i; ?>);"><img src="img/delete.png" width="16" height="16" border="0" align="absmiddle" title="Remove" /></a></th>
       <th width="80" scope="row"><label for="q<?php echo $question; ?>o<?php echo $i; ?>" class="optionWidget-<?php echo $question; ?>">Option</label></th>
       <td><span id="sprytextfield-q<?php echo $question; ?>o<?php echo $i; ?>" class="sprytextfield">  
         <input name="q<?php echo $question; ?>o<?php echo $i; ?>" type="text" class="optionField" id="q<?php echo $question; ?>o<?php echo $i; ?>" value="<?php echo $row_getOption['option']; ?>" />

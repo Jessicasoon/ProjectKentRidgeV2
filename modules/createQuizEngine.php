@@ -31,6 +31,13 @@ if(isset($_GET['step'])){
 		$quiz_picture = ($_POST['result_picture_0'] != "") ? $_POST['result_picture_0'] : "none.gif";
 		if(isset($_POST['id'])){
 			$quiz = new Quiz($_POST['id']);
+			// Modified on 20 Oct by Hien for getting type and display_mode from the database
+			// for test_simple to skip the result step
+			$query = sprintf("SELECT fk_quiz_type, display_mode FROM q_quizzes WHERE quiz_id = %d", GetSQLValueString($_POST['id'], "int"));
+			$getQuery = mysql_query($query, $quizroo) or die(mysql_error());
+			$row_getQuery = mysql_fetch_assoc($getQuery);
+			$mode = $row_getQuery['display_mode'];
+			$type = $row_getQuery['fk_quiz_type'];
 			$quiz_id = $quiz->update($_POST['quiz_title'], $_POST['quiz_description'], $_POST['quiz_cat'], $quiz_picture, $member->id, $mode, $type);
 		}else{
 			$quiz = new Quiz();
