@@ -12,7 +12,7 @@
 }
 .page-container {
 	text-align: center;
-	color: #3399ff;
+	color: #ff6633; /*3399ff*/
 	font-size: 18px;
 	font-weight: bold;
 }
@@ -25,13 +25,13 @@
 }
 
 .page-container a:visited{
-	color: #999;
+	color: #333;
 	text-decoration: none;
 	font-size: 18px;
  	font-weight: bold;
 }
 .page-container a:hover{
-	color: #0066CC;
+	color: #ff9966; /*0066CC*/
 	text-decoration: none;
 	font-size: 18px;
  	font-weight: bold;
@@ -119,7 +119,7 @@
 .quiz_box {
 	margin-top: 5px;
 	margin-bottom: 5px;
-	min-height: 100px;
+	min-height: 125px; /*100*/
 	border-bottom-width: 1px;
 	border-bottom-style: dotted;
 	border-bottom-color: #999;
@@ -138,7 +138,7 @@
 }
 .quiz_box a:visited {
 	text-decoration: underline;
-	color: #666;
+	color: #333;
 }
 .quiz_box:last-child {
 	border-bottom-style: none;

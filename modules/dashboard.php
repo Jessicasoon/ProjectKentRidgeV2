@@ -112,7 +112,7 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
         <div class="quiz_box clear">
           <h3>
           <!-- Modified on 13 Oct for greying out the taken quiz-->
-          <a href="previewQuiz.php?id=<?php echo $row_quizzes1['quiz_id']; ?>" <?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes1['quiz_name']; ?></a>
+          <a href="previewQuiz.php?id=<?php echo $row_quizzes1['quiz_id']; ?>" <?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#999"';}?>><?php echo $row_quizzes1['quiz_name']; ?></a>
           <!-- Modify on 6 Sep by Hien, to add the star for recommended quizzes-->
         <?php if ($row_quizzes1['isRecommended'] == 1){ ?>
         <img src="../webroot/img/5star.png" width="22" height="24" align="right"/>
@@ -122,8 +122,8 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
           <div class="thumb_box">
             <a href="previewQuiz.php?id=<?php echo $row_quizzes1['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_quizzes1['quiz_picture']; ?>" alt="<?php echo $row_quizzes1['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_quizzes1['quiz_description']; ?>" /></a></div>
           <div class="quiz_details">
-            <p class="description" <?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo substr($row_quizzes1['quiz_description'], 0, 110).((strlen($row_quizzes1['quiz_description']) < 110)? "" : "..."); ?></p>
-            <p class="source">from <a href="topics.php?topic=<?php echo $row_quizzes1['fk_quiz_cat']; ?>"<?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes1['cat_name']; ?></a>  by <a href="viewMember.php?id=<?php echo $row_quizzes1['fk_member_id']; ?>"<?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes1['member_name']; ?></a></p>
+            <p class="description" <?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#999"';}?>><?php echo substr($row_quizzes1['quiz_description'], 0, 110).((strlen($row_quizzes1['quiz_description']) < 110)? "" : "..."); ?></p>
+            <p class="source">from <a href="topics.php?topic=<?php echo $row_quizzes1['fk_quiz_cat']; ?>"<?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#999"';}?>><?php echo $row_quizzes1['cat_name']; ?></a>  by <a href="viewMember.php?id=<?php echo $row_quizzes1['fk_member_id']; ?>"<?php $quiz = new Quiz($row_quizzes1['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#999"';}?>><?php echo $row_quizzes1['member_name']; ?></a></p>
 			<p class="source"><?php //------------------type of quiz added by YL on 15oct------------------------
 //***********************************************ADD BY LIEN************************************************//
 		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
@@ -157,7 +157,7 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
       <?php if($totalRows_quizzes2 !=0 ){ do { ?>
         <div class="quiz_box clear">
           <h3>
-        <a href="previewQuiz.php?id=<?php echo $row_quizzes2['quiz_id']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes2['quiz_name']; ?></a>
+        <a href="previewQuiz.php?id=<?php echo $row_quizzes2['quiz_id']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#999"';}?>><?php echo $row_quizzes2['quiz_name']; ?></a>
         <!-- Modify on 6 Sep by Hien, to add the star for recommended quizzes-->
         <?php if ($row_quizzes2['isRecommended'] == 1){ ?>
         <img src="../webroot/img/5star.png" width="24" height="22" align="right"/>
@@ -167,8 +167,8 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
           <div class="thumb_box">
             <a href="previewQuiz.php?id=<?php echo $row_quizzes2['quiz_id']; ?>"><img src="../quiz_images/imgcrop.php?w=90&amp;h=68&amp;f=<?php echo $row_quizzes2['quiz_picture']; ?>" alt="<?php echo $row_quizzes2['quiz_description']; ?>" width="90" height="68" border="0" title="<?php echo $row_quizzes2['quiz_description']; ?>" /></a></div>
           <div class="quiz_details">
-            <p class="description"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo substr($row_quizzes2['quiz_description'], 0, 120).((strlen($row_quizzes2['quiz_description']) < 120)? "" : "..."); ?></p>
-            <p class="source">from <a href="topics.php?topic=<?php echo $row_quizzes2['fk_quiz_cat']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes2['cat_name']; ?></a> by <a href="viewMember.php?id=<?php echo $row_quizzes2['fk_member_id']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#CCC"';}?>><?php echo $row_quizzes2['member_name']; ?></a></p>
+            <p class="description"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#999"';}?>><?php echo substr($row_quizzes2['quiz_description'], 0, 120).((strlen($row_quizzes2['quiz_description']) < 120)? "" : "..."); ?></p>
+            <p class="source">from <a href="topics.php?topic=<?php echo $row_quizzes2['fk_quiz_cat']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#999"';}?>><?php echo $row_quizzes2['cat_name']; ?></a> by <a href="viewMember.php?id=<?php echo $row_quizzes2['fk_member_id']; ?>"<?php $quiz = new Quiz($row_quizzes2['quiz_id']); if($quiz->hasTaken($member->id)){ echo 'style="color:#999"';}?>><?php echo $row_quizzes2['member_name']; ?></a></p>
 			<p class="source"><?php
 //***********************************************ADD BY LIEN************************************************//
 		$queryMode = sprintf("SELECT display_mode FROM q_quizzes WHERE quiz_id = %d", $quiz->quiz_id);
