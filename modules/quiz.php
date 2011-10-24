@@ -1628,5 +1628,30 @@ class Quiz{
 	
 		return $mode;
 	}
+	
+	/*Modify on 24 Oct by Hien for creating feedback into DB */
+	function createFeedback($feedback, $member_id){
+		require('quizrooDB.php');
+		
+		// insert into the feedback table (protect each insert from HTML Injection)
+		$insertSQL = sprintf("INSERT INTO q_feedback(`feedback`, `fk_member_id`) VALUES (%s, %d)",
+						   htmlentities(GetSQLValueString($feedback, "text")),
+						   GetSQLValueString($member_id, "int"));
+		mysql_query($insertSQL, $quizroo) or die(mysql_error());
+		
+		// find the feedback_id to return
+		$querySQL = "SELECT LAST_INSERT_ID() AS insertID, creation_date FROM q_feedback WHERE feedback_id = LAST_INSERT_ID()";
+		$resultID = mysql_query($querySQL, $quizroo) or die(mysql_error());
+		$row_resultID = mysql_fetch_assoc($resultID);
+		
+		$this->feedback_id = $row_resultID['insertID'];
+		$this->feedback = htmlentities($feedback);
+		$this->fk_member_id = $member_id;
+		$this->creation_date = $row_resultID['creation_date'];
+		
+		mysql_free_result($resultID);
+		
+		return $this->feedback_id;
+	}
 }
 }

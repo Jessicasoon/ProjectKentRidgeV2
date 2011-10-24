@@ -98,6 +98,8 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
   <br/>
   <div id="topics-bar" class="clear">
   <ul style="font-size:18px" > <!--------------TABBING LOGIC------------------->
+  <!-- for aligning the tabs to center-->
+  <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
 	  <li><?php if($get_type==0){echo "Most Popular";} else{?><a href ="../webroot/index.php?starting=0&sort=0">Most Popular</a><?php }?></li>
 	  <li><?php if($get_type==1){echo "Most Recent";} else{?><a href ="../webroot/index.php?starting=0&sort=1">Most Recent</a><?php }?></li>
 	  <li><?php if($get_type==2){echo "Newly Created";} else{?><a href ="../webroot/index.php?starting=0&sort=2">Newly Created</a><?php }?></li>
@@ -264,6 +266,7 @@ $totalRows_quizzes2 = mysql_num_rows($quizzes2);
   <div id="social" class="framePanel rounded">
     <h2>Social</h2>
     <div class="content-container">
+    <p>If you have any feedback on Quizroo, either on quiz content or quiz design, click on this &nbsp;<a href="../webroot/feedback.php" target="_blank"><img src="../webroot/img/feedback.png" alt="Give us your feedback" border="0" align="absmiddle"/></a></p>
     <p>Visit our <a href="http://www.facebook.com/apps/application.php?id=154849761223760" target="_blank">facebook page</a> for updates! Discuss what you like about Quizroo! <a href="http://www.twitter.com/quizroo" target="_blank"><img src="http://twitter-badges.s3.amazonaws.com/follow_us-b.png" alt="Follow Quizroo on Twitter" border="0" align="absmiddle"/></a></p>
     <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fapps%2Fapplication.php%3Fid%3D154849761223760&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;font&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"></iframe>
     </div>

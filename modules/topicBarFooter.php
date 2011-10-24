@@ -20,9 +20,9 @@ if(isset($_GET['topic'])){
   if( isAdmin == 1)
   {
   ?>
-      <li><a href="index.php" class="icon"><span>#</span></a></li>  
+      <li><a href="../webroot/admin.php" class="icon"><img src="../webroot/img/Admin.png" width="20" height="20"/></a></li>  
       		
-    <?php ;}
+    <?php }
 	do { ?>
       <li><a href="topics.php?topic=<?php echo $row_getTopics['cat_id']; ?>" class="topicTitle<?php echo ($topic == $row_getTopics['cat_id']) ? " current" : ""; ?>" title="Total <?php echo $row_getTopics['total']; ?> quizzes, <?php echo ($row_getTopics['undone'] != NULL) ? $row_getTopics['undone'] : 0; ?> undone"><?php echo $row_getTopics['cat_name']; ?></a></li>
       <?php } while ($row_getTopics = mysql_fetch_assoc($getTopics)); ?>
