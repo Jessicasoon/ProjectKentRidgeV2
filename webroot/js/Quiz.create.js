@@ -1163,7 +1163,6 @@ function submitCheckMulti(value){
 	}
 }
 
-//KEPT TEMPORARILY YL
 function submitCheck(value){
 	// check if upload complete
 	if(value && !checkIfUploading()){
@@ -1173,9 +1172,12 @@ function submitCheck(value){
 		$("#optionCounts").val(QuizQuestionTest.getOptionValues());
 		return true;
 	}else{
-		if(checkIfUploading()){
-			alert("Photo uploads still in progress! Please wait for uploads to complete!");
-		}
+		// Modified on 24 Oct: adding try catch because not all form has uploading function, without try catch will return exception
+		try{
+			if(checkIfUploading()){
+				alert("Photo uploads still in progress! Please wait for uploads to complete!");
+			}
+		} catch(err){}
 		if(!value){
 			alert("Some of the required fields are empty! Please scroll up to check. Fields requiring attention will be highlighted red.");	
 		}

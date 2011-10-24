@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Quizroo: Create Quiz</title>
+<title>Quizroo: Feedback Portal</title>
 <?php include("inc/header-css.php");?>
 <link href="css/dashboard.css" rel="stylesheet" type="text/css" />
 <link href="css/recent.css" rel="stylesheet" type="text/css" />
@@ -25,13 +25,21 @@
 <div class="framePanel">
 <h2 align="center"><span style="color:#C00; font-family: Myriad Pro, Arial, sans-serif; font-weight: bold;">Quizroo Feedback Portal</span></h2>
 <?php if(!isset($_GET['feedback_id'])) { ?>
+<script type="text/javascript">
+$(document).ready(function(){
+	// init the validators
+	QuizValidate.init();
+}); // end of javascript ready()
+</script>
 <p>Type your feedback in this textbox and send it to us.</p>
 <form action="../modules/feedback.php" method="post" enctype="multipart/form-data" name="feedback" id="feedback" onSubmit="return submitCheck(Spry.Widget.Form.validate(this));">
-<textarea name="feedback" id="feedback" cols="80" rows="5"></textarea>
-<span class="textareaRequiredMsg">Feedback should not be blank!</span>
+<span id="sprytextarea0" class="sprytextarea">
+<textarea name="feedback" id="feedback" cols="80" rows="5"></textarea><br/>
+<span class="textareaRequiredMsg">Feedback should not be blank!</span></span>
 <br/><br/>
 <input type="submit" name="submit" id="submit" value="Submit!"/>
 </form>
+
 <?php } else if (isset($_GET['feedback_id'])){ ?>
 <p>Thank you very much for your valuable feedback on Quizroo. Your feedback has been submitted sucessfully.
 We will take your feedback into account and do necessary changes accordingly.</p>
