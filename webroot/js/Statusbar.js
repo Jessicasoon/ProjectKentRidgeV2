@@ -384,7 +384,7 @@ var Statusbar = {
 				"<div class='statusbar-menu-desc'>Know more about the developers of Quizroo</div>"
 			);
 			$(quizroo).click(function(){
-				window.open('http://hci.comp.nus.edu.sg/main/');
+				window.open('http://hci.comp.nus.edu.sg/');
 			});
 		}else if(option=='statusbar-search'){
 			//$('#statusbar-search').addClass('statusbar-searchmenu-button-selected');
