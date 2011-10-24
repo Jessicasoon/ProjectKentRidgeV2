@@ -17,7 +17,7 @@ if(isset($_GET['topic'])){
   <!-- Modify 26 July: display or not display admin page based on member id-->
   <?php //check if member is admin
   $isAdmin =  sprintf("SELECT isAdmin FROM `s_members` WHERE member_id = " + $facebookID);
-  if( isAdmin == 1)
+  if( $isAdmin == 1)
   {
   ?>
       <li><a href="../webroot/admin.php" class="icon"><img src="../webroot/img/Admin.png" width="20" height="20"/></a></li>  
